@@ -174,9 +174,13 @@
     root.setAttribute("aria-modal", "true");
     root.setAttribute("aria-labelledby", "rj-ix-title");
     var house = safeHref(ixCfg.href);
+    var support = "";
+    if (ixCfg.support && ixCfg.supportHref) {
+      support = '<p class="ix-support"><a data-ix-support href="' + esc(safeHref(ixCfg.supportHref)) + '">' + esc(ixCfg.support) + "</a></p>";
+    }
     root.innerHTML = '<div class="ix-card"><div class="ix-top"><span class="label ix-label">' + esc(ixCfg.label || "Quảng cáo / Advertisement") + "</span>" +
       '<button type="button" class="btn" data-ix-x>' + esc(ixCfg.close || "Close") + "</button></div>" +
-      '<h2 id="rj-ix-title">' + esc(ixCfg.title || "") + "</h2><p>" + esc(ixCfg.body || "") + "</p>" +
+      '<h2 id="rj-ix-title">' + esc(ixCfg.title || "") + "</h2><p>" + esc(ixCfg.body || "") + "</p>" + support +
       '<div class="ix-actions">' + (ixCfg.cta ? '<a class="btn" data-ix-house href="' + esc(house) + '">' + esc(ixCfg.cta) + "</a>" : "") +
       '<button type="button" class="btn primary" data-ix-go>' + esc(ixCfg.go || "Continue to job") + "</button></div>" +
       '<p class="ix-count" id="rj-ix-count" aria-live="polite"></p></div>';
@@ -203,6 +207,12 @@
     root.querySelector("[data-ix-go]").addEventListener("click", leave);
     var houseLink = root.querySelector("[data-ix-house]");
     if (houseLink) houseLink.addEventListener("click", function () {
+      gone = true;
+      if (timer) clearInterval(timer);
+      document.removeEventListener("keydown", onKey, true);
+    });
+    var supportLink = root.querySelector("[data-ix-support]");
+    if (supportLink) supportLink.addEventListener("click", function () {
       gone = true;
       if (timer) clearInterval(timer);
       document.removeEventListener("keydown", onKey, true);
@@ -241,4 +251,46 @@
       openIx(a.href);
     });
   }
+
+  // Dismissible support note. The head script already hides it when the choice is stored,
+  // so this only handles the click and does not move layout on load.
+  document.addEventListener("click", function (ev) {
+    var node = ev.target;
+    if (node && !node.closest && node.parentElement) node = node.parentElement;
+    if (!node || !node.closest) return;
+    var dismiss = node.closest("[data-support-dismiss]");
+    if (dismiss) {
+      var card = dismiss.closest("[data-support-nudge]");
+      if (card) card.hidden = true;
+      document.documentElement.dataset.support = "off";
+      try { localStorage.setItem("rjvn-support-hide", "1"); } catch (e) { /* storage blocked */ }
+      return;
+    }
+    var copyBtn = node.closest("[data-copy]");
+    if (!copyBtn || copyBtn.tagName !== "BUTTON") return;
+    var text = copyBtn.getAttribute("data-copy") || "";
+    var done = copyBtn.getAttribute("data-copied") || "Copied";
+    var original = copyBtn.getAttribute("data-label") || copyBtn.textContent;
+    copyBtn.setAttribute("data-label", original);
+    function mark() {
+      copyBtn.textContent = done;
+      window.setTimeout(function () { copyBtn.textContent = original; }, 2000);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var copied = false;
+      try { copied = document.execCommand("copy"); } catch (err) { copied = false; }
+      document.body.removeChild(ta);
+      if (copied) mark();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(mark, fallback);
+    else fallback();
+  });
 })();

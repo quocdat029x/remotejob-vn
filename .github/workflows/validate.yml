@@ -17,7 +17,7 @@ jobs:
         with:
           python-version-file: ".python-version"
       - name: Unit tests
-        run: python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && node scripts/test_interstitial.mjs
+        run: python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && python3 scripts/test_support.py && node scripts/test_interstitial.mjs
       - name: Validate data (schema, policy, privacy)
         run: python3 scripts/validate.py
       - name: Build site
@@ -49,4 +49,11 @@ jobs:
           test -s dist/en/terms/index.html
           test -s dist/lien-he/index.html
           test -s dist/en/contact/index.html
+          test -s dist/ung-ho/index.html
+          test -s dist/en/support/index.html
+          grep -q "https://remotejob.nguyenquocdat.dev/ung-ho/" dist/llms.txt
+          grep -q "https://remotejob.nguyenquocdat.dev/en/support/" dist/llms.txt
+          grep -q "https://remotejob.nguyenquocdat.dev/ung-ho/" dist/sitemap-vi.xml
+          grep -q "https://remotejob.nguyenquocdat.dev/en/support/" dist/sitemap-en.xml
+          grep -q 'hreflang="en" href="https://remotejob.nguyenquocdat.dev/en/support/"' dist/ung-ho/index.html
           grep -q "Content-Type: text/plain; charset=utf-8" dist/_headers

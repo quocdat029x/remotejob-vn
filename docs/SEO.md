@@ -23,6 +23,7 @@
 | Privacy | `/chinh-sach-bao-mat/` | `/en/privacy/` |
 | Terms | `/dieu-khoan/` | `/en/terms/` |
 | Contact | `/lien-he/` | `/en/contact/` |
+| Support | `/ung-ho/` | `/en/support/` |
 
 ## Metadata
 
@@ -55,7 +56,7 @@ from the ATS API. `python3 scripts/check_jsonld.py` validates all blocks; the Ri
 
 - `/sitemap.xml` is a sitemap index → `/sitemap-vi.xml` and `/sitemap-en.xml`; each URL has `lastmod`
   (company/job `last_checked`) and `xhtml:link` hreflang alternates. Privacy, terms, and contact
-  are included. Removed jobs stay `noindex` and out of the sitemap.
+  are included, as are `/ung-ho/` and `/en/support/`. Removed jobs stay `noindex` and out of the sitemap.
 - `/robots.txt` allows `/`, keeps `Disallow: /data/jobs-index.json`, names Mediapartners-Google,
   AdsBot-Google, GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Extended,
   Applebot-Extended, and Bingbot with the same allow/disallow, lists the sitemap index and both

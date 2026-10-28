@@ -27,7 +27,7 @@ def privacy_body(lang, *, ads_on):
 <h2>Cloudflare Web Analytics</h2>
 <p>Dự án Cloudflare Pages có thể bật Cloudflare Web Analytics. Beacon do Cloudflare gắn khi triển khai, không nằm trong mã nguồn. Công cụ này không dùng cookie và chỉ tạo số liệu tổng hợp (lượt xem trang). Không có công cụ thống kê nào khác.</p>
 <h2>Dữ liệu lưu trên máy bạn</h2>
-<p>Trình duyệt có thể lưu lựa chọn giao diện sáng/tối và số lần bấm liên kết ứng tuyển (để giới hạn hộp thoại quảng cáo) trong localStorage của chính máy bạn. Dữ liệu đó không được gửi về máy chủ của dự án.</p>
+<p>Trình duyệt có thể lưu lựa chọn giao diện sáng/tối, số lần bấm liên kết ứng tuyển (để giới hạn hộp thoại quảng cáo) và việc bạn đã ẩn thẻ ủng hộ trong localStorage của chính máy bạn. Dữ liệu đó không được gửi về máy chủ của dự án.</p>
 <h2>Liên kết affiliate</h2>
 <p>Trang Công cụ có các vị trí gắn nhãn Affiliate. Nếu sau này một liên kết trở thành liên kết affiliate, dự án có thể nhận hoa hồng mà bạn không trả thêm. Hiện mỗi URL là trang công khai của nhà cung cấp hoặc địa chỉ giữ chỗ. Liên kết dùng <code>rel="sponsored nofollow"</code>.</p>
 {google}
@@ -40,7 +40,7 @@ def privacy_body(lang, *, ads_on):
 <h2>Cloudflare Web Analytics</h2>
 <p>The Cloudflare Pages project can enable Cloudflare Web Analytics. Cloudflare injects the beacon at deploy time; it is not in this repository. It is cookieless and aggregate-only (page views). There is no other analytics.</p>
 <h2>Data stored on your device</h2>
-<p>The browser may store the light/dark theme and how often an apply link was clicked (to cap the ad dialog) in localStorage on your device. That data is not sent to the project.</p>
+<p>The browser may store the light/dark theme, how often an apply link was clicked (to cap the ad dialog), and whether you dismissed the support note in localStorage on your device. That data is not sent to the project.</p>
 <h2>Affiliate links</h2>
 <p>The Tools page has slots labeled Affiliate. If a link later becomes an affiliate link, the project may earn a commission at no extra cost to you. Right now each URL is the vendor's public page or a placeholder. Links use <code>rel="sponsored nofollow"</code>.</p>
 {google}

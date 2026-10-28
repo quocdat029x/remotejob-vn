@@ -69,6 +69,7 @@ Jobs are read from public applicant-tracking feeds (Greenhouse, Lever, Ashby, Wo
 - [Chính sách bảo mật]({site}/chinh-sach-bao-mat/): Cloudflare Web Analytics, affiliates, advertising
 - [Điều khoản]({site}/dieu-khoan/): disclaimer
 - [Liên hệ]({site}/lien-he/): GitHub issues only
+- [Ủng hộ]({site}/ung-ho/): optional donations, VietQR and Buy Me a Coffee
 
 ## Roles
 
@@ -86,6 +87,7 @@ Jobs are read from public applicant-tracking feeds (Greenhouse, Lever, Ashby, Wo
 - [Privacy]({site}/en/privacy/): privacy policy
 - [Terms]({site}/en/terms/): terms and disclaimer
 - [Contact]({site}/en/contact/): GitHub issues only
+- [Support]({site}/en/support/): optional donations, Buy Me a Coffee and VietQR
 
 ## Data
 
