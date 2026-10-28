@@ -170,6 +170,54 @@ a.b:hover{color:var(--brand)}
 .filters .row-end{display:flex;gap:var(--s2);align-items:center;justify-content:space-between}
 .filters button{height:40px;padding:0 var(--s3);font:600 var(--fs-sm) var(--font);border:1px solid var(--border-strong);border-radius:var(--r-sm);background:var(--surface);color:var(--text);cursor:pointer}
 .filters output{font-size:var(--fs-sm);color:var(--text-2)}
+/* Job facets. Company filters keep the grid above; these rules are scoped to #job-filters. */
+#job-filters.filters{display:flex;flex-direction:column;align-items:stretch;gap:var(--s2);z-index:15;overflow:visible}
+#job-filters .q-row{display:flex;gap:var(--s2);align-items:flex-end}
+#job-filters .q{flex:1;min-width:0;grid-column:auto}
+#job-filters .q input{height:44px}
+.facet-bar{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.facet{position:relative;min-width:0}
+.facet-h{display:none;margin:0 0 var(--s1);font-size:var(--fs-xs);color:var(--text-2);text-transform:uppercase;letter-spacing:.04em}
+#job-filters .facet-btn{height:auto;min-height:44px;display:inline-flex;align-items:center;gap:var(--s2);padding:0 var(--s3);border-radius:var(--r-pill);background:var(--surface);color:var(--text);max-width:100%}
+#job-filters .facet-btn[aria-expanded=true],#job-filters .facet-btn[aria-pressed=true]{border-color:var(--brand);background:var(--brand-soft);color:var(--text)}
+#job-filters .facet-btn .n:empty,#job-filters .filters-open .n:empty{display:none}
+#job-filters .facet-btn .n,#job-filters .filters-open .n{min-width:1.25rem;height:1.25rem;padding:0 6px;border-radius:var(--r-pill);background:var(--brand);color:var(--brand-ink);font-size:var(--fs-xs);display:inline-grid;place-items:center}
+.facet-pop{position:absolute;z-index:30;top:calc(100% + 4px);left:0;width:min(20rem,calc(100vw - 2rem));max-height:20rem;overflow:auto;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--shadow-2);padding:var(--s2)}
+.facet:nth-last-child(-n+3) .facet-pop{left:auto;right:0}
+#job-filters label.opt{flex-direction:row;align-items:center;gap:var(--s2);min-height:44px;padding:0 var(--s2);border-radius:var(--r-sm);font-size:var(--fs-sm);font-weight:500;color:var(--text);cursor:pointer}
+#job-filters label.opt:hover,#job-filters label.opt:focus-within{background:var(--surface-2)}
+#job-filters label.opt input{width:1.125rem;height:1.125rem;flex:none;accent-color:var(--brand)}
+#job-filters label.opt .lab{min-width:0}
+#job-filters label.opt .n{margin-left:auto;color:var(--text-3);font-size:var(--fs-xs);font-weight:700}
+#job-filters label.opt.is-zero{color:var(--text-3)}
+#job-filters .facet-q{width:100%;height:40px;margin:0 0 var(--s2)}
+.active-row{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center}
+.active-filters{display:flex;flex-wrap:wrap;gap:var(--s2);flex:1;min-width:0}
+#job-filters .chip-x{height:auto;min-height:44px;padding:0 var(--s3);border-radius:var(--r-pill);border:1px solid var(--brand);background:var(--brand-soft);color:var(--text);font:600 var(--fs-sm) var(--font);display:inline-flex;align-items:center;cursor:pointer}
+#job-filters .filters-open{display:none;align-items:center;gap:var(--s2)}
+@media (max-width:767px){
+  #job-filters > .facet-bar{display:none}
+  #job-filters .filters-open{display:inline-flex;height:44px;flex:none;padding:0 var(--s3)}
+}
+#job-sheet .facet-bar{display:flex;flex-direction:column;gap:var(--s3);width:100%}
+#job-sheet .facet-h{display:block}
+#job-sheet .facet-btn{display:none}
+#job-sheet .facet-pop{position:static;width:auto;max-height:none;border:0;box-shadow:none;padding:0}
+.sheet{border:0;padding:0;width:100%;max-width:none;max-height:min(85vh,40rem);margin:0;color:var(--text);background:var(--surface)}
+.sheet[open]{display:flex;flex-direction:column;position:fixed;inset:auto 0 0 0;border-radius:var(--r-lg) var(--r-lg) 0 0;box-shadow:var(--shadow-2)}
+.sheet::backdrop{background:rgba(15,23,42,.72)}
+.sheet-h,.sheet-f{display:flex;align-items:center;gap:var(--s2);padding:var(--s3) var(--s4);background:var(--surface)}
+.sheet-h{justify-content:space-between;border-bottom:1px solid var(--border)}
+.sheet-h h2{font-size:var(--fs-lg);margin:0}
+.sheet-b{overflow:auto;padding:var(--s2) var(--s4) var(--s4);display:flex;flex-direction:column;gap:var(--s3)}
+.sheet-b h3{font-size:var(--fs-xs);margin:0;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em}
+.sheet-f{position:sticky;bottom:0;border-top:1px solid var(--border);padding-bottom:calc(var(--s3) + env(safe-area-inset-bottom))}
+#job-sheet .btn{height:auto;min-height:44px;flex:1}
+#job-sheet .sheet-h .btn{flex:none}
+#job-sheet label.opt{flex-direction:row;align-items:center;gap:var(--s2);min-height:44px;font-size:var(--fs-sm);font-weight:500;color:var(--text)}
+#job-sheet label.opt input{width:1.125rem;height:1.125rem;flex:none;accent-color:var(--brand)}
+#job-sheet label.opt .n{margin-left:auto;color:var(--text-3);font-size:var(--fs-xs)}
+#job-sheet .facet-q{width:100%;height:44px;margin:0 0 var(--s2)}
 .empty{text-align:center;padding:var(--s7) var(--s4);border:2px dashed var(--border);border-radius:var(--r-lg);color:var(--text-2)}
 .empty b{display:block;color:var(--text);font-size:var(--fs-lg);margin-bottom:var(--s1)}
 
