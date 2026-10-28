@@ -257,13 +257,19 @@ html[data-support=off] .support-nudge{display:none}
 .support-nudge p{margin:0;font-size:var(--fs-sm);color:var(--text)}
 .support-nudge .dismiss{flex:none;min-width:44px;height:44px;border:1px solid var(--border-strong);border-radius:var(--r-md);background:var(--surface);color:var(--text);font:700 1.25rem/1 var(--font);cursor:pointer}
 .donate-grid{display:grid;gap:var(--s4);align-items:start}
-@media (min-width:900px){.donate-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}}
+@media (min-width:900px){.donate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.donate-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .donate-grid .card h2{margin-top:0}
 .card.qr-card{background:#fff;color:#0f172a;border-color:#e2e8f0}
 .card.qr-card h2,.card.qr-card p,.card.qr-card dd{color:#0f172a}
 .card.qr-card .muted,.card.qr-card dt{color:#475569}
 .card.qr-card .btn{background:#fff;color:#0f172a;border-color:#cbd5e1}
 .card.qr-card .btn:hover{border-color:#0f766e;color:#0f766e}
+.card.qr-card.binance-card{border-top:3px solid #f0b90b}
+.card.qr-card .binance-free{color:#166534;font-weight:600;margin-top:var(--s3)}
+.card.qr-card .usdt-block{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid #e2e8f0}
+.card.qr-card .usdt-block h3{font-size:var(--fs-md);margin:0 0 var(--s2);color:#0f172a}
+.acct.usdt-addr{font-size:var(--fs-sm);line-height:1.4;letter-spacing:0;word-break:break-all}
 .qr-frame{background:#fff;border-radius:var(--r-md);margin:var(--s3) 0}
 .qr-frame img{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
 .acct-facts{display:grid;gap:var(--s3);margin:var(--s4) 0 0}
@@ -306,4 +312,5 @@ html[data-support=off] .support-nudge{display:none}
 .side-acct .acct{font-size:var(--fs-sm);letter-spacing:0}
 .side-support .copy-acct{min-height:44px;padding:0 var(--s3);font-size:var(--fs-sm)}
 .side-support .btn.bmc-btn{min-height:44px;padding:0 var(--s3);font-size:var(--fs-sm)}
-.side-more{display:inline-flex;align-items:center;min-height:44px;font-size:var(--fs-sm);font-weight:700}
+.side-actions{display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--s4)}
+.side-more,.side-binance{display:inline-flex;align-items:center;min-height:44px;font-size:var(--fs-sm);font-weight:700}

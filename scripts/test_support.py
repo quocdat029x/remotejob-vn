@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Support page: VietQR + Buy Me a Coffee, hreflang, and the soft ask."""
+import json
 import os
 import re
 import sys
@@ -36,7 +37,9 @@ class SupportPageTests(unittest.TestCase):
         self.assertIn('height="1150"', html)
         self.assertIn('srcset="/assets/vietqr-tpbank.webp"', html)
         self.assertIn('src="/assets/vietqr-tpbank.png"', html)
-        self.assertNotIn('loading="lazy"', html)
+        viet = html.split('id="vietqr"', 1)[1].split("</section>", 1)[0]
+        self.assertNotIn('loading="lazy"', viet)
+        self.assertIn('fetchpriority="high"', viet)
         self.assertIn("chụp màn hình", html)
         self.assertIn("pull request", html)
         self.assertIn("CONTRIBUTING.md", html)
@@ -107,6 +110,9 @@ class SupportPageTests(unittest.TestCase):
         self.assertIn('rel="noopener"', vi)
         self.assertIn('target="_blank"', vi)
         self.assertIn('href="/ung-ho/"', vi)
+        self.assertIn('href="/ung-ho/#binance"', vi)
+        self.assertIn("Binance Pay", vi)
+        self.assertNotIn("/assets/binance-pay", vi)
         self.assertIn("Xem thêm", vi)
         self.assertNotIn("<script", vi)
         self.assertNotIn("bmc-button", vi)
@@ -116,6 +122,9 @@ class SupportPageTests(unittest.TestCase):
         self.assertIn("The site is free. Donations keep it running.", en)
         self.assertLess(en.index("bmc-btn"), en.index("side-qr"))
         self.assertIn('href="/en/support/"', en)
+        self.assertIn('href="/en/support/#binance"', en)
+        self.assertIn("Binance Pay", en)
+        self.assertNotIn("/assets/binance-pay", en)
         self.assertIn("See more", en)
         self.assertIn('loading="lazy"', en)
 
@@ -185,10 +194,85 @@ class SupportPageTests(unittest.TestCase):
 
     def test_static_qr_assets_exist(self):
         assets = os.path.join(ROOT, "site", "assets")
-        for name in ("vietqr-tpbank.webp", "vietqr-tpbank.png"):
+        for name in ("vietqr-tpbank.webp", "vietqr-tpbank.png", "binance-pay.webp", "binance-pay.png"):
             path = os.path.join(assets, name)
             self.assertTrue(os.path.isfile(path), path)
             self.assertGreater(os.path.getsize(path), 1000)
+        with open(os.path.join(assets, "binance-pay.png"), "rb") as fh:
+            header = fh.read(24)
+        self.assertEqual(header[:8], b"\x89PNG\r\n\x1a\n")
+        width = int.from_bytes(header[16:20], "big")
+        height = int.from_bytes(header[20:24], "big")
+        self.assertEqual((width, height), (675, 675))
+
+    def test_binance_pay_card_uses_config_and_hides_empty_usdt(self):
+        with open(os.path.join(ROOT, "site.config.json"), encoding="utf-8") as fh:
+            cfg = json.load(fh)
+        block = cfg["donate"]["binance"]
+        self.assertEqual(block["username"], "hiddencat")
+        self.assertEqual(block["qr_image"], "/assets/binance-pay.png")
+        self.assertIsNone(block["pay_id"])
+        self.assertEqual(block["usdt_addresses"], [])
+        repo = "https://github.com/quocdat029x/remotejob-vn"
+        vi = support_page.body("vi", repo=repo)
+        self.assertLess(vi.index('id="vietqr"'), vi.index('id="binance"'))
+        self.assertLess(vi.index('id="binance"'), vi.index('id="international"'))
+        self.assertIn("Mở app Binance → Pay → Quét mã, hoặc tìm username hiddencat", vi)
+        self.assertIn("Chuyển khoản Binance Pay giữa các tài khoản Binance không mất phí.", vi)
+        self.assertIn('data-copy="hiddencat"', vi)
+        self.assertIn('src="/assets/binance-pay.png"', vi)
+        self.assertIn('srcset="/assets/binance-pay.webp"', vi)
+        self.assertIn('width="675"', vi)
+        self.assertIn('height="675"', vi)
+        self.assertIn('loading="lazy"', vi.split('id="binance"', 1)[1].split("</section>", 1)[0])
+        self.assertNotIn("USDT", vi)
+        self.assertNotIn("Binance Pay ID", vi)
+        self.assertNotIn("binance.com", vi)
+        self.assertNotIn("<script", vi)
+        en = support_page.body("en", repo=repo)
+        self.assertLess(en.index('id="international"'), en.index('id="binance"'))
+        self.assertLess(en.index('id="binance"'), en.index('id="vietqr"'))
+        self.assertIn("Open the Binance app → Pay → Scan the code, or search for the username hiddencat", en)
+        self.assertIn("Binance Pay transfers between Binance users are free.", en)
+        self.assertIn('data-copy="hiddencat"', en)
+        self.assertNotIn("USDT", en)
+
+    def test_usdt_rows_render_only_when_addresses_exist(self):
+        repo = "https://github.com/quocdat029x/remotejob-vn"
+        trc = "T123456789012345678901234567890123"
+        bep = "0x" + ("ab" * 20)
+        donate = {"binance": {
+            "username": "hiddencat",
+            "qr_image": "/assets/binance-pay.png",
+            "pay_id": "1092837465",
+            "usdt_addresses": [
+                {"network": "trc20", "address": trc},
+                {"network": "BEP20", "address": bep},
+                {"network": "", "address": trc},
+                {"network": "TRC20", "address": "short"},
+            ],
+        }}
+        vi = support_page.body("vi", repo=repo, donate=donate)
+        self.assertIn("USDT (TRC20)", vi)
+        self.assertIn("USDT (BEP20)", vi)
+        self.assertIn(f'data-copy="{trc}"', vi)
+        self.assertIn(f'data-copy="{bep}"', vi)
+        self.assertIn('data-copy="1092837465"', vi)
+        self.assertIn("Chỉ gửi USDT đúng mạng ghi bên dưới.", vi)
+        self.assertEqual(vi.count("USDT (TRC20)"), 1)
+        en = support_page.body("en", repo=repo, donate=donate)
+        self.assertIn("USDT (TRC20)", en)
+        self.assertIn("Send USDT only on the network named below.", en)
+        self.assertIn("Binance Pay ID", en)
+        hidden = support_page.body("vi", repo=repo, donate={"binance": {
+            "username": "hiddencat",
+            "qr_image": "https://evil.example/qr.png",
+            "pay_id": None,
+            "usdt_addresses": [{"network": "TRC20", "address": trc}],
+        }})
+        self.assertNotIn('id="binance"', hidden)
+        self.assertNotIn("evil.example", hidden)
+        self.assertNotIn(trc, hidden)
 
 
 if __name__ == "__main__":
