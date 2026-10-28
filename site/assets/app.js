@@ -7,10 +7,18 @@
     if (webdriver) return true;
     return /bot|crawl|spider|slurp|headless|phantom|semrush|ahrefs|petalbot|lighthouse|facebookexternalhit|embedly/i.test(ua || "");
   }
-  function rjOutboundAdDecision(clicks, lastShownMs, nowMs) {
+  function rjOutboundAdDecision(clicks, lastShownMs, nowMs, rules) {
+    var cfg = rules || {};
+    var everyN = parseInt(cfg.every_n != null ? cfg.every_n : cfg.everyN, 10);
+    if (!everyN || everyN < 1) everyN = 2;
+    var gap = parseInt(cfg.min_gap_ms != null ? cfg.min_gap_ms : cfg.minGapMs, 10);
+    if (isNaN(gap) || gap < 0) gap = 180000;
+    var first = cfg.first_click != null ? cfg.first_click : cfg.firstClick;
+    if (first == null) first = true;
     var n = (clicks || 0) + 1;
-    var due = !lastShownMs || (nowMs - lastShownMs) >= 600000;
-    var show = n % 3 === 0 && due;
+    var due = !lastShownMs || (nowMs - lastShownMs) >= gap;
+    var onCadence = first ? (n === 1 || (n - 1) % everyN === 0) : (n % everyN === 0);
+    var show = onCadence && due;
     return {clicks: n, show: show, lastShownMs: show ? nowMs : (lastShownMs || 0)};
   }
   var lang = document.body.getAttribute("data-lang") || "vi";
@@ -242,7 +250,7 @@
       if (!a || ev.button !== 0) return;
       var n = parseInt(storeGet("rjvn-out-n") || "0", 10) || 0;
       var at = parseInt(storeGet("rjvn-out-at") || "0", 10) || 0;
-      var d = rjOutboundAdDecision(n, at, Date.now());
+      var d = rjOutboundAdDecision(n, at, Date.now(), ixCfg);
       storeSet("rjvn-out-n", String(d.clicks));
       var modified = ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || a.target === "_blank";
       if (!d.show || modified) return;

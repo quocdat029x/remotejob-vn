@@ -50,6 +50,10 @@ class ListingTests(unittest.TestCase):
         self.assertIn('id="rj-ix"', html)
         self.assertIn("Quảng cáo / Advertisement", html)
         self.assertNotIn("<script src=", html)
+        self.assertNotIn("adsbygoogle", html)
+        self.assertIn('"first_click": true', html)
+        self.assertIn('"every_n": 2', html)
+        self.assertIn('"min_gap_ms": 180000', html)
 
 
 if __name__ == "__main__":

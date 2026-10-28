@@ -36,8 +36,10 @@ shown when someone lands from search.
   off, or for a crawler, the browser follows that href. Modified clicks (new tab) are not intercepted.
 - **Frequency cap**, stored on the device in `localStorage` (falls back to `sessionStorage` if
   `localStorage` throws). Keys `rjvn-out-n` (outbound click count) and `rjvn-out-at` (last time the
-  dialog was shown). The dialog opens on every 3rd plain click, and never more than once per 10 minutes.
-  Nothing is sent to a server.
+  dialog was shown). The cadence is `interstitial` in `site.config.json`: `first_click` (show on the
+  first apply click), `every_n` (then every Nth click after that), and `min_gap_ms` (minimum time
+  between shows). Shipped values are the first click, then every 2nd click, at least 3 minutes
+  (180000 ms) apart. Nothing is sent to a server.
 - **Creative** comes from `data/ads.json` → `interstitial` (house/sponsored placeholder by default:
   title, body, internal CTA, 5 second countdown). The visible label is `Quảng cáo / Advertisement`.
 - **Controls.** A visible close button, a "Continue to job" / "Tiếp tục tới tin tuyển dụng" button, and

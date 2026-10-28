@@ -428,11 +428,34 @@ def jobs_for_default_listings(jobs, co_by):
     return [j for j in jobs if not company_is_aggregator(co_by.get(j.get("company_slug")))]
 
 
+def interstitial_rules(cfg):
+    """Frequency cap for the apply-click dialog. Numbers live in site.config.json."""
+    raw = (cfg or {}).get("interstitial") or {}
+    if not isinstance(raw, dict):
+        raw = {}
+    first = raw.get("first_click", True)
+    if isinstance(first, str):
+        first = first.strip().lower() not in ("0", "false", "no", "")
+    else:
+        first = bool(first)
+    try:
+        every = int(raw.get("every_n", 2))
+    except (TypeError, ValueError):
+        every = 2
+    every = max(1, min(20, every))
+    try:
+        gap = int(raw.get("min_gap_ms", 180000))
+    except (TypeError, ValueError):
+        gap = 180000
+    gap = max(0, min(24 * 60 * 60 * 1000, gap))
+    return {"first_click": first, "every_n": every, "min_gap_ms": gap}
+
+
 def ix_script(lang):
     """JSON config for the click interstitial. Empty when site.config.json disables it.
 
     The dialog itself is created by app.js on click, so this tag is not visible content
-    and does not participate in layout.
+    and does not participate in layout. The creative is house copy, never an AdSense unit.
     """
     if not CFG.get("outbound_interstitial"):
         return ""
@@ -462,6 +485,7 @@ def ix_script(lang):
         "support": t["ix_support"],
         "supportHref": url_for(lang, support_page.PATHS[lang]),
     }
+    payload.update(interstitial_rules(CFG))
     raw = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
     return f'<script type="application/json" id="rj-ix">{raw}</script>'
 
@@ -789,11 +813,26 @@ def main():
             )
         else:
             link_note = t["status_link_none"]
+        ix_rules = interstitial_rules(CFG)
+        ix_every = ix_rules["every_n"]
+        ix_gap_ms = ix_rules["min_gap_ms"]
+        if ix_gap_ms % 60000 == 0:
+            ix_gap_vi = f"{ix_gap_ms // 60000} phút"
+            ix_gap_en = f"{ix_gap_ms // 60000} minute" + ("s" if ix_gap_ms // 60000 != 1 else "")
+        else:
+            ix_gap_vi = f"{max(1, ix_gap_ms // 1000)} giây"
+            ix_gap_en = f"{max(1, ix_gap_ms // 1000)} seconds"
+        if ix_rules["first_click"]:
+            ix_cap_vi = f"lần bấm đầu tiên, sau đó mỗi {ix_every} lượt bấm, cách nhau ít nhất {ix_gap_vi}"
+            ix_cap_en = f"the first click, then every {ix_every} clicks, at least {ix_gap_en} apart"
+        else:
+            ix_cap_vi = f"mỗi {ix_every} lượt bấm, cách nhau ít nhất {ix_gap_vi}"
+            ix_cap_en = f"every {ix_every} clicks, at least {ix_gap_en} apart"
         if lang == "vi":
             adbody = f"""<h1>Quảng cáo &amp; tin tài trợ</h1>
 <p>RemoteJob VN miễn phí cho người tìm việc. Chi phí vận hành có thể được bù bằng các hình thức không làm phiền:</p>
 <ul><li><b>Vị trí quảng cáo cố định</b>: một ô ở cột phải trên máy tính, và tối đa một thẻ "Quảng cáo" sau mỗi 12 dòng trong danh sách. Không có quảng cáo khi vừa mở trang hoặc khi vào từ kết quả tìm kiếm. Không đặt quảng cáo ở đầu trang công ty.</li>
-<li><b>Khi bấm xem tin gốc</b>: hộp thoại gắn nhãn "Quảng cáo / Advertisement" chỉ hiện sau khi bạn bấm liên kết ứng tuyển ra ngoài, tối đa một lần mỗi 3 lượt bấm và mỗi 10 phút. Có nút đóng, nút tiếp tục, và tự mở tin sau khoảng 5 giây. Hộp thoại này chỉ dùng nội dung của trang (quảng cáo nội bộ), không bao giờ là đơn vị Google AdSense. Tắt bằng <code>outbound_interstitial</code> trong site.config.json.</li>
+<li><b>Khi bấm xem tin gốc</b>: hộp thoại gắn nhãn "Quảng cáo / Advertisement" chỉ hiện sau khi bạn bấm liên kết ứng tuyển ra ngoài ({ix_cap_vi}). Có nút đóng, nút tiếp tục, và tự mở tin sau khoảng 5 giây. Hộp thoại này chỉ dùng nội dung của trang (quảng cáo nội bộ), không bao giờ là đơn vị Google AdSense. Tắt bằng <code>outbound_interstitial</code> trong site.config.json.</li>
 <li><b>Tin tuyển dụng tài trợ</b>: tối đa 3 tin, gắn nhãn "Tài trợ", hiển thị riêng ở đầu trang việc làm, có ngày hết hạn. Chỉ nhận việc remote mở cho người ở Việt Nam, không nhận cờ bạc/cá cược. <a href="{post_url}">Đăng tin tuyển dụng</a>.</li>
 <li><b>Liên kết affiliate</b> trên trang Công cụ, luôn gắn nhãn "Affiliate".</li></ul>
 <p>{"Script Google AdSense được tải để xác minh tài khoản và cho Auto ads dạng vignette. Ô dành sẵn vẫn là quảng cáo nội bộ cho đến khi có mã vị trí. Cookie quảng cáo và cách từ chối nằm trong <a href=\"" + legal_href(lang, "privacy") + "\">chính sách bảo mật</a>." if adsense.client_id(CFG) else "Chưa tải mạng quảng cáo bên thứ ba. Liên hệ qua GitHub issue của dự án."}</p>"""
@@ -808,7 +847,7 @@ def main():
             adbody = f"""<h1>Advertising &amp; sponsored jobs</h1>
 <p>RemoteJob VN is free for job seekers. Running costs may be covered in non-intrusive ways:</p>
 <ul><li><b>Fixed ad slots</b>: one box in the right column on desktop, and at most one "Ad" card every 12 rows in lists. Nothing appears on page load or when landing from search. No ad at the top of a company page.</li>
-<li><b>Outbound apply click</b>: a dialog labeled "Quảng cáo / Advertisement" opens only after you click through to the original posting, at most once every 3 clicks and once every 10 minutes. It has a close button, a continue button, and opens the job after about 5 seconds. The dialog is house content only and never an AdSense unit. Turn it off with <code>outbound_interstitial</code> in site.config.json.</li>
+<li><b>Outbound apply click</b>: a dialog labeled "Quảng cáo / Advertisement" opens only after you click through to the original posting ({ix_cap_en}). It has a close button, a continue button, and opens the job after about 5 seconds. The dialog is house content only and never an AdSense unit. Turn it off with <code>outbound_interstitial</code> in site.config.json.</li>
 <li><b>Sponsored jobs</b>: at most 3, labeled "Sponsored", shown separately at the top of the jobs page, with an end date. Remote roles open to people in Vietnam only; no gambling/betting. <a href="{post_url}">Post a job</a>.</li>
 <li><b>Affiliate links</b> on the Tools page, always labeled "Affiliate".</li></ul>
 <p>{"The Google AdSense script loads for account verification and Auto ads vignettes. Reserved slots stay house ads until slot IDs are set. Advertising cookies and opt-out links are in the <a href=\"" + legal_href(lang, "privacy") + "\">privacy policy</a>." if adsense.client_id(CFG) else "No third-party ad network is loaded. Contact us via a GitHub issue."}</p>"""
