@@ -116,6 +116,8 @@ def main():
         for s in load("data/sources.json"):
             if s.get("slug") not in known:
                 errors.append(f"source {s.get('slug')}: unknown company")
+    if os.path.exists(os.path.join(ROOT, "data/status.json")):
+        scan_private(load("data/status.json"), "status")
     sp = load("data/sponsored.json")
     check(sp, load("schema/sponsored.schema.json"), "sponsored")
     for it in sp.get("items", []):

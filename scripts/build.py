@@ -10,6 +10,10 @@ import argparse, datetime, hashlib, html, json, os, re, shutil, sys, unicodedata
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(__file__))
+import adsense  # noqa: E402
+import jobfilter as jf  # noqa: E402
+import legal_pages  # noqa: E402
+import llms  # noqa: E402
 from site_text import T, MODE_LABELS, TZ_LABELS, ROLE_PAGES  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,6 +34,31 @@ def slugify(text, limit=70):
     if len(t) > limit:
         t = t[:limit].rsplit("-", 1)[0]
     return t or "job"
+
+
+def assign_job_paths(jobs):
+    """Public path for each job key. Collision suffixes match the page builder."""
+    used = set()
+    out = {}
+    for job in sorted(jobs, key=lambda item: item["key"]):
+        base = slugify(job["company_slug"] + "-" + job["title"], 80)
+        slug = base if base not in used else base + "-" + hashlib.sha1(job["key"].encode()).hexdigest()[:6]
+        used.add(slug)
+        out[job["key"]] = f"/viec-lam/{slug}/"
+    return out
+
+
+# English legal pages use translated slugs (/en/privacy/), not the Vietnamese path.
+LEGAL_PATHS = {
+    "privacy": {"vi": "/chinh-sach-bao-mat/", "en": "/privacy/"},
+    "terms": {"vi": "/dieu-khoan/", "en": "/terms/"},
+    "contact": {"vi": "/lien-he/", "en": "/contact/"},
+}
+FRESH = {}
+
+
+def legal_href(lang, key):
+    return url_for(lang, LEGAL_PATHS[key][lang])
 
 
 def load(rel, default=None):
@@ -128,7 +157,7 @@ def avatar(c, size=""):
     return f'<span class="avatar {size}" style="background:{col}" aria-hidden="true">{e(initials(c["name"]))}</span>'
 
 
-def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="website", alt=True):
+def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="website", alt=True, alternates=None):
     out = [
         '<meta charset="utf-8">',
         '<meta name="viewport" content="width=device-width,initial-scale=1">',
@@ -142,9 +171,14 @@ def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="webs
     if noindex:
         out.append('<meta name="robots" content="noindex,follow">')
     if alt:
-        out += [f'<link rel="alternate" hreflang="vi" href="{e(absu("vi", path))}">',
-                f'<link rel="alternate" hreflang="en" href="{e(absu("en", path))}">',
-                f'<link rel="alternate" hreflang="x-default" href="{e(absu("vi", path))}">']
+        alts = alternates or {"vi": path, "en": path}
+        out += [f'<link rel="alternate" hreflang="vi" href="{e(absu("vi", alts["vi"]))}">',
+                f'<link rel="alternate" hreflang="en" href="{e(absu("en", alts["en"]))}">',
+                f'<link rel="alternate" hreflang="x-default" href="{e(absu("vi", alts["vi"]))}">']
+    client = adsense.client_id(CFG)
+    if client:
+        # Publisher id, Auto ads loader. Manual units are pushed from the end of body.
+        out += [adsense.meta_tag(client), adsense.loader_tag(client)]
     out += [
         f'<meta property="og:type" content="{og_type}">',
         f'<meta property="og:site_name" content="{e(NAME)}">',
@@ -172,7 +206,7 @@ def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="webs
     return "\n".join(out)
 
 
-def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=None, js=True, aside=None, og_type="website", alt=True):
+def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=None, js=True, aside=None, og_type="website", alt=True, alternates=None):
     t = T[lang]
     nav = [("/cong-ty/", t["nav_companies"]), ("/viec-lam/", t["nav_jobs"]),
            ("/viec-lam-remote/", t["nav_roles"]), ("/cong-cu/", t["nav_tools"]),
@@ -194,18 +228,24 @@ def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=No
         main += f'<aside class="side" aria-label="{e(t["ad"])}">{aside}</aside>'
     main += "</div>"
     script = (ix_script(lang) + f'\n<script src="/assets/app.{JS_HASH}.js" defer></script>') if js else ""
+    # Manual AdSense units are pushed only when a slot id exists. The apply-click
+    # dialog is a house creative and must not be queued as an ad unit.
+    if any(adsense.slot_id(CFG, name) for name in adsense.SIZES):
+        script = adsense.push_tag() + ("\n" + script if script else "")
     L = lambda p: url_for(lang, p)
     repo = e(CFG["REPO_URL"])
+    privacy_blurb = t["footer_privacy_ads"] if adsense.client_id(CFG) else t["footer_privacy"]
+    other_path = (alternates or {}).get(other, path)
     footer = f"""<footer class="foot"><div class="wrap"><div class="cols">
-<div><a class="brand" href="{L('/')}">{LOGO}<span>RemoteJob <b>VN</b></span></a><p class="muted" style="margin-top:12px;max-width:42ch">{e(t['site_tag'])}. {e(t['footer_privacy'])}</p></div>
+<div><a class="brand" href="{L('/')}">{LOGO}<span>RemoteJob <b>VN</b></span></a><p class="muted" style="margin-top:12px;max-width:42ch">{e(t['site_tag'])}. {e(privacy_blurb)}</p></div>
 <nav aria-label="{e(t['ft_explore'])}"><h2>{e(t['ft_explore'])}</h2><ul><li><a href="{L('/cong-ty/')}">{e(t['nav_companies'])}</a></li><li><a href="{L('/viec-lam/')}">{e(t['nav_jobs'])}</a></li><li><a href="{L('/viec-lam-remote/')}">{e(t['nav_roles'])}</a></li><li><a href="{L('/cong-cu/')}">{e(t['nav_tools'])}</a></li></ul></nav>
 <nav aria-label="{e(t['ft_project'])}"><h2>{e(t['ft_project'])}</h2><ul><li><a href="{L('/gioi-thieu/')}">{e(t['nav_about'])}</a></li><li><a href="{L('/dang-tin/')}">{e(t['nav_post'])}</a></li><li><a href="{repo}/blob/main/CONTRIBUTING.md" rel="noopener">{e(t['ft_contribute'])}</a></li><li><a href="{repo}" rel="noopener">GitHub</a></li><li><a href="/sitemap.xml">Sitemap</a></li></ul></nav>
-<nav aria-label="{e(t['ft_legal'])}"><h2>{e(t['ft_legal'])}</h2><ul><li><a href="{L('/gioi-thieu/')}#privacy">{e(t['ft_privacy'])}</a></li><li><a href="{L('/cong-cu/')}#disclosure">{e(t['ft_disclosure'])}</a></li><li><a href="{L('/quang-cao/')}">{e(t['ads_title'])}</a></li><li><a href="{L('/gioi-thieu/')}#license">{e(t['ft_license'])}</a></li></ul></nav>
-</div><p class="fine">{e(t['footer'])}</p></div></footer>"""
+<nav aria-label="{e(t['ft_legal'])}"><h2>{e(t['ft_legal'])}</h2><ul><li><a href="{legal_href(lang, 'privacy')}">{e(t['ft_privacy'])}</a></li><li><a href="{legal_href(lang, 'terms')}">{e(t['ft_terms'])}</a></li><li><a href="{legal_href(lang, 'contact')}">{e(t['ft_contact'])}</a></li><li><a href="{L('/cong-cu/')}#disclosure">{e(t['ft_disclosure'])}</a></li><li><a href="{L('/quang-cao/')}">{e(t['ads_title'])}</a></li><li><a href="{L('/gioi-thieu/')}#license">{e(t['ft_license'])}</a></li></ul></nav>
+</div><p class="fine">{e(t['footer'])}</p><p class="fine status">{e(FRESH.get(lang, ''))}</p></div></footer>"""
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
-{head_tags(lang, path, title, desc, noindex, ld, og_type, alt)}
+{head_tags(lang, path, title, desc, noindex, ld, og_type, alt, alternates)}
 </head>
 <body data-lang="{lang}">
 <a class="skip" href="#main">{e(t['skip'])}</a>
@@ -213,7 +253,7 @@ def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=No
 <a class="brand" href="{L('/')}" aria-label="RemoteJob VN – {e(t['nav_home'])}">{LOGO}<span>RemoteJob <b>VN</b></span></a>
 <nav class="nav" aria-label="{e(t['nav_main'])}">{navhtml}</nav>
 <div class="tools"><button class="iconbtn" type="button" id="theme-toggle" hidden aria-label="{e(t['theme'])}" title="{e(t['theme'])}">{ICON_SUN}{ICON_MOON}</button>
-<a class="iconbtn" href="{url_for(other, path) if alt else url_for(other, '/')}" hreflang="{other}" lang="{other}" title="{e(t['switch_label'])}">{t['switch']}</a></div>
+<a class="iconbtn" href="{url_for(other, other_path) if alt else url_for(other, '/')}" hreflang="{other}" lang="{other}" title="{e(t['switch_label'])}">{t['switch']}</a></div>
 </div></header>
 <div class="wrap">{main}</div>
 {footer}
@@ -224,9 +264,26 @@ def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=No
 
 
 # ---------------------------------------------------------------- components
+def ad_unit(lang, placement, tag=None):
+    """AdSense markup for a configured slot id. None keeps the house creative."""
+    client = adsense.client_id(CFG)
+    slot = adsense.slot_id(CFG, placement)
+    if not (client and slot):
+        return None
+    width, height = adsense.SIZES[placement]
+    cls = {"sidebar": "slot slot-side adsense", "native": "slot slot-native adsense", "bottom": "slot slot-bottom adsense"}[placement]
+    inner = f'<span class="label">{e(T[lang]["ad"])}</span>{adsense.ins_html(client, slot, width, height)}'
+    if tag:
+        return f'<{tag} class="{cls}" data-ad="1">{inner}</{tag}>'
+    return f'<div class="{cls}">{inner}</div>'
+
+
 def ad_sidebar(lang, ads):
     if not ads.get("enabled"):
         return None
+    unit = ad_unit(lang, "sidebar")
+    if unit:
+        return unit
     t = T[lang]
     s = ads["sidebar"]
     return (f'<div class="slot slot-side"><span><span class="label">{e(t["ad"])}</span></span>'
@@ -234,10 +291,23 @@ def ad_sidebar(lang, ads):
 
 
 def ad_native(lang, ads, tag="li"):
+    unit = ad_unit(lang, "native", tag=tag)
+    if unit:
+        return unit
     t = T[lang]
     n = ads["native"]
     return (f'<{tag} class="slot slot-native" data-ad="1"><span class="label">{e(t["ad"])}</span>'
             f'<a href="{url_for(lang, n["url"])}">{e(n[lang])}</a></{tag}>')
+
+
+def ad_bottom(lang, ads):
+    if not ads.get("enabled"):
+        return ""
+    unit = ad_unit(lang, "bottom")
+    if unit:
+        return unit
+    return ('<div class="slot slot-bottom"><span class="label">' + e(T[lang]["ad"]) + "</span><a href=\""
+            + url_for(lang, ads["native"]["url"]) + "\">" + e(ads["native"][lang]) + "</a></div>")
 
 
 def with_native(rows, lang, ads, tag="li"):
@@ -421,6 +491,16 @@ def main():
     # Aggregators (job boards) keep their own pages but do not fill mixed lists.
     agg_slugs = {c["slug"] for c in companies if company_is_aggregator(c)}
     listed = jobs_for_default_listings(active, co_by)
+    global FRESH
+    api_count = sum(1 for s in sources.values() if s.get("method") == "api" or s.get("ats") in jf.API_ATS)
+    checked_dates = [s.get("last_checked") or "" for s in sources.values()] + [j.get("last_checked") or "" for j in active]
+    last_data = max([d for d in checked_dates if d] or [TODAY])
+    status_doc = load("data/status.json", {}) or {}
+    FRESH = {
+        lang: T[lang]["status_line"].format(
+            date=fmt_date(last_data, lang), api=api_count, sources=len(sources), jobs=len(listed))
+        for lang in LANGS
+    }
 
     # --- role pages (direct employers only)
     roles = []
@@ -438,13 +518,13 @@ def main():
         shutil.rmtree(OUT)
     sitemap = {"vi": [], "en": []}
 
-    def write(lang, path, content, lastmod=None, index=True):
+    def write(lang, path, content, lastmod=None, index=True, alternates=None):
         fp = os.path.join(OUT, url_for(lang, path).lstrip("/"), "index.html") if path.endswith("/") else os.path.join(OUT, url_for(lang, path).lstrip("/"))
         os.makedirs(os.path.dirname(fp), exist_ok=True)
         with open(fp, "w", encoding="utf-8") as fh:
             fh.write(content)
         if index:
-            sitemap[lang].append((path, lastmod or TODAY))
+            sitemap[lang].append((path, lastmod or TODAY, alternates))
 
     # --- sponsored
     feat = [s for s in sponsored.get("items", []) if s["starts"] <= TODAY <= s["expires"]][: int(sponsored.get("max_featured", 0))]
@@ -472,7 +552,9 @@ def main():
         top = [j for j in listed if j["region"] in ("vn", "apac") and j["remote"] in ("yes", "hybrid")][:12]
         role_links = "".join(f'<li><a class="chip" href="{url_for(lang, "/viec-lam-remote/" + r["slug"] + "/")}">{e(r[lang])} <span class="n">{len(r["jobs"])}</span></a></li>' for r in roles)
         grpA = [c for c in companies if c["group"] == "A"][:10]
-        body = f"""<section class="hero"><h1>{e(t['home_h1'])}</h1><p class="lead">{e(t['home_lead'])}</p>
+        lead_key = "home_lead_ads" if adsense.client_id(CFG) else "home_lead"
+        desc_key = "home_desc_ads" if adsense.client_id(CFG) else "home_desc"
+        body = f"""<section class="hero"><h1>{e(t['home_h1'])}</h1><p class="lead">{e(t[lead_key])}</p>
 <form class="hero-search" action="{url_for(lang, '/viec-lam/')}" method="get" role="search"><label class="sr" for="hq">{e(t['search'])}</label>
 <input id="hq" type="search" name="q" placeholder="{e(t['hero_search_ph'])}" autocomplete="off"><button class="btn primary" type="submit">{e(t['hero_btn'])}</button></form>
 <ul class="chips" aria-label="{e(t['browse_roles'])}">{role_links}</ul>
@@ -485,7 +567,7 @@ def main():
 <p style="margin-top:16px"><a class="btn" href="{url_for(lang, '/cong-ty/')}">{e(t['see_all_companies'])} →</a></p></section>
 <p class="note" style="margin-top:32px">{e(t['contrib_cta'])} <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a></p>"""
         ld = [{"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": absu(lang, "/"), "inLanguage": lang}]
-        write(lang, "/", page(lang, "/", t["home_title"], t["home_desc"].format(n=len(companies), j=len(listed)), body, jsonld=ld, aside=side), jobs_updated)
+        write(lang, "/", page(lang, "/", t["home_title"], t[desc_key].format(n=len(companies), j=len(listed)), body, jsonld=ld, aside=side), jobs_updated)
 
         # ---------------- company directory
         mode_opts = [(k, MODE_LABELS[k][0 if lang == "vi" else 1]) for k in MODE_LABELS]
@@ -542,7 +624,7 @@ def main():
 <section><h2 id="jobs">{e(t['open_jobs'])} ({len(cj)})</h2>{srcnote}{jl}</section>
 <section><h2>{e(t['related'])}</h2><ul class="list grid2">{relhtml}</ul></section>
 <p style="margin-top:24px" class="small"><a href="{e(CFG['REPO_URL'])}/edit/main/data/companies.json" rel="noopener">✎ {e(t['edit'])}</a></p>
-{('<div class="slot slot-bottom"><span class="label">' + e(t['ad']) + '</span><a href="' + url_for(lang, ads['native']['url']) + '">' + e(ads['native'][lang]) + '</a></div>') if ads.get('enabled') else ''}"""
+{ad_bottom(lang, ads)}"""
             org = {"@context": "https://schema.org", "@type": "Organization", "name": c["name"], "url": c["website"] or c["careers_url"],
                    "sameAs": [u for u in [c["careers_url"]] if u and u != c["website"]]}
             if not org["sameAs"]:
@@ -669,33 +751,46 @@ def main():
         # ---------------- advertise + about + post a job
         post_url = url_for(lang, "/dang-tin/")
         issue_url = e(CFG["REPO_URL"] + "/issues/new?template=post-a-job.yml")
+        if status_doc.get("last_link_check"):
+            link_note = t["status_link"].format(
+                date=fmt_date(status_doc.get("last_link_check"), lang),
+                checked=status_doc.get("last_link_checked") or 0,
+                alive=status_doc.get("last_link_alive") or 0,
+                removed=status_doc.get("last_link_removed") or 0,
+                blocked=status_doc.get("last_link_blocked") or 0,
+                errors=status_doc.get("last_link_errors") or 0,
+            )
+        else:
+            link_note = t["status_link_none"]
         if lang == "vi":
             adbody = f"""<h1>Quảng cáo &amp; tin tài trợ</h1>
 <p>RemoteJob VN miễn phí cho người tìm việc. Chi phí vận hành có thể được bù bằng các hình thức không làm phiền:</p>
 <ul><li><b>Vị trí quảng cáo cố định</b>: một ô ở cột phải trên máy tính, và tối đa một thẻ "Quảng cáo" sau mỗi 12 dòng trong danh sách. Không có quảng cáo khi vừa mở trang hoặc khi vào từ kết quả tìm kiếm. Không đặt quảng cáo ở đầu trang công ty.</li>
-<li><b>Khi bấm xem tin gốc</b>: hộp thoại gắn nhãn "Quảng cáo / Advertisement" chỉ hiện sau khi bạn bấm liên kết ứng tuyển ra ngoài, tối đa một lần mỗi 3 lượt bấm và mỗi 10 phút. Có nút đóng, nút tiếp tục, và tự mở tin sau khoảng 5 giây. Tắt bằng <code>outbound_interstitial</code> trong site.config.json.</li>
+<li><b>Khi bấm xem tin gốc</b>: hộp thoại gắn nhãn "Quảng cáo / Advertisement" chỉ hiện sau khi bạn bấm liên kết ứng tuyển ra ngoài, tối đa một lần mỗi 3 lượt bấm và mỗi 10 phút. Có nút đóng, nút tiếp tục, và tự mở tin sau khoảng 5 giây. Hộp thoại này chỉ dùng nội dung của trang (quảng cáo nội bộ), không bao giờ là đơn vị Google AdSense. Tắt bằng <code>outbound_interstitial</code> trong site.config.json.</li>
 <li><b>Tin tuyển dụng tài trợ</b>: tối đa 3 tin, gắn nhãn "Tài trợ", hiển thị riêng ở đầu trang việc làm, có ngày hết hạn. Chỉ nhận việc remote mở cho người ở Việt Nam, không nhận cờ bạc/cá cược. <a href="{post_url}">Đăng tin tuyển dụng</a>.</li>
 <li><b>Liên kết affiliate</b> trên trang Công cụ, luôn gắn nhãn "Affiliate".</li></ul>
-<p>Không dùng mạng quảng cáo bên thứ ba, không cookie. Liên hệ qua GitHub issue của dự án.</p>"""
+<p>{"Script Google AdSense được tải để xác minh tài khoản và cho Auto ads dạng vignette. Ô dành sẵn vẫn là quảng cáo nội bộ cho đến khi có mã vị trí. Cookie quảng cáo và cách từ chối nằm trong <a href=\"" + legal_href(lang, "privacy") + "\">chính sách bảo mật</a>." if adsense.client_id(CFG) else "Chưa tải mạng quảng cáo bên thứ ba. Liên hệ qua GitHub issue của dự án."}</p>"""
             abbody = f"""<h1>Giới thiệu</h1><p>RemoteJob VN là danh bạ cộng đồng các công ty remote-first có tuyển người ở Việt Nam. Dữ liệu là thông tin công khai, mỗi công ty có link nguồn và ngày kiểm tra.</p>
-<h2 id="privacy">Quyền riêng tư</h2><p>Không cookie, không theo dõi cá nhân. Cloudflare Pages có thể bật Cloudflare Web Analytics (không cookie, chỉ số liệu tổng hợp) trong phần cài đặt dự án; beacon được Cloudflare gắn tự động, không nằm trong mã nguồn và không có công cụ thống kê nào khác. Ngôn ngữ chọn bằng đường dẫn (/en/). Trình duyệt có thể lưu lựa chọn giao diện và số lần bấm xem tin (để giới hạn quảng cáo) ngay trên máy bạn; dữ liệu đó không được gửi đi.</p>
+<h2 id="privacy">Quyền riêng tư</h2><p>{"Cloudflare Web Analytics không dùng cookie. Google AdSense có thể dùng cookie quảng cáo khi được bật." if adsense.client_id(CFG) else "Không cookie, không theo dõi cá nhân."} Chi tiết ở <a href="{legal_href(lang, "privacy")}">chính sách bảo mật</a>. Ngôn ngữ chọn bằng đường dẫn (/en/). Trình duyệt có thể lưu lựa chọn giao diện và số lần bấm xem tin ngay trên máy bạn; dữ liệu đó không được gửi đi.</p>
 <h2>Tiêu chí</h2><ul><li>Công ty cho làm remote (hoặc remote-friendly, có ghi rõ) và tuyển người ở Việt Nam.</li><li>Không đưa công ty cờ bạc, cá cược, casino, iGaming.</li><li>Chỉ thông tin công khai, có nguồn.</li></ul>
 <h2 id="contribute">Đóng góp</h2><p>Thêm hoặc sửa công ty bằng pull request vào <code>data/companies.json</code>. Xem <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a>.</p>
-<h2>Tin tuyển dụng</h2><p>Tin việc được lấy tự động mỗi ngày từ API tuyển dụng công khai (Greenhouse, Lever, Ashby, Workable, Recruitee). Tin không còn xuất hiện sẽ bị gỡ khỏi danh sách và sitemap.</p>
+<h2>Tin tuyển dụng</h2><p>Tin việc được lấy mỗi ngày từ API tuyển dụng công khai (Greenhouse, Lever, Ashby, Workable, Recruitee, và các feed JSON/XML công khai khác khi công ty dùng). Nguồn chưa có API được kiểm tra link mỗi tuần. Tin không còn sống bị gỡ khỏi danh sách và sitemap, trang noindex được giữ 30 ngày.</p>
+<h2 id="status">{e(t["status_h"])}</h2><p>{e(FRESH[lang])}</p><p>{e(link_note)}</p>
 <h2 id="license">Giấy phép</h2><p>Dữ liệu: CC BY 4.0. Mã nguồn: MIT.</p>"""
         else:
             adbody = f"""<h1>Advertising &amp; sponsored jobs</h1>
 <p>RemoteJob VN is free for job seekers. Running costs may be covered in non-intrusive ways:</p>
 <ul><li><b>Fixed ad slots</b>: one box in the right column on desktop, and at most one "Ad" card every 12 rows in lists. Nothing appears on page load or when landing from search. No ad at the top of a company page.</li>
-<li><b>Outbound apply click</b>: a dialog labeled "Quảng cáo / Advertisement" opens only after you click through to the original posting, at most once every 3 clicks and once every 10 minutes. It has a close button, a continue button, and opens the job after about 5 seconds. Turn it off with <code>outbound_interstitial</code> in site.config.json.</li>
+<li><b>Outbound apply click</b>: a dialog labeled "Quảng cáo / Advertisement" opens only after you click through to the original posting, at most once every 3 clicks and once every 10 minutes. It has a close button, a continue button, and opens the job after about 5 seconds. The dialog is house content only and never an AdSense unit. Turn it off with <code>outbound_interstitial</code> in site.config.json.</li>
 <li><b>Sponsored jobs</b>: at most 3, labeled "Sponsored", shown separately at the top of the jobs page, with an end date. Remote roles open to people in Vietnam only; no gambling/betting. <a href="{post_url}">Post a job</a>.</li>
 <li><b>Affiliate links</b> on the Tools page, always labeled "Affiliate".</li></ul>
-<p>No third-party ad networks, no cookies. Contact us via a GitHub issue.</p>"""
+<p>{"The Google AdSense script loads for account verification and Auto ads vignettes. Reserved slots stay house ads until slot IDs are set. Advertising cookies and opt-out links are in the <a href=\"" + legal_href(lang, "privacy") + "\">privacy policy</a>." if adsense.client_id(CFG) else "No third-party ad network is loaded. Contact us via a GitHub issue."}</p>"""
             abbody = f"""<h1>About</h1><p>RemoteJob VN is a community directory of remote-first companies that hire people in Vietnam. Data is public information; each company has source links and a last-checked date.</p>
-<h2 id="privacy">Privacy</h2><p>No cookies and no personal tracking. Cloudflare Pages can enable Cloudflare Web Analytics (cookieless, aggregate-only) from the project settings; the beacon is injected by Cloudflare, it is not in this repository, and there is no other analytics. Language is chosen by URL (/en/). The browser may store the theme choice and how often an apply link was clicked (to cap the ad) on this device; that data is not sent anywhere.</p>
+<h2 id="privacy">Privacy</h2><p>{"Cloudflare Web Analytics is cookieless. Google AdSense may use advertising cookies when it is enabled." if adsense.client_id(CFG) else "No cookies and no personal tracking."} Details are in the <a href="{legal_href(lang, "privacy")}">privacy policy</a>. Language is chosen by URL (/en/). The browser may store the theme choice and how often an apply link was clicked (to cap the ad) on this device; that data is not sent anywhere.</p>
 <h2>Criteria</h2><ul><li>The company allows remote work (or remote-friendly, stated clearly) and hires people in Vietnam.</li><li>No gambling, betting, casino or iGaming companies.</li><li>Public, sourced information only.</li></ul>
 <h2 id="contribute">Contributing</h2><p>Add or edit a company with a pull request to <code>data/companies.json</code>. See <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a>.</p>
-<h2>Job data</h2><p>Jobs are fetched daily from public ATS APIs (Greenhouse, Lever, Ashby, Workable, Recruitee). Postings that disappear are removed from lists and the sitemap.</p>
+<h2>Job data</h2><p>Jobs are fetched daily from public ATS APIs (Greenhouse, Lever, Ashby, Workable, Recruitee, and other public JSON/XML feeds when a company uses one). Sources with no API are link-checked weekly. Dead postings leave the lists and the sitemap; a noindex page is kept for 30 days.</p>
+<h2 id="status">{e(t["status_h"])}</h2><p>{e(FRESH[lang])}</p><p>{e(link_note)}</p>
 <h2 id="license">License</h2><p>Data: CC BY 4.0. Code: MIT.</p>"""
         write(lang, "/quang-cao/", page(lang, "/quang-cao/", t["ads_title"], t["ads_desc"], adbody, crumbs=[(t["ads_title"], "/quang-cao/")]), TODAY)
         write(lang, "/gioi-thieu/", page(lang, "/gioi-thieu/", t["about_title"], t["about_desc"], abbody, crumbs=[(t["nav_about"], "/gioi-thieu/")]), TODAY)
@@ -733,6 +828,19 @@ def main():
 <p class="muted small">Issues are public. Do not include phone numbers, private notes or CVs.</p>"""
         write(lang, "/dang-tin/", page(lang, "/dang-tin/", t["post_title"], t["post_desc"], postbody,
                                         crumbs=[(t["nav_post"], "/dang-tin/")]), TODAY)
+        repo = CFG["REPO_URL"].rstrip("/")
+        report_url = e(repo + "/issues/new?template=report-problem.yml")
+        add_url = e(repo + "/issues/new?template=add-company.yml")
+        for key, title_key, desc_key, renderer in (
+            ("privacy", "privacy_title", "privacy_desc", lambda: legal_pages.privacy_body(lang, ads_on=bool(adsense.client_id(CFG)))),
+            ("terms", "terms_title", "terms_desc", lambda: legal_pages.terms_body(lang, privacy_href=legal_href(lang, "privacy"))),
+            ("contact", "contact_title", "contact_desc", lambda: legal_pages.contact_body(
+                lang, repo=repo, report_url=report_url, add_url=add_url, post_url=issue_url)),
+        ):
+            path = LEGAL_PATHS[key][lang]
+            alts = LEGAL_PATHS[key]
+            write(lang, path, page(lang, path, t[title_key], t[desc_key], renderer(),
+                                   crumbs=[(t[title_key], path)], alternates=alts), TODAY, alternates=alts)
 
     # ---------------- 404, assets, data index, sitemap, robots
     tv, te = T["vi"], T["en"]
@@ -750,8 +858,21 @@ def main():
         fh.write(_minify_js(JS))
     with open(os.path.join(ROOT, "site", "_headers"), encoding="utf-8") as fh:
         headers = fh.read().replace("{THEME_BOOT_SHA}", THEME_BOOT_SHA)
+    if adsense.client_id(CFG):
+        script_tokens = []
+        if any(adsense.slot_id(CFG, name) for name in adsense.SIZES):
+            script_tokens.append("'" + adsense.push_sha() + "'")
+        headers = adsense.widen_csp(headers, script_tokens)
     with open(os.path.join(OUT, "_headers"), "w", encoding="utf-8") as fh:
         fh.write(headers)
+    client = adsense.client_id(CFG)
+    if client:
+        with open(os.path.join(OUT, "ads.txt"), "w", encoding="utf-8") as fh:
+            fh.write(adsense.ads_txt(client))
+    indexnow_key = str(CFG.get("indexnow_key") or "").strip()
+    if re.fullmatch(r"[A-Za-z0-9-]{8,128}", indexnow_key):
+        with open(os.path.join(OUT, indexnow_key + ".txt"), "w", encoding="utf-8") as fh:
+            fh.write(indexnow_key)
     icons(OUT)
     with open(os.path.join(OUT, "site.webmanifest"), "w", encoding="utf-8") as fh:
         json.dump({"name": NAME, "short_name": "RemoteJob", "lang": "vi", "start_url": "/", "display": "standalone",
@@ -775,19 +896,30 @@ def main():
 
     for lang in LANGS:
         urls = []
-        for path, lastmod in sitemap[lang]:
+        for path, lastmod, alts in sitemap[lang]:
+            altmap = alts or {"vi": path, "en": path}
             urls.append(f"<url><loc>{e(absu(lang, path))}</loc><lastmod>{lastmod}</lastmod>"
-                        f'<xhtml:link rel="alternate" hreflang="vi" href="{e(absu("vi", path))}"/>'
-                        f'<xhtml:link rel="alternate" hreflang="en" href="{e(absu("en", path))}"/>'
-                        f'<xhtml:link rel="alternate" hreflang="x-default" href="{e(absu("vi", path))}"/></url>')
+                        f'<xhtml:link rel="alternate" hreflang="vi" href="{e(absu("vi", altmap["vi"]))}"/>'
+                        f'<xhtml:link rel="alternate" hreflang="en" href="{e(absu("en", altmap["en"]))}"/>'
+                        f'<xhtml:link rel="alternate" hreflang="x-default" href="{e(absu("vi", altmap["vi"]))}"/></url>')
         with open(os.path.join(OUT, f"sitemap-{lang}.xml"), "w", encoding="utf-8") as fh:
             fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
                      'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + "\n".join(urls) + "\n</urlset>\n")
     with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
                  "".join(f"<sitemap><loc>{SITE}/sitemap-{l}.xml</loc><lastmod>{TODAY}</lastmod></sitemap>\n" for l in LANGS) + "</sitemapindex>\n")
+    role_meta = [(slug, vi, en) for slug, vi, en, _tags, _rx, _co in ROLE_PAGES]
+    with open(os.path.join(OUT, "llms.txt"), "w", encoding="utf-8") as fh:
+        fh.write(llms.llms_txt(SITE, CFG["REPO_URL"], role_meta))
+    full_jobs = []
+    for job in listed:
+        row = dict(job)
+        row["company_name"] = co_by[job["company_slug"]]["name"]
+        full_jobs.append(row)
+    with open(os.path.join(OUT, "llms-full.txt"), "w", encoding="utf-8") as fh:
+        fh.write(llms.llms_full_txt(SITE, companies, full_jobs, TODAY))
     with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as fh:
-        fh.write(f"User-agent: *\nAllow: /\nDisallow: /data/jobs-index.json\n\nSitemap: {SITE}/sitemap.xml\n")
+        fh.write(llms.robots_txt(SITE))
     n_pages = sum(len(v) for v in sitemap.values())
     print(f"built {OUT}: {len(companies)} companies, {len(active)} active jobs, {len(listed)} in default listings, "
           f"{len(active) - len(listed)} aggregator jobs withheld from mixed lists, {len(gone)} removed/stale job pages (noindex), "

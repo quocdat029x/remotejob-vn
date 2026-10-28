@@ -6,5 +6,8 @@
  "REMOVED_PAGE_KEEP_DAYS": 30,
  "JOBS_PER_PAGE": 50,
  "REPO_URL": "https://github.com/quocdat029x/remotejob-vn",
- "outbound_interstitial": true
+ "outbound_interstitial": true,
+ "adsense_client": "ca-pub-7257034493587502",
+ "adsense_slots": {"sidebar": "", "native": "", "bottom": ""},
+ "indexnow_key": "93b4ade68c6d304974c6d72857eb4de5"
 }

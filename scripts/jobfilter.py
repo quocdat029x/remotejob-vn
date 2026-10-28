@@ -7,6 +7,14 @@ import datetime
 import re
 import urllib.parse as up
 
+# Public JSON/XML applicant-tracking feeds. HTML-only sources are not in this set;
+# their open jobs are link-checked instead of re-fetched. See docs/JOB_FILTER_RULES.md.
+API_ATS = {
+    "greenhouse", "lever", "ashby", "workable", "recruitee",
+    "smartrecruiters", "personio", "teamtailor", "bamboohr", "breezy",
+    "jazzhr", "pinpoint", "rippling",
+}
+
 # 1) ATS APIs: URL must point at a single posting.
 API_URL_RX = {
     "greenhouse": re.compile(r"(/jobs/\d+|gh_jid=\d+)"),
@@ -14,6 +22,14 @@ API_URL_RX = {
     "ashby": re.compile(r"jobs\.ashbyhq\.com/[^/]+/[0-9a-f-]{36}"),
     "workable": re.compile(r"/j/[A-Z0-9]{6,}"),
     "recruitee": re.compile(r"/o/[^/?#]+"),
+    "smartrecruiters": re.compile(r"jobs\.smartrecruiters\.com/[^/]+/\d+"),
+    "personio": re.compile(r"jobs\.personio\.(de|com)/job/\d+"),
+    "teamtailor": re.compile(r"/jobs/\d+"),
+    "bamboohr": re.compile(r"bamboohr\.com/(?:careers|jobs)/\d+"),
+    "breezy": re.compile(r"breezy\.hr/p/[^/?#]+"),
+    "jazzhr": re.compile(r"applytojob\.com/apply/[^/]+/[^/?#]+"),
+    "pinpoint": re.compile(r"/postings/[^/?#]+"),
+    "rippling": re.compile(r"ats\.rippling\.com/[^/]+/jobs/[^/?#]+"),
 }
 
 # 2) HTML sources: per-host allowlist of "single posting" URL shapes.

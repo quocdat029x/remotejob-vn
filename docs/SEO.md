@@ -20,6 +20,9 @@
 | Role pages | `/viec-lam-remote/devops/`, `/sre/`, `/platform/`, `/ai-llm/`, `/mlops/`, `/dev/`, `/data/`, `/security/`, `/blockchain/` | `/en/viec-lam-remote/…` |
 | Post a job | `/dang-tin/` | `/en/dang-tin/` |
 | Tools | `/cong-cu/` | `/en/cong-cu/` |
+| Privacy | `/chinh-sach-bao-mat/` | `/en/privacy/` |
+| Terms | `/dieu-khoan/` | `/en/terms/` |
+| Contact | `/lien-he/` | `/en/contact/` |
 
 ## Metadata
 
@@ -51,8 +54,22 @@ from the ATS API. `python3 scripts/check_jsonld.py` validates all blocks; the Ri
 ## Sitemaps and robots
 
 - `/sitemap.xml` is a sitemap index → `/sitemap-vi.xml` and `/sitemap-en.xml`; each URL has `lastmod`
-  (company/job `last_checked`) and `xhtml:link` hreflang alternates.
-- `/robots.txt` allows everything and points to the sitemap index.
+  (company/job `last_checked`) and `xhtml:link` hreflang alternates. Privacy, terms, and contact
+  are included. Removed jobs stay `noindex` and out of the sitemap.
+- `/robots.txt` allows `/`, keeps `Disallow: /data/jobs-index.json`, names Mediapartners-Google,
+  AdsBot-Google, GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Extended,
+  Applebot-Extended, and Bingbot with the same allow/disallow, lists the sitemap index and both
+  language sitemaps, and comments the absolute URL of `/llms.txt`.
+- `/llms.txt` (llmstxt.org) and `/llms-full.txt` are generated at build time and served as
+  `text/plain; charset=utf-8`. The full file lists public company facts and current
+  direct-employer jobs only.
+
+## IndexNow
+
+`indexnow_key` in `site.config.json` is written to `dist/<key>.txt` (the key is public by design).
+After a successful data commit on `main`, `scripts/indexnow.py` POSTs new, changed, and removed
+job URLs (Vietnamese and English) to `https://api.indexnow.org/indexnow`. Nothing is sent when
+the only change is `last_checked`. There is no retry.
 
 ## Internal linking
 

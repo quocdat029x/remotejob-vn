@@ -14,10 +14,9 @@ code, never track users and never block content. Everything is data-driven and c
 - **Native card**: at most one card every 10–15 rows (`native_every`, clamped to 10–15) in company and job lists,
   styled like a list card but labeled "Quảng cáo / Ad". Hidden while the user is filtering.
 - **Company pages**: no ad at the top; one labeled slot at the very bottom only.
-- No ad on page load, no sticky overlay, no autoplay, no ad-network script. List slots reserve their size
-  so they do not shift layout.
-- To sell a slot, replace the text/URL in `data/ads.json` (static house ad). If an ad network is ever added,
-  update the CSP in `site/_headers` and the privacy text on `/gioi-thieu/` first.
+- List slots reserve their size so they do not shift layout. With no AdSense slot id they stay house ads.
+  The async AdSense loader is separate and only present when `adsense_client` is set (see below).
+- To sell a slot, replace the text/URL in `data/ads.json` (static house ad) or paste an AdSense slot id.
 - `enabled: false` removes the sidebar, native and company-page slots. It does not by itself turn off the
   outbound-click interstitial; that has its own flag (below).
 
@@ -44,22 +43,45 @@ shown when someone lands from search.
 - **Off switch.** `"outbound_interstitial": false` in `site.config.json` omits the config tag. The apply
   link is unchanged.
 
-### Later: Google AdSense vignette instead of this dialog
+The apply-click dialog is **house content only**. It is never an AdSense unit. AdSense policy does
+not allow ads inside a pop-up we build. Do not put `adsbygoogle` markup in `site/assets/app.js`.
+Leave `"outbound_interstitial": true` if you want that house dialog. Auto ads vignettes, if enabled
+in the AdSense account, are Google's own between-page format and are separate from this dialog.
+Do not also turn the custom dialog into an ad-network interstitial.
 
-This repository does not load AdSense or any other ad-network script. To swap the custom interstitial
-for an AdSense Auto ads vignette later:
+## Google AdSense
 
-1. Set `"outbound_interstitial": false` in `site.config.json` so the custom dialog is not emitted.
-   Leave the apply control as a normal `<a href>`. `data-out="job"` can stay; with the flag off, the
-   script does not intercept it.
-2. In a separate change, add the AdSense loader only after editing `site/_headers` (`script-src`,
-   `frame-src`, `img-src`, `connect-src`) and the privacy copy on `/gioi-thieu/` (third-party script
-   and cookies). Do not claim "no third-party scripts" in the same release.
-3. In the AdSense UI, enable Auto ads and the vignette format. Vignettes are Google's interstitial and
-   are triggered by AdSense between page views, not by `site/assets/app.js`.
-4. Do not run the custom dialog and an AdSense vignette together.
-5. There is no publisher id and no `adsbygoogle` snippet in this repo. Adding one is a deliberate
-   follow-up, not a default.
+`site.config.json` holds `adsense_client` (a `ca-pub-` id) and optional `adsense_slots`
+(`sidebar`, `native`, `bottom`, numeric slot ids). The publisher id in this repo is
+`ca-pub-7257034493587502`. Slot ids are empty, so the reserved sidebar, native, and company-page
+slots stay house ads.
+
+When `adsense_client` matches `ca-pub-` plus digits, the build:
+
+- writes `/ads.txt` as `google.com, pub-7257034493587502, DIRECT, f08c47fec0942fa0`
+- adds `<meta name="google-adsense-account" content="ca-pub-...">`
+- adds the async loader
+  `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-..." crossorigin="anonymous"></script>`
+  on every page (verification and Auto ads; it does not block HTML parsing)
+- widens `dist/_headers` for the Google ad and Funding Choices hosts (`script-src`, `img-src`,
+  `frame-src`, `connect-src`)
+- renders a fixed-size `<ins class="adsbygoogle">` **only** for a slot that has an id
+  (sidebar 300×250, native and bottom 320×100). The desktop sidebar unit is not requested when
+  the sidebar is `display: none` (under 1100px).
+
+When the client id is empty, none of that is emitted and the CSP matches `site/_headers`.
+
+### What you still do in the AdSense account
+
+1. Finish site review. The publisher id is already in `site.config.json`; merging this change
+   publishes `ads.txt`, the meta tag, and the loader.
+2. Ads → Auto ads: turn **vignette** on. Turn **anchor** ads and other mobile overlays off.
+   There is no reliable page-level switch for that in the snippet; it is an account setting.
+3. Privacy & messaging: enable Google's certified CMP for the EEA and the UK. Do not add a
+   cookie banner in this repository.
+4. Optional, after review: create display units and paste the numeric slot ids into
+   `adsense_slots`. Until then the reserved boxes stay house ads. Do not put a unit in the
+   apply-click dialog.
 
 ## Affiliate page `/cong-cu/` (`data/affiliates.json`)
 

@@ -17,7 +17,7 @@ jobs:
         with:
           python-version-file: ".python-version"
       - name: Unit tests
-        run: python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && node scripts/test_interstitial.mjs
+        run: python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && node scripts/test_interstitial.mjs
       - name: Validate data (schema, policy, privacy)
         run: python3 scripts/validate.py
       - name: Build site
@@ -29,3 +29,24 @@ jobs:
           css=$(stat -c %s dist/assets/style.*.css); js=$(stat -c %s dist/assets/app.*.js)
           echo "css=$css js=$js"
           test "$css" -lt 30720 && test "$js" -lt 20480
+      - name: Check llms.txt, robots.txt, and AdSense files
+        run: |
+          test -s dist/llms.txt
+          test -s dist/llms-full.txt
+          grep -q "/llms.txt" dist/robots.txt
+          grep -q "User-agent: GPTBot" dist/robots.txt
+          grep -q "User-agent: Mediapartners-Google" dist/robots.txt
+          grep -q "User-agent: AdsBot-Google" dist/robots.txt
+          grep -q "Disallow: /data/jobs-index.json" dist/robots.txt
+          grep -q "Sitemap: https://remotejob.nguyenquocdat.dev/sitemap.xml" dist/robots.txt
+          grep -q "google.com, pub-7257034493587502, DIRECT, f08c47fec0942fa0" dist/ads.txt
+          grep -q "google-adsense-account" dist/index.html
+          grep -q "adsbygoogle.js?client=ca-pub-7257034493587502" dist/index.html
+          grep -q "pagead2.googlesyndication.com" dist/_headers
+          grep -q "adssettings.google.com" dist/chinh-sach-bao-mat/index.html
+          test -s dist/en/privacy/index.html
+          test -s dist/dieu-khoan/index.html
+          test -s dist/en/terms/index.html
+          test -s dist/lien-he/index.html
+          test -s dist/en/contact/index.html
+          grep -q "Content-Type: text/plain; charset=utf-8" dist/_headers

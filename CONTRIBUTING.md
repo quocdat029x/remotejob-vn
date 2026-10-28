@@ -43,7 +43,7 @@ Repository: https://github.com/quocdat029x/remotejob-vn
 {"slug": "example", "ats": "greenhouse", "token": "example", "endpoint": "https://boards-api.greenhouse.io/v1/boards/example/jobs", "method": "api", "last_checked": null, "status": "ok"}
 ```
 
-Supported `ats` values with APIs: `greenhouse`, `lever`, `ashby`, `workable`, `recruitee`.
+Supported `ats` values with public feeds: `greenhouse`, `lever`, `ashby`, `workable`, `recruitee`, `smartrecruiters`, `personio`, `teamtailor`, `bamboohr`, `breezy`, `jazzhr`, `pinpoint`, `rippling`. Set `"method": "api"` and the public endpoint. Do not add a feed that requires a sign-in (including TopCV or ITviec scraping).
 
 4. Run the checks locally:
 

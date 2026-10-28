@@ -46,13 +46,14 @@ Refresh jobs from public ATS APIs (Greenhouse, Lever, Ashby, Workable, Recruitee
 ```bash
 python3 scripts/refresh_jobs.py --dry-run --only gradion,akuity   # try a few sources without writing
 python3 scripts/refresh_jobs.py                                    # all API sources, ~1 request/second
+python3 scripts/linkcheck_jobs.py --dry-run --limit 3             # HTML-only URL check, no writes
 ```
 
 Other tools:
 
 ```bash
 python3 scripts/check_jsonld.py      # validate JSON-LD in dist/
-python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && node scripts/test_interstitial.mjs
+python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && node scripts/test_interstitial.mjs
 ./scripts/screenshots.sh             # light/dark screenshots at 1280 and 390 px (needs google-chrome + local server)
 ```
 
@@ -69,7 +70,10 @@ python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && node scr
 | `/cong-cu/` | Tools for remote workers (affiliate slots, clearly labeled; URLs are placeholders) |
 | `/dang-tin/` | Post a sponsored job (pricing: contact, via a GitHub issue) |
 | `/quang-cao/`, `/gioi-thieu/` | Advertising info, about/privacy/license |
-| `/en/...` | English versions of all of the above |
+| `/chinh-sach-bao-mat/`, `/dieu-khoan/`, `/lien-he/` | Privacy, terms, contact (GitHub issues only) |
+| `/en/privacy/`, `/en/terms/`, `/en/contact/` | English privacy, terms, and contact |
+| `/llms.txt`, `/llms-full.txt` | llmstxt.org summary and a compact public listing |
+| `/en/...` | English versions of the HTML pages above |
 
 ## Documentation
 
