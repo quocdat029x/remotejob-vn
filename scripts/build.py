@@ -1008,8 +1008,17 @@ def main():
         fh.write(CSS)
     with open(os.path.join(OUT, "assets", f"app.{JS_HASH}.js"), "w", encoding="utf-8") as fh:
         fh.write(_minify_js(JS))
-    for name in ("vietqr-tpbank.webp", "vietqr-tpbank.png"):
-        shutil.copy(os.path.join(ROOT, "site", "assets", name), os.path.join(OUT, "assets", name))
+    asset_names = ["vietqr-tpbank.webp", "vietqr-tpbank.png"]
+    binance = ((CFG.get("donate") or {}).get("binance") or {})
+    qr_image = str(binance.get("qr_image") or "")
+    if qr_image.startswith("/assets/") and ".." not in qr_image:
+        asset_names.append(qr_image[len("/assets/"):])
+        if qr_image.endswith(".png"):
+            asset_names.append(qr_image[len("/assets/"):-4] + ".webp")
+    for name in dict.fromkeys(asset_names):
+        src = os.path.join(ROOT, "site", "assets", name)
+        if os.path.isfile(src):
+            shutil.copy(src, os.path.join(OUT, "assets", name))
     with open(os.path.join(ROOT, "site", "_headers"), encoding="utf-8") as fh:
         headers = fh.read().replace("{THEME_BOOT_SHA}", THEME_BOOT_SHA)
     if adsense.client_id(CFG):
