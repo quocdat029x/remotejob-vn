@@ -33,8 +33,10 @@ class SupportPageTests(unittest.TestCase):
         self.assertIn('target="_blank"', html)
         self.assertNotIn("bmc-button", html)
         self.assertNotIn("<script", html)
-        self.assertIn('width="887"', html)
-        self.assertIn('height="1150"', html)
+        self.assertIn('width="683"', html)
+        self.assertIn('height="683"', html)
+        self.assertIn("VietQR · Napas 247 · TPBank", html)
+        self.assertIn('class="qr-badge"', html)
         self.assertIn('srcset="/assets/vietqr-tpbank.webp"', html)
         self.assertIn('src="/assets/vietqr-tpbank.png"', html)
         viet = html.split('id="vietqr"', 1)[1].split("</section>", 1)[0]
@@ -51,8 +53,9 @@ class SupportPageTests(unittest.TestCase):
         self.assertLess(html.index("Buy Me a Coffee"), html.index("VietQR"))
         self.assertIn("screenshot", html.lower())
         self.assertIn('loading="lazy"', html)
-        self.assertIn('width="887"', html)
-        self.assertIn('height="1150"', html)
+        self.assertIn('width="683"', html)
+        self.assertIn('height="683"', html)
+        self.assertIn("VietQR · Napas 247 · TPBank", html)
         self.assertIn("NGUYEN QUOC DAT", html)
         self.assertIn('data-copy="88886897979"', html)
 
@@ -101,7 +104,7 @@ class SupportPageTests(unittest.TestCase):
         self.assertLess(vi.index("side-qr"), vi.index("bmc-btn"))
         self.assertIn('loading="lazy"', vi)
         self.assertIn('width="160"', vi)
-        self.assertIn('height="207"', vi)
+        self.assertIn('height="160"', vi)
         self.assertIn('srcset="/assets/vietqr-tpbank.webp"', vi)
         self.assertIn('src="/assets/vietqr-tpbank.png"', vi)
         self.assertIn("8888 6897 979", vi)
@@ -163,10 +166,15 @@ class SupportPageTests(unittest.TestCase):
             css = fh.read()
         with open(js_path, encoding="utf-8") as fh:
             js = fh.read()
-        self.assertIn(".rail{display:flex", css.replace("\n", ""))
-        self.assertIn(".rail.is-tall{position:static}", css.replace("\n", ""))
+        flat = css.replace("\n", "")
+        self.assertIn(".rail{display:flex", flat)
+        self.assertIn(".rail.is-tall{position:static}", flat)
         self.assertIn(".layout.with-aside:not(:has(.support-nudge)) .side-support", css)
         self.assertIn("max-height:720px", css)
+        self.assertIn(".donate-grid{display:grid;gap:var(--s4);align-items:stretch}", flat)
+        self.assertIn(".qr-frame{background:#fff", flat)
+        self.assertIn(".side-qr{background:#fff", flat)
+        self.assertIn(".side-qr img{display:block;width:160px;height:160px", flat)
         self.assertIn("function fitRail()", js)
         self.assertIn("is-tall", js)
 
@@ -204,6 +212,12 @@ class SupportPageTests(unittest.TestCase):
         width = int.from_bytes(header[16:20], "big")
         height = int.from_bytes(header[20:24], "big")
         self.assertEqual((width, height), (675, 675))
+        with open(os.path.join(assets, "vietqr-tpbank.png"), "rb") as fh:
+            viet = fh.read(24)
+        self.assertEqual(viet[:8], b"\x89PNG\r\n\x1a\n")
+        viet_w = int.from_bytes(viet[16:20], "big")
+        viet_h = int.from_bytes(viet[20:24], "big")
+        self.assertEqual((viet_w, viet_h), (683, 683))
 
     def test_binance_pay_card_uses_config_and_hides_empty_usdt(self):
         with open(os.path.join(ROOT, "site.config.json"), encoding="utf-8") as fh:

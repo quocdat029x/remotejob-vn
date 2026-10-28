@@ -256,30 +256,38 @@ html[data-support=off] .support-nudge{display:none}
 .support-nudge{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);margin:0 0 var(--s4);padding:var(--s2) var(--s3) var(--s2) var(--s4);min-height:52px;background:var(--accent-soft);border:1px solid var(--border);border-radius:var(--r-md)}
 .support-nudge p{margin:0;font-size:var(--fs-sm);color:var(--text)}
 .support-nudge .dismiss{flex:none;min-width:44px;height:44px;border:1px solid var(--border-strong);border-radius:var(--r-md);background:var(--surface);color:var(--text);font:700 1.25rem/1 var(--font);cursor:pointer}
-.donate-grid{display:grid;gap:var(--s4);align-items:start}
+/* Donation cards share one row height. QR pads stay white in both themes so the codes scan. */
+.donate-grid{display:grid;gap:var(--s4);align-items:stretch}
 @media (min-width:900px){.donate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1100px){.donate-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.donate-grid .card h2{margin-top:0}
-.card.qr-card{background:#fff;color:#0f172a;border-color:#e2e8f0}
-.card.qr-card h2,.card.qr-card p,.card.qr-card dd{color:#0f172a}
-.card.qr-card .muted,.card.qr-card dt{color:#475569}
-.card.qr-card .btn{background:#fff;color:#0f172a;border-color:#cbd5e1}
-.card.qr-card .btn:hover{border-color:#0f766e;color:#0f766e}
+.donate-grid>.card{display:flex;flex-direction:column;padding:var(--s4)}
+.donate-grid .card h2{margin:0 0 var(--s3);font-size:var(--fs-lg);line-height:1.3}
+.donate-grid .donate-intro{margin:0 0 var(--s3);color:var(--text-2);font-size:var(--fs-sm);line-height:1.5}
+@media (min-width:1100px){.donate-grid .donate-intro{min-height:4.5em}}
 .card.qr-card.binance-card{border-top:3px solid #f0b90b}
-.card.qr-card .binance-free{color:#166534;font-weight:600;margin-top:var(--s3)}
-.card.qr-card .usdt-block{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid #e2e8f0}
-.card.qr-card .usdt-block h3{font-size:var(--fs-md);margin:0 0 var(--s2);color:#0f172a}
+.card.qr-card .binance-free{color:var(--ok);font-weight:600;margin:var(--s3) 0 0}
+.card.qr-card .usdt-block{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--border)}
+.card.qr-card .usdt-block h3{font-size:var(--fs-md);margin:0 0 var(--s2);color:inherit}
 .acct.usdt-addr{font-size:var(--fs-sm);line-height:1.4;letter-spacing:0;word-break:break-all}
-.qr-frame{background:#fff;border-radius:var(--r-md);margin:var(--s3) 0}
-.qr-frame img{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
-.acct-facts{display:grid;gap:var(--s3);margin:var(--s4) 0 0}
+.qr-frame{background:#fff;color-scheme:light;border:1px solid #e2e8f0;border-radius:var(--r-md);padding:var(--s3);margin:0}
+.qr-frame img{display:block;width:100%;height:auto;max-width:640px;margin:0 auto;background:#fff}
+.qr-badge{margin:var(--s2) 0 0;text-align:center;font-size:var(--fs-xs);font-weight:700;letter-spacing:.01em;color:#475569}
+.acct-facts{display:grid;gap:var(--s3);margin:var(--s3) 0 0}
 .acct-facts div{display:grid;gap:2px}
-.acct-facts dt{font-size:var(--fs-xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.acct-facts dt{font-size:var(--fs-xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-2)}
 .acct{font:600 1.25rem/1.3 var(--mono);letter-spacing:.03em}
 .acct-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3)}
 .copy-acct{min-height:44px}
 .qr-mobile-note{display:none;margin-top:var(--s3)}
 @media (max-width:767px){.qr-mobile-note{display:block}}
+.bmc-points{margin:0;padding-left:1.15em;color:var(--text-2);font-size:var(--fs-sm);line-height:1.45}
+.bmc-points li+li{margin-top:var(--s2)}
+.bmc-action{margin-top:auto;margin-bottom:auto;padding-top:var(--s3)}
+@media (max-width:767px){
+  .donate-grid .acct{font-size:1rem;letter-spacing:0}
+  .donate-grid .acct-row{gap:var(--s2)}
+  .donate-grid .copy-acct{padding:0 var(--s3);font-size:var(--fs-sm)}
+}
 .btn.bmc-btn{width:100%;min-height:56px;padding:0 var(--s5);font-size:var(--fs-lg);background:#4338ca;border-color:#4338ca;color:#fff}
 .btn.bmc-btn:hover{background:#3730a3;border-color:#3730a3;color:#fff}
 .other-help ul{max-width:68ch}
@@ -306,8 +314,8 @@ html[data-support=off] .support-nudge{display:none}
 .side-support h2{font-size:var(--fs-md);line-height:1.3;margin:0 0 var(--s1)}
 .side-support p{margin:0 0 var(--s3);font-size:var(--fs-sm);line-height:1.35;color:var(--text-2)}
 .side-support-body{display:flex;flex-direction:column;gap:var(--s3);align-items:stretch}
-.side-qr{background:#fff;border-radius:var(--r-sm);padding:var(--s2);width:176px;align-self:center}
-.side-qr img{display:block;width:160px;height:207px;max-width:none}
+.side-qr{background:#fff;color-scheme:light;border-radius:var(--r-sm);padding:var(--s2);width:176px;align-self:center}
+.side-qr img{display:block;width:160px;height:160px;max-width:none;background:#fff}
 .side-acct{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s2)}
 .side-acct .acct{font-size:var(--fs-sm);letter-spacing:0}
 .side-support .copy-acct{min-height:44px;padding:0 var(--s3);font-size:var(--fs-sm)}
