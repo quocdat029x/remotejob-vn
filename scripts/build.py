@@ -175,7 +175,8 @@ def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="webs
 def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=None, js=True, aside=None, og_type="website", alt=True):
     t = T[lang]
     nav = [("/cong-ty/", t["nav_companies"]), ("/viec-lam/", t["nav_jobs"]),
-           ("/viec-lam-remote/", t["nav_roles"]), ("/cong-cu/", t["nav_tools"]), ("/gioi-thieu/", t["nav_about"])]
+           ("/viec-lam-remote/", t["nav_roles"]), ("/cong-cu/", t["nav_tools"]),
+           ("/dang-tin/", t["nav_post"]), ("/gioi-thieu/", t["nav_about"])]
     other = "en" if lang == "vi" else "vi"
     navhtml = "".join(
         f'<a href="{url_for(lang, p)}"{" aria-current=\"page\"" if (path == p or (p != "/" and path.startswith(p))) else ""}>{e(lbl)}</a>' for p, lbl in nav)
@@ -198,7 +199,7 @@ def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=No
     footer = f"""<footer class="foot"><div class="wrap"><div class="cols">
 <div><a class="brand" href="{L('/')}">{LOGO}<span>RemoteJob <b>VN</b></span></a><p class="muted" style="margin-top:12px;max-width:42ch">{e(t['site_tag'])}. {e(t['footer_privacy'])}</p></div>
 <nav aria-label="{e(t['ft_explore'])}"><h2>{e(t['ft_explore'])}</h2><ul><li><a href="{L('/cong-ty/')}">{e(t['nav_companies'])}</a></li><li><a href="{L('/viec-lam/')}">{e(t['nav_jobs'])}</a></li><li><a href="{L('/viec-lam-remote/')}">{e(t['nav_roles'])}</a></li><li><a href="{L('/cong-cu/')}">{e(t['nav_tools'])}</a></li></ul></nav>
-<nav aria-label="{e(t['ft_project'])}"><h2>{e(t['ft_project'])}</h2><ul><li><a href="{L('/gioi-thieu/')}">{e(t['nav_about'])}</a></li><li><a href="{repo}/blob/main/CONTRIBUTING.md" rel="noopener">{e(t['ft_contribute'])}</a></li><li><a href="{repo}" rel="noopener">GitHub</a></li><li><a href="/sitemap.xml">Sitemap</a></li></ul></nav>
+<nav aria-label="{e(t['ft_project'])}"><h2>{e(t['ft_project'])}</h2><ul><li><a href="{L('/gioi-thieu/')}">{e(t['nav_about'])}</a></li><li><a href="{L('/dang-tin/')}">{e(t['nav_post'])}</a></li><li><a href="{repo}/blob/main/CONTRIBUTING.md" rel="noopener">{e(t['ft_contribute'])}</a></li><li><a href="{repo}" rel="noopener">GitHub</a></li><li><a href="/sitemap.xml">Sitemap</a></li></ul></nav>
 <nav aria-label="{e(t['ft_legal'])}"><h2>{e(t['ft_legal'])}</h2><ul><li><a href="{L('/gioi-thieu/')}#privacy">{e(t['ft_privacy'])}</a></li><li><a href="{L('/cong-cu/')}#disclosure">{e(t['ft_disclosure'])}</a></li><li><a href="{L('/quang-cao/')}">{e(t['ads_title'])}</a></li><li><a href="{L('/gioi-thieu/')}#license">{e(t['ft_license'])}</a></li></ul></nav>
 </div><p class="fine">{e(t['footer'])}</p></div></footer>"""
     return f"""<!doctype html>
@@ -656,44 +657,82 @@ def main():
                 f'<li class="card tool-card"><span class="label aff">{e(t["affiliate"])}</span> '
                 f'<a class="t" href="{e(it["url"])}" rel="sponsored nofollow noopener">{e(it["name"])}</a><p class="muted small" style="margin:6px 0 0">{e(it[lang])}</p></li>'
                 for it in cat["items"])
-            cats += f'<section id="{e(cat["id"])}"><h2>{e(cat[lang])}</h2><ul class="list grid2">{items}</ul></section>'
+            intro = (cat.get("intro") or {}).get(lang)
+            intro_html = f'<p class="muted">{e(intro)}</p>' if intro else ""
+            cats += f'<section id="{e(cat["id"])}"><h2>{e(cat[lang])}</h2>{intro_html}<ul class="list grid2">{items}</ul></section>'
         toc = "".join(f'<li><a class="chip" href="#{e(cat["id"])}">{e(cat[lang])}</a></li>' for cat in affiliates["categories"])
         body = (f'<div class="pagehead"><h1>{e(t["tools_h1"])}</h1><p class="lead">{e(t["tools_desc"])}</p></div>'
                 f'<p class="disclosure" id="disclosure"><span class="label aff">{e(t["affiliate"])}</span><span>{e(t["aff_disclosure"])}</span></p>'
                 f'<ul class="chips" style="margin-top:16px">{toc}</ul>{cats}')
         write(lang, "/cong-cu/", page(lang, "/cong-cu/", t["tools_title"], t["tools_desc"], body, crumbs=[(t["nav_tools"], "/cong-cu/")]), TODAY)
 
-        # ---------------- advertise + about
+        # ---------------- advertise + about + post a job
+        post_url = url_for(lang, "/dang-tin/")
+        issue_url = e(CFG["REPO_URL"] + "/issues/new?template=post-a-job.yml")
         if lang == "vi":
-            adbody = """<h1>Quảng cáo &amp; tin tài trợ</h1>
+            adbody = f"""<h1>Quảng cáo &amp; tin tài trợ</h1>
 <p>RemoteJob VN miễn phí cho người tìm việc. Chi phí vận hành có thể được bù bằng các hình thức không làm phiền:</p>
 <ul><li><b>Vị trí quảng cáo cố định</b>: một ô ở cột phải trên máy tính, và tối đa một thẻ "Quảng cáo" sau mỗi 12 dòng trong danh sách. Không có quảng cáo khi vừa mở trang hoặc khi vào từ kết quả tìm kiếm. Không đặt quảng cáo ở đầu trang công ty.</li>
 <li><b>Khi bấm xem tin gốc</b>: hộp thoại gắn nhãn "Quảng cáo / Advertisement" chỉ hiện sau khi bạn bấm liên kết ứng tuyển ra ngoài, tối đa một lần mỗi 3 lượt bấm và mỗi 10 phút. Có nút đóng, nút tiếp tục, và tự mở tin sau khoảng 5 giây. Tắt bằng <code>outbound_interstitial</code> trong site.config.json.</li>
-<li><b>Tin tuyển dụng tài trợ</b>: tối đa 3 tin, gắn nhãn "Tài trợ", hiển thị riêng ở đầu trang việc làm, có ngày hết hạn. Chỉ nhận công ty tuyển remote ở Việt Nam, không nhận cờ bạc/cá cược.</li>
+<li><b>Tin tuyển dụng tài trợ</b>: tối đa 3 tin, gắn nhãn "Tài trợ", hiển thị riêng ở đầu trang việc làm, có ngày hết hạn. Chỉ nhận việc remote mở cho người ở Việt Nam, không nhận cờ bạc/cá cược. <a href="{post_url}">Đăng tin tuyển dụng</a>.</li>
 <li><b>Liên kết affiliate</b> trên trang Công cụ, luôn gắn nhãn "Affiliate".</li></ul>
-<p>Không dùng mạng quảng cáo bên thứ ba, không cookie theo dõi. Liên hệ qua GitHub issue của dự án.</p>"""
+<p>Không dùng mạng quảng cáo bên thứ ba, không cookie. Liên hệ qua GitHub issue của dự án.</p>"""
             abbody = f"""<h1>Giới thiệu</h1><p>RemoteJob VN là danh bạ cộng đồng các công ty remote-first có tuyển người ở Việt Nam. Dữ liệu là thông tin công khai, mỗi công ty có link nguồn và ngày kiểm tra.</p>
-<h2 id="privacy">Quyền riêng tư</h2><p>Trang tĩnh, không analytics, không cookie, không script bên thứ ba. Ngôn ngữ chọn bằng đường dẫn (/en/). Trình duyệt có thể lưu lựa chọn giao diện và số lần bấm xem tin (để giới hạn quảng cáo) ngay trên máy bạn; dữ liệu đó không được gửi đi.</p>
+<h2 id="privacy">Quyền riêng tư</h2><p>Không cookie, không theo dõi cá nhân. Cloudflare Pages có thể bật Cloudflare Web Analytics (không cookie, chỉ số liệu tổng hợp) trong phần cài đặt dự án; beacon được Cloudflare gắn tự động, không nằm trong mã nguồn và không có công cụ thống kê nào khác. Ngôn ngữ chọn bằng đường dẫn (/en/). Trình duyệt có thể lưu lựa chọn giao diện và số lần bấm xem tin (để giới hạn quảng cáo) ngay trên máy bạn; dữ liệu đó không được gửi đi.</p>
 <h2>Tiêu chí</h2><ul><li>Công ty cho làm remote (hoặc remote-friendly, có ghi rõ) và tuyển người ở Việt Nam.</li><li>Không đưa công ty cờ bạc, cá cược, casino, iGaming.</li><li>Chỉ thông tin công khai, có nguồn.</li></ul>
 <h2 id="contribute">Đóng góp</h2><p>Thêm hoặc sửa công ty bằng pull request vào <code>data/companies.json</code>. Xem <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a>.</p>
 <h2>Tin tuyển dụng</h2><p>Tin việc được lấy tự động mỗi ngày từ API tuyển dụng công khai (Greenhouse, Lever, Ashby, Workable, Recruitee). Tin không còn xuất hiện sẽ bị gỡ khỏi danh sách và sitemap.</p>
 <h2 id="license">Giấy phép</h2><p>Dữ liệu: CC BY 4.0. Mã nguồn: MIT.</p>"""
         else:
-            adbody = """<h1>Advertising &amp; sponsored jobs</h1>
+            adbody = f"""<h1>Advertising &amp; sponsored jobs</h1>
 <p>RemoteJob VN is free for job seekers. Running costs may be covered in non-intrusive ways:</p>
 <ul><li><b>Fixed ad slots</b>: one box in the right column on desktop, and at most one "Ad" card every 12 rows in lists. Nothing appears on page load or when landing from search. No ad at the top of a company page.</li>
 <li><b>Outbound apply click</b>: a dialog labeled "Quảng cáo / Advertisement" opens only after you click through to the original posting, at most once every 3 clicks and once every 10 minutes. It has a close button, a continue button, and opens the job after about 5 seconds. Turn it off with <code>outbound_interstitial</code> in site.config.json.</li>
-<li><b>Sponsored jobs</b>: at most 3, labeled "Sponsored", shown separately at the top of the jobs page, with an end date. Only companies hiring remote in Vietnam; no gambling/betting.</li>
+<li><b>Sponsored jobs</b>: at most 3, labeled "Sponsored", shown separately at the top of the jobs page, with an end date. Remote roles open to people in Vietnam only; no gambling/betting. <a href="{post_url}">Post a job</a>.</li>
 <li><b>Affiliate links</b> on the Tools page, always labeled "Affiliate".</li></ul>
-<p>No third-party ad networks, no tracking cookies. Contact us via a GitHub issue.</p>"""
+<p>No third-party ad networks, no cookies. Contact us via a GitHub issue.</p>"""
             abbody = f"""<h1>About</h1><p>RemoteJob VN is a community directory of remote-first companies that hire people in Vietnam. Data is public information; each company has source links and a last-checked date.</p>
-<h2 id="privacy">Privacy</h2><p>Static site, no analytics, no cookies, no third-party scripts. Language is chosen by URL (/en/). The browser may store the theme choice and how often an apply link was clicked (to cap the ad) on this device; that data is not sent anywhere.</p>
+<h2 id="privacy">Privacy</h2><p>No cookies and no personal tracking. Cloudflare Pages can enable Cloudflare Web Analytics (cookieless, aggregate-only) from the project settings; the beacon is injected by Cloudflare, it is not in this repository, and there is no other analytics. Language is chosen by URL (/en/). The browser may store the theme choice and how often an apply link was clicked (to cap the ad) on this device; that data is not sent anywhere.</p>
 <h2>Criteria</h2><ul><li>The company allows remote work (or remote-friendly, stated clearly) and hires people in Vietnam.</li><li>No gambling, betting, casino or iGaming companies.</li><li>Public, sourced information only.</li></ul>
 <h2 id="contribute">Contributing</h2><p>Add or edit a company with a pull request to <code>data/companies.json</code>. See <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a>.</p>
 <h2>Job data</h2><p>Jobs are fetched daily from public ATS APIs (Greenhouse, Lever, Ashby, Workable, Recruitee). Postings that disappear are removed from lists and the sitemap.</p>
 <h2 id="license">License</h2><p>Data: CC BY 4.0. Code: MIT.</p>"""
         write(lang, "/quang-cao/", page(lang, "/quang-cao/", t["ads_title"], t["ads_desc"], adbody, crumbs=[(t["ads_title"], "/quang-cao/")]), TODAY)
         write(lang, "/gioi-thieu/", page(lang, "/gioi-thieu/", t["about_title"], t["about_desc"], abbody, crumbs=[(t["nav_about"], "/gioi-thieu/")]), TODAY)
+        if lang == "vi":
+            postbody = f"""<h1>Đăng tin tuyển dụng</h1>
+<p>Dành cho nhà tuyển dụng muốn đưa một việc remote lên đầu trang chủ và trang việc làm. Người tìm việc vẫn xem danh sách miễn phí.</p>
+<h2>Tin tài trợ</h2>
+<ul>
+<li>Gắn nhãn <b>Tài trợ</b> và hiện riêng, không trộn vào danh sách việc thường.</li>
+<li>Tối đa <b>3 tin cùng lúc</b>.</li>
+<li>Chỉ nhận việc <b>remote và mở cho người ở Việt Nam</b>. Không nhận cờ bạc, cá cược, casino, iGaming.</li>
+<li>Có ngày bắt đầu và ngày hết hạn. Hết hạn thì tin rời khỏi vị trí tài trợ.</li>
+</ul>
+<h2>Giá</h2>
+<p><b>Giá: liên hệ.</b> Chưa có bảng giá công khai. Gửi yêu cầu không phải là đơn hàng đã thanh toán.</p>
+<h2>Liên hệ</h2>
+<p>Mở một GitHub issue. Không cần email hay số điện thoại.</p>
+<p><a class="btn primary" href="{issue_url}" rel="noopener">Gửi yêu cầu đăng tin</a></p>
+<p class="muted small">Issue là công khai. Không ghi số điện thoại, ghi chú riêng hay CV.</p>"""
+        else:
+            postbody = f"""<h1>Post a job</h1>
+<p>For employers who want a remote role at the top of the home page and the jobs list. Job seekers still browse the directory for free.</p>
+<h2>Sponsored listings</h2>
+<ul>
+<li>Labeled <b>Sponsored</b> and shown apart from the regular job list.</li>
+<li>At most <b>3 listings at a time</b>.</li>
+<li>Remote roles <b>open to people in Vietnam</b> only. No gambling, betting, casino or iGaming.</li>
+<li>A start date and an end date. After the end date the listing leaves the sponsored slot.</li>
+</ul>
+<h2>Pricing</h2>
+<p><b>Pricing: contact.</b> There is no public rate card. Opening a request is not a paid order.</p>
+<h2>Contact</h2>
+<p>Open a GitHub issue. No email or phone number is required.</p>
+<p><a class="btn primary" href="{issue_url}" rel="noopener">Request a featured listing</a></p>
+<p class="muted small">Issues are public. Do not include phone numbers, private notes or CVs.</p>"""
+        write(lang, "/dang-tin/", page(lang, "/dang-tin/", t["post_title"], t["post_desc"], postbody,
+                                        crumbs=[(t["nav_post"], "/dang-tin/")]), TODAY)
 
     # ---------------- 404, assets, data index, sitemap, robots
     tv, te = T["vi"], T["en"]

@@ -19,4 +19,4 @@ Source: `site/assets/style.css` (minified and fingerprinted to `dist/assets/styl
 - **Accessibility**: skip link, visible focus rings, keyboard-only navigation, `aria-current`, labeled forms,
   `prefers-reduced-motion`, 44 px touch targets.
 - **Responsive**: tested at 360/390, 768 and 1280 px; print stylesheet hides navigation, filters and ads and prints link URLs.
-- **Budgets**: CSS < 30 KB, JS < 20 KB, no frameworks, no web fonts, no third-party requests.
+- **Budgets**: CSS < 30 KB, JS < 20 KB, no frameworks, no web fonts. Those budgets cover files this repo ships. Cloudflare Web Analytics is not one of them: Pages injects that cookieless beacon, and the CSP allows only its script and connect hosts.

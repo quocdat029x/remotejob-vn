@@ -62,6 +62,6 @@ company that should be removed. Please include the page URL and a public source.
 ## Code contributions
 
 - Python 3.10+, stdlib only (Pillow optional for images). Keep the site framework-free.
-- Budgets: CSS < 30 KB, JS < 20 KB, no web fonts, no third-party scripts, no tracking.
+- Budgets: CSS < 30 KB, JS < 20 KB, no web fonts. No analytics except the cookieless Cloudflare Web Analytics beacon that Pages injects; do not add another tracker. The CSP in `site/_headers` lists the only allowed beacon hosts.
 - Every page must work without JavaScript.
 - Code, comments, docs and commit messages are in English; user-facing site text is Vietnamese-first with English under `/en/`.

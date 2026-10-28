@@ -35,9 +35,13 @@ in the project so it matches `.python-version`.
 
    If you create it by hand, use exactly that record. SSL is issued automatically.
 5. `site/_headers` is copied to `dist/_headers`; Cloudflare Pages applies it (CSP, `nosniff`, cache headers).
-   The CSP allows only same-origin scripts plus the SHA-256 hash of the tiny inline theme script, which the build
-   fills in automatically.
-6. `dist/404.html` is used automatically for unknown paths.
+   The CSP allows same-origin scripts, the SHA-256 hash of the tiny inline theme script (filled in by the build),
+   and the Cloudflare Web Analytics beacon only: `script-src https://static.cloudflareinsights.com` and
+   `connect-src https://cloudflareinsights.com`. Do not widen those hosts.
+6. Analytics: in the Pages project settings, enable **Cloudflare Web Analytics** so Pages injects the beacon.
+   Do not commit a beacon snippet, a token, or any other analytics. It is cookieless and aggregate-only.
+   There is no personal tracking and no cookie.
+7. `dist/404.html` is used automatically for unknown paths.
 
 The daily `refresh.yml` workflow commits updated `data/` to the default branch with the built-in
 `GITHUB_TOKEN` (`contents: write` only). It does not use any other secret. Each such commit triggers

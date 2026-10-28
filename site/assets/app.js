@@ -1,5 +1,6 @@
 // Progressive enhancement only: every page is fully rendered without this file.
-// Adds client-side filtering to the company directory and the jobs list. No tracking, no cookies.
+// Adds client-side filtering, and the apply-click interstitial. No cookies.
+// Cloudflare Web Analytics is injected by Pages, not by this file.
 (function () {
   "use strict";
   function rjIsBot(webdriver, ua) {

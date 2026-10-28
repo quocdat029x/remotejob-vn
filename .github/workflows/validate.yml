@@ -17,7 +17,7 @@ jobs:
         with:
           python-version-file: ".python-version"
       - name: Unit tests
-        run: python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && node scripts/test_interstitial.mjs
+        run: python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && node scripts/test_interstitial.mjs
       - name: Validate data (schema, policy, privacy)
         run: python3 scripts/validate.py
       - name: Build site

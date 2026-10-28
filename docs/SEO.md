@@ -18,6 +18,8 @@
 | Jobs | `/viec-lam/`, `/viec-lam/trang/2/` | `/en/viec-lam/` |
 | Job | `/viec-lam/covergo-senior-full-stack-engineer-net-vue-react-fully-remote/` | `/en/viec-lam/…` |
 | Role pages | `/viec-lam-remote/devops/`, `/sre/`, `/platform/`, `/ai-llm/`, `/mlops/`, `/dev/`, `/data/`, `/security/`, `/blockchain/` | `/en/viec-lam-remote/…` |
+| Post a job | `/dang-tin/` | `/en/dang-tin/` |
+| Tools | `/cong-cu/` | `/en/cong-cu/` |
 
 ## Metadata
 
@@ -60,10 +62,11 @@ role pages for its `hires_roles` and 6 related companies, and role pages link to
 ## Core Web Vitals
 
 - No render-blocking JS (`defer`), one small cacheable stylesheet, system fonts, no web fonts.
-- Ad slots and cards reserve their size (no layout shift). No third-party requests at all.
+- Ad slots and cards reserve their size (no layout shift).
+- The only analytics is Cloudflare Web Analytics, cookieless and aggregate-only, turned on in the Pages project so the beacon is injected there and not committed here. No personal tracking, no cookies, no other analytics. `site/_headers` allows `script-src https://static.cloudflareinsights.com` and `connect-src https://cloudflareinsights.com` and nothing broader.
 - The apply-click interstitial is not in the HTML and is not shown on load or on a landing from search,
   so it does not sit on the LCP element and does not add CLS. See `docs/MONETIZATION.md`.
-- Lighthouse 13 (local, 2026-10-28): home and a job page score Performance 99–100, Accessibility 100, Best Practices 100, SEO 100 on mobile and desktop.
+- Lighthouse 13 (local, 2026-10-28): home and a job page score Performance 100, Accessibility 100, Best Practices 100, SEO 100 on mobile, and Performance 96 with the other categories at 100 on desktop. CLS is 0. The Cloudflare beacon is not in the local build, so these runs do not include it.
 
 ## Google Search Console setup
 

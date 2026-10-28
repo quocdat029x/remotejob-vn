@@ -63,14 +63,21 @@ for an AdSense Auto ads vignette later:
 
 ## Affiliate page `/cong-cu/` (`data/affiliates.json`)
 
-Five categories: VPS/hosting, courses & certifications, home-office gear, international payment tools, coworking.
+Sections are ordered for the audience, which includes non-engineers (sales, marketing, support and operations are a large share of the jobs):
+
+1. Receiving international payments (Wise, Payoneer)
+2. Courses, certifications and English (Coursera, Udemy, KodeKloud, English-learning apps, a CV tool)
+3. Home-office gear (intended program: Shopee Affiliate via ACCESSTRADE Vietnam)
+4. VPS and hosting for engineers (DigitalOcean, Vultr, Hostinger)
+5. Coworking in Ho Chi Minh City, Hanoi and Da Nang
+
 Every link:
 
 - is rendered with a visible **"Affiliate"** label,
 - has `rel="sponsored nofollow noopener"`,
 - appears under an affiliate disclosure (`#disclosure`, linked from the footer).
 
-All URLs are `https://example.com/affiliate/...` placeholders. Replace them only after joining a real program.
+`url` is a non-affiliate placeholder: the vendor's public homepage, or `https://example.com/affiliate/<slot>` when there is no single product page. Replace `url` only when a program is joined. Do not add a script or a tracking pixel.
 
 ## Featured / sponsored jobs (`data/sponsored.json`)
 
@@ -82,4 +89,5 @@ All URLs are `https://example.com/affiliate/...` placeholders. Replace them only
 - Active items (`starts` ≤ today ≤ `expires`) appear at the top of the home page and job list, at most
   `max_featured` (0–3), with a distinct border and a **"Tài trợ / Sponsored"** label, links use `rel="sponsored nofollow noopener"`.
 - Sponsored items do not get JobPosting JSON-LD and are not mixed into organic results.
-- `/quang-cao/` explains the options to employers.
+- `/dang-tin/` (English `/en/dang-tin/`) explains the offer to employers: labeled Sponsored, at most 3 at a time, remote roles open to people in Vietnam only. Pricing is the placeholder **Pricing: contact** / **Giá: liên hệ**. The contact path is a GitHub issue (`post-a-job.yml`), not an email address or phone number.
+- `/quang-cao/` summarizes the same options and links to that page.
