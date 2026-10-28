@@ -1,0 +1,15 @@
+name: Report a problem
+description: Wrong fact, broken link, closed job, or a company that should be removed
+labels: [data-fix]
+body:
+  - type: input
+    id: url
+    attributes: {label: Page URL on RemoteJob VN}
+    validations: {required: true}
+  - type: textarea
+    id: problem
+    attributes: {label: What is wrong?}
+    validations: {required: true}
+  - type: input
+    id: source
+    attributes: {label: Public source for the correction (if any)}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sponsored (paid) featured job slots",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["max_featured", "items"],
+  "properties": {
+    "max_featured": {"type": "integer", "minimum": 0, "maximum": 3},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "company_name", "title", "url", "starts", "expires"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "company_slug": {"type": ["string", "null"]},
+          "company_name": {"type": "string"},
+          "title": {"type": "string", "maxLength": 120},
+          "url": {"type": "string", "pattern": "^https://"},
+          "location": {"type": ["string", "null"]},
+          "salary": {"type": ["string", "null"]},
+          "blurb": {"type": ["string", "null"], "maxLength": 200},
+          "starts": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+          "expires": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+ "_note": "PLACEHOLDER links only. Replace url with a real affiliate link after signing a program. Every item is rendered with an 'Affiliate' label and rel=\"sponsored nofollow noopener\".",
+ "categories": [
+  {"id": "vps-hosting", "vi": "VPS & hosting", "en": "VPS & hosting", "items": [
+   {"name": "Nhà cung cấp VPS A (placeholder)", "url": "https://example.com/affiliate/vps-a", "vi": "VPS giá rẻ có region Singapore, hợp lab DevOps.", "en": "Budget VPS with a Singapore region, good for DevOps labs."},
+   {"name": "Cloud provider B (placeholder)", "url": "https://example.com/affiliate/cloud-b", "vi": "Credit dùng thử cho Kubernetes managed.", "en": "Trial credit for managed Kubernetes."}]},
+  {"id": "courses-certs", "vi": "Khoá học & chứng chỉ", "en": "Courses & certifications", "items": [
+   {"name": "Nền tảng học Cloud C (placeholder)", "url": "https://example.com/affiliate/course-c", "vi": "Luyện thi CKA/CKAD, AWS, GCP.", "en": "CKA/CKAD, AWS, GCP exam prep."},
+   {"name": "English for remote work D (placeholder)", "url": "https://example.com/affiliate/english-d", "vi": "Tiếng Anh giao tiếp cho họp với team quốc tế.", "en": "Spoken English for international team meetings."}]},
+  {"id": "home-office", "vi": "Thiết bị làm việc tại nhà", "en": "Home-office gear", "items": [
+   {"name": "Ghế công thái học E (placeholder)", "url": "https://example.com/affiliate/chair-e", "vi": "Ghế ngồi 8 tiếng không đau lưng.", "en": "A chair you can sit in for 8 hours."},
+   {"name": "Tai nghe chống ồn F (placeholder)", "url": "https://example.com/affiliate/headset-f", "vi": "Tai nghe có mic tốt cho call.", "en": "Headset with a good mic for calls."}]},
+  {"id": "payments", "vi": "Nhận lương quốc tế", "en": "International payments", "items": [
+   {"name": "Ví/thẻ đa tiền tệ G (placeholder)", "url": "https://example.com/affiliate/payments-g", "vi": "Nhận USD/EUR, phí chuyển về VND thấp.", "en": "Receive USD/EUR, low fees to VND."},
+   {"name": "Dịch vụ invoice cho contractor H (placeholder)", "url": "https://example.com/affiliate/invoice-h", "vi": "Xuất hoá đơn cho khách nước ngoài.", "en": "Invoicing for foreign clients."}]},
+  {"id": "coworking", "vi": "Coworking", "en": "Coworking", "items": [
+   {"name": "Coworking I (placeholder)", "url": "https://example.com/affiliate/coworking-i", "vi": "Có chi nhánh Hà Nội, TP.HCM, Đà Nẵng.", "en": "Locations in Hanoi, HCMC, Da Nang."}]}
+ ]
+}

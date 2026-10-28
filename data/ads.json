@@ -1,0 +1,7 @@
+{
+ "_note": "Placeholder ad slots. No ad network script is loaded. Slots reserve fixed space (no layout shift).",
+ "enabled": true,
+ "native_every": 12,
+ "sidebar": {"vi": "Đặt quảng cáo ở đây: tiếp cận kỹ sư remote tại Việt Nam.", "en": "Advertise here: reach remote engineers in Vietnam.", "url": "/quang-cao/"},
+ "native": {"vi": "Vị trí quảng cáo (placeholder). Nhà tuyển dụng remote? Đăng tin tài trợ.", "en": "Ad slot (placeholder). Hiring remote? Post a sponsored job.", "url": "/quang-cao/"}
+}

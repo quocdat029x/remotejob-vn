@@ -1,0 +1,798 @@
+#!/usr/bin/env python3
+"""Static site generator for RemoteJob VN. Stdlib only (Pillow optional, for the OG image).
+
+Reads data/*.json and site.config.json, writes pre-rendered HTML to dist/.
+Every page is complete HTML; site/assets/app.js only adds client-side filtering.
+
+Usage: python3 scripts/build.py [--out dist] [--today YYYY-MM-DD]
+"""
+import argparse, datetime, hashlib, html, json, os, re, shutil, sys, unicodedata
+from collections import Counter, defaultdict
+
+sys.path.insert(0, os.path.dirname(__file__))
+from site_text import T, MODE_LABELS, TZ_LABELS, ROLE_PAGES  # noqa: E402
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CFG = json.load(open(os.path.join(ROOT, "site.config.json"), encoding="utf-8"))
+SITE = CFG["SITE_URL"].rstrip("/")
+NAME = CFG["SITE_NAME"]
+LANGS = ("vi", "en")
+REGION_ORDER = {"vn": 0, "apac": 1, "global": 2, "other": 3}
+REMOTE_ORDER = {"yes": 0, "hybrid": 1, "unknown": 2, "no": 3}
+e = html.escape
+
+
+# ---------------------------------------------------------------- helpers
+def slugify(text, limit=70):
+    t = (text or "").replace("đ", "d").replace("Đ", "D")
+    t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
+    t = re.sub(r"[^a-z0-9]+", "-", t).strip("-")
+    if len(t) > limit:
+        t = t[:limit].rsplit("-", 1)[0]
+    return t or "job"
+
+
+def load(rel, default=None):
+    p = os.path.join(ROOT, rel)
+    if not os.path.exists(p):
+        return default
+    with open(p, encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def mode_tags(text):
+    s = (text or "").lower()
+    tags = []
+    if "trực tiếp" in s or "direct" in s:
+        tags.append("direct")
+    if "eor" in s:
+        tags.append("eor")
+    if "contractor" in s or "hợp đồng" in s:
+        tags.append("contractor")
+    if "freelance" in s:
+        tags.append("freelance")
+    if "agency" in s or "nền tảng" in s or "staffing" in s:
+        tags.append("agency")
+    if not tags or s.strip() == "chưa xác minh":
+        tags.append("unverified")
+    return tags
+
+
+def tz_tags(text):
+    s = (text or "").lower()
+    tags = []
+    if re.search(r"giờ vn|utc\+7|gmt\+7|vn/sg|giờ việt", s):
+        tags.append("vn")
+    if re.search(r"apac|apj|châu á|asia|ấn độ|nhật|úc", s):
+        tags.append("apac")
+    if re.search(r"\beu\b|châu âu|anh\b", s):
+        tags.append("eu")
+    if re.search(r"mỹ|\bus\b|est\b|pacific|châu mỹ", s):
+        tags.append("us")
+    if re.search(r"async|toàn cầu|tự chọn|tùy khách", s):
+        tags.append("async")
+    return tags or ["unknown"]
+
+
+def url_for(lang, path):
+    """path is a site path like '/cong-ty/x/'; returns the language-specific path."""
+    return path if lang == "vi" else "/en" + path
+
+
+def absu(lang, path):
+    return SITE + url_for(lang, path)
+
+
+def fmt_date(d, lang):
+    if not d:
+        return "—"
+    y, m, dd = d[:10].split("-")
+    return f"{dd}/{m}/{y}" if lang == "vi" else d[:10]
+
+
+# ---------------------------------------------------------------- layout
+def _minify_css(css):
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    css = re.sub(r"\s+", " ", css)
+    css = re.sub(r"\s*([{};,>])\s*", r"\1", css)
+    return css.replace(";}", "}").strip()
+
+
+CSS = _minify_css(open(os.path.join(ROOT, "site", "assets", "style.css"), encoding="utf-8").read())
+CSS_HASH = hashlib.sha1(CSS.encode()).hexdigest()[:10]
+JS = open(os.path.join(ROOT, "site", "assets", "app.js"), encoding="utf-8").read()
+JS_HASH = hashlib.sha1(JS.encode()).hexdigest()[:10]
+# Runs before first paint so the saved theme never flashes. Its SHA-256 is allowed in the CSP (site/_headers).
+THEME_BOOT = "try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}"
+THEME_BOOT_SHA = "sha256-" + __import__("base64").b64encode(hashlib.sha256(THEME_BOOT.encode()).digest()).decode()
+
+LOGO = ('<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14" fill="#0f766e"/>'
+        '<path d="M14 40c6-12 12-18 18-18s12 6 18 18" fill="none" stroke="#5eead4" stroke-width="5" stroke-linecap="round"/>'
+        '<circle cx="32" cy="22" r="6" fill="#fff"/><path d="M18 46h28" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>')
+ICON_SUN = '<svg class="theme-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+ICON_MOON = '<svg class="theme-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'
+AVATAR_COLORS = ["#0f766e", "#4338ca", "#b91c1c", "#a16207", "#7e22ce", "#0369a1", "#15803d", "#be185d", "#c2410c", "#334155"]
+
+
+def initials(name):
+    words = re.findall(r"[A-Za-z0-9À-ỹ]+", re.sub(r"\(.*?\)", "", name or ""))
+    if not words:
+        return "?"
+    if len(words) == 1:
+        return words[0][:2].upper()
+    return (words[0][0] + words[1][0]).upper()
+
+
+def avatar(c, size=""):
+    col = AVATAR_COLORS[int(hashlib.md5(c["slug"].encode()).hexdigest(), 16) % len(AVATAR_COLORS)]
+    return f'<span class="avatar {size}" style="background:{col}" aria-hidden="true">{e(initials(c["name"]))}</span>'
+
+
+def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="website", alt=True):
+    out = [
+        '<meta charset="utf-8">',
+        '<meta name="viewport" content="width=device-width,initial-scale=1">',
+        f"<title>{e(title)}</title>",
+        f'<meta name="description" content="{e(desc)}">',
+        f"<script>{THEME_BOOT}</script>",
+        f'<link rel="stylesheet" href="/assets/style.{CSS_HASH}.css">',
+    ]
+    if alt:
+        out.append(f'<link rel="canonical" href="{e(absu(lang, path))}">')
+    if noindex:
+        out.append('<meta name="robots" content="noindex,follow">')
+    if alt:
+        out += [f'<link rel="alternate" hreflang="vi" href="{e(absu("vi", path))}">',
+                f'<link rel="alternate" hreflang="en" href="{e(absu("en", path))}">',
+                f'<link rel="alternate" hreflang="x-default" href="{e(absu("vi", path))}">']
+    out += [
+        f'<meta property="og:type" content="{og_type}">',
+        f'<meta property="og:site_name" content="{e(NAME)}">',
+        f'<meta property="og:title" content="{e(title)}">',
+        f'<meta property="og:description" content="{e(desc)}">',
+        f'<meta property="og:url" content="{e(absu(lang, path))}">',
+        f'<meta property="og:image" content="{SITE}/og-default.png">',
+        '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
+        f'<meta property="og:image:alt" content="{e(NAME)}">',
+        f'<meta property="og:locale" content="{"vi_VN" if lang == "vi" else "en_US"}">',
+        f'<meta property="og:locale:alternate" content="{"en_US" if lang == "vi" else "vi_VN"}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        f'<meta name="twitter:title" content="{e(title)}">',
+        f'<meta name="twitter:description" content="{e(desc)}">',
+        f'<meta name="twitter:image" content="{SITE}/og-default.png">',
+        '<meta name="theme-color" content="#0f766e" media="(prefers-color-scheme: light)">',
+        '<meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">',
+        '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
+        '<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">',
+        '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
+        '<link rel="manifest" href="/site.webmanifest">',
+    ]
+    for block in jsonld or []:
+        out.append('<script type="application/ld+json">' + json.dumps(block, ensure_ascii=False).replace("</", "<\\/") + "</script>")
+    return "\n".join(out)
+
+
+def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=None, js=True, aside=None, og_type="website", alt=True):
+    t = T[lang]
+    nav = [("/cong-ty/", t["nav_companies"]), ("/viec-lam/", t["nav_jobs"]),
+           ("/viec-lam-remote/", t["nav_roles"]), ("/cong-cu/", t["nav_tools"]), ("/gioi-thieu/", t["nav_about"])]
+    other = "en" if lang == "vi" else "vi"
+    navhtml = "".join(
+        f'<a href="{url_for(lang, p)}"{" aria-current=\"page\"" if (path == p or (p != "/" and path.startswith(p))) else ""}>{e(lbl)}</a>' for p, lbl in nav)
+    ld = list(jsonld or [])
+    crumbhtml = ""
+    if crumbs:
+        items = [(t["home_crumb"], "/")] + crumbs
+        crumbhtml = '<nav class="crumbs" aria-label="Breadcrumb"><ol>' + "".join(
+            f'<li><a href="{url_for(lang, p)}">{e(n)}</a></li>' if i < len(items) - 1 else f'<li aria-current="page">{e(n)}</li>'
+            for i, (n, p) in enumerate(items)) + "</ol></nav>"
+        ld.append({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": n, "item": absu(lang, p)} for i, (n, p) in enumerate(items)]})
+    main = f'<div class="layout{" with-aside" if aside else ""}"><main id="main">{crumbhtml}{body}</main>'
+    if aside:
+        main += f'<aside class="side" aria-label="{e(t["ad"])}">{aside}</aside>'
+    main += "</div>"
+    script = f'<script src="/assets/app.{JS_HASH}.js" defer></script>' if js else ""
+    L = lambda p: url_for(lang, p)
+    repo = e(CFG["REPO_URL"])
+    footer = f"""<footer class="foot"><div class="wrap"><div class="cols">
+<div><a class="brand" href="{L('/')}">{LOGO}<span>RemoteJob <b>VN</b></span></a><p class="muted" style="margin-top:12px;max-width:42ch">{e(t['site_tag'])}. {e(t['footer_privacy'])}</p></div>
+<nav aria-label="{e(t['ft_explore'])}"><h2>{e(t['ft_explore'])}</h2><ul><li><a href="{L('/cong-ty/')}">{e(t['nav_companies'])}</a></li><li><a href="{L('/viec-lam/')}">{e(t['nav_jobs'])}</a></li><li><a href="{L('/viec-lam-remote/')}">{e(t['nav_roles'])}</a></li><li><a href="{L('/cong-cu/')}">{e(t['nav_tools'])}</a></li></ul></nav>
+<nav aria-label="{e(t['ft_project'])}"><h2>{e(t['ft_project'])}</h2><ul><li><a href="{L('/gioi-thieu/')}">{e(t['nav_about'])}</a></li><li><a href="{repo}/blob/main/CONTRIBUTING.md" rel="noopener">{e(t['ft_contribute'])}</a></li><li><a href="{repo}" rel="noopener">GitHub</a></li><li><a href="/sitemap.xml">Sitemap</a></li></ul></nav>
+<nav aria-label="{e(t['ft_legal'])}"><h2>{e(t['ft_legal'])}</h2><ul><li><a href="{L('/gioi-thieu/')}#privacy">{e(t['ft_privacy'])}</a></li><li><a href="{L('/cong-cu/')}#disclosure">{e(t['ft_disclosure'])}</a></li><li><a href="{L('/quang-cao/')}">{e(t['ads_title'])}</a></li><li><a href="{L('/gioi-thieu/')}#license">{e(t['ft_license'])}</a></li></ul></nav>
+</div><p class="fine">{e(t['footer'])}</p></div></footer>"""
+    return f"""<!doctype html>
+<html lang="{lang}">
+<head>
+{head_tags(lang, path, title, desc, noindex, ld, og_type, alt)}
+</head>
+<body data-lang="{lang}">
+<a class="skip" href="#main">{e(t['skip'])}</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="{L('/')}" aria-label="RemoteJob VN – {e(t['nav_home'])}">{LOGO}<span>RemoteJob <b>VN</b></span></a>
+<nav class="nav" aria-label="{e(t['nav_main'])}">{navhtml}</nav>
+<div class="tools"><button class="iconbtn" type="button" id="theme-toggle" hidden aria-label="{e(t['theme'])}" title="{e(t['theme'])}">{ICON_SUN}{ICON_MOON}</button>
+<a class="iconbtn" href="{url_for(other, path) if alt else url_for(other, '/')}" hreflang="{other}" lang="{other}" title="{e(t['switch_label'])}">{t['switch']}</a></div>
+</div></header>
+<div class="wrap">{main}</div>
+{footer}
+{script}
+</body>
+</html>
+"""
+
+
+# ---------------------------------------------------------------- components
+def ad_sidebar(lang, ads):
+    if not ads.get("enabled"):
+        return None
+    t = T[lang]
+    s = ads["sidebar"]
+    return (f'<div class="slot slot-side"><span><span class="label">{e(t["ad"])}</span></span>'
+            f'<div class="ph">300 × 250</div><a href="{url_for(lang, s["url"])}">{e(s[lang])}</a></div>')
+
+
+def ad_native(lang, ads, tag="li"):
+    t = T[lang]
+    n = ads["native"]
+    return (f'<{tag} class="slot slot-native" data-ad="1"><span class="label">{e(t["ad"])}</span>'
+            f'<a href="{url_for(lang, n["url"])}">{e(n[lang])}</a></{tag}>')
+
+
+def with_native(rows, lang, ads, tag="li"):
+    if not ads.get("enabled"):
+        return "".join(rows)
+    k = max(10, min(15, int(ads.get("native_every", 12))))
+    out = []
+    for i, r in enumerate(rows, 1):
+        out.append(r)
+        if i % k == 0 and i < len(rows):
+            out.append(ad_native(lang, ads, tag))
+    return "".join(out)
+
+
+def badge(text, cls=""):
+    return f'<span class="b {cls}">{e(text)}</span>'
+
+
+def job_badges(j, lang):
+    t = T[lang]
+    out = badge(t["region_" + j["region"]], "r-" + j["region"])
+    out += badge(t["remote_" + j["remote"]], "m-" + j["remote"])
+    if j.get("salary"):
+        out += badge("💰 " + j["salary"], "sal")
+    return out
+
+
+def job_row(j, co, lang):
+    t = T[lang]
+    loc = f'<span class="loc">{e(j["location"])}</span>' if j.get("location") else ""
+    return (f'<li class="card job-card"><a class="t" href="{url_for(lang, j["path"])}">{e(j["title"])}</a>'
+            f'<div class="meta"><a class="co" href="{url_for(lang, "/cong-ty/" + co["slug"] + "/")}">{e(co["name"])}</a>{loc}</div>'
+            f'<div class="tags">{job_badges(j, lang)}<span class="b date">✓ {e(t["checked_short"])} {fmt_date(j["last_checked"], lang)}</span></div></li>')
+
+
+def company_card(c, lang, njobs):
+    t = T[lang]
+    roles = " ".join(c["hires_roles"])
+    modes = " ".join(c["_modes"])
+    tzs = " ".join(c["_tz"])
+    text = " ".join([c["name"], c["hq"], c["remote_policy"], c["vn_hiring_mode"], c["timezone_note"], roles]).lower()
+    v = badge("✓ " + t["verified"], "ok") if c["verified"] else badge(t["unverified"], "warn")
+    jobs = f'<span class="nj">{njobs} {e(t["jobs_word"])}</span>' if njobs else ""
+    mode = "".join(badge(MODE_LABELS[m][0 if lang == "vi" else 1], "mode") for m in c["_modes"][:2])
+    return (f'<li class="card co-card co" data-roles="{e(roles)}" data-mode="{e(modes)}" data-group="{c["group"]}" data-tz="{e(tzs)}" data-text="{e(text)}">'
+            f'{avatar(c)}<div style="min-width:0"><div class="co-top">'
+            f'<a class="t" href="{url_for(lang, "/cong-ty/" + c["slug"] + "/")}">{e(c["name"])}</a>{jobs}</div>'
+            f'<div class="meta"><span>{e(c["hq"])}</span><span>{e(c["timezone_note"])}</span></div>'
+            f'<p class="desc">{e(c["remote_policy"])}</p>'
+            f'<div class="tags">{v}{mode}{"".join(badge(r, "role") for r in c["hires_roles"][:4])}</div></div></li>')
+
+
+def pager(lang, base, n, total):
+    t = T[lang]
+    if total <= 1:
+        return ""
+    href = lambda k: url_for(lang, base if k == 1 else f"{base}trang/{k}/")
+    parts = []
+    if n > 1:
+        parts.append(f'<a rel="prev" href="{href(n - 1)}" aria-label="{e(t["prev"])}">←</a>')
+    lo, hi = max(1, n - 2), min(total, n + 2)
+    last = 0
+    for k in sorted(set([1, total] + list(range(lo, hi + 1)))):
+        if k - last > 1:
+            parts.append('<span class="gap" aria-hidden="true">…</span>')
+        parts.append(f'<span aria-current="page">{k}</span>' if k == n else f'<a href="{href(k)}" aria-label="{e(t["page"])} {k}">{k}</a>')
+        last = k
+    if n < total:
+        parts.append(f'<a rel="next" href="{href(n + 1)}" aria-label="{e(t["next"])}">→</a>')
+    return f'<nav class="pager" aria-label="{e(t["page"])}">{"".join(parts)}</nav>'
+
+
+def select(name, label, options, lang):
+    t = T[lang]
+    opts = f'<option value="">{e(t["all"])}</option>' + "".join(f'<option value="{e(v)}">{e(lbl)}</option>' for v, lbl in options)
+    return f'<label>{e(label)}<select name="{name}">{opts}</select></label>'
+
+
+def empty_state(lang, extra=""):
+    t = T[lang]
+    return f'<div class="empty"><b>{e(t["empty_title"])}</b>{e(t["empty_body"])}{extra}</div>'
+
+
+# ---------------------------------------------------------------- build
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", default=os.path.join(ROOT, "dist"))
+    ap.add_argument("--today", default=os.environ.get("BUILD_DATE") or datetime.date.today().isoformat())
+    a = ap.parse_args()
+    OUT, TODAY = a.out, a.today
+    today_d = datetime.date.fromisoformat(TODAY)
+
+    companies = load("data/companies.json")
+    jobs_all = load("data/jobs.json", [])
+    sources = {s["slug"]: s for s in load("data/sources.json", [])}
+    ads = load("data/ads.json", {"enabled": False})
+    affiliates = load("data/affiliates.json", {"categories": []})
+    sponsored = load("data/sponsored.json", {"max_featured": 0, "items": []})
+    co_by = {c["slug"]: c for c in companies}
+    for c in companies:
+        c["_modes"] = mode_tags(c["vn_hiring_mode"])
+        c["_tz"] = tz_tags(c["timezone_note"])
+
+    # --- classify jobs: active (listed + sitemap), gone (noindex page, not listed), dropped (no page)
+    stale_cut = (today_d - datetime.timedelta(days=CFG["JOB_STALE_DAYS"])).isoformat()
+    keep_cut = (today_d - datetime.timedelta(days=CFG["REMOVED_PAGE_KEEP_DAYS"])).isoformat()
+    active, gone = [], []
+    used = set()
+    for j in sorted(jobs_all, key=lambda x: x["key"]):
+        if j["company_slug"] not in co_by:
+            continue
+        base = slugify(j["company_slug"] + "-" + j["title"], 80)
+        s = base if base not in used else base + "-" + hashlib.sha1(j["key"].encode()).hexdigest()[:6]
+        used.add(s)
+        j["slug"] = s
+        j["path"] = f"/viec-lam/{s}/"
+        is_open = j.get("status", "open") == "open" and j.get("last_checked", "") >= stale_cut
+        if is_open:
+            active.append(j)
+        elif (j.get("removed_on") or j.get("last_checked", "")) >= keep_cut:
+            gone.append(j)
+    sort_key = lambda j: (REGION_ORDER[j["region"]], REMOTE_ORDER[j["remote"]], co_by[j["company_slug"]]["name"].lower(), j["title"].lower())
+    active.sort(key=sort_key)
+    jobs_by_co = defaultdict(list)
+    for j in active:
+        jobs_by_co[j["company_slug"]].append(j)
+    jobs_updated = max([j["last_checked"] for j in active] or [TODAY])
+
+    # --- role pages
+    roles = []
+    for slug, vi, en, tagset, rx, co_roles in ROLE_PAGES:
+        crx = re.compile(rx, re.I)
+        js = [j for j in active if (set(j["roles"]) & tagset) or crx.search(j["title"])]
+        cos = [c for c in companies if set(c["hires_roles"]) & co_roles]
+        roles.append(dict(slug=slug, vi=vi, en=en, jobs=js, keys={j["key"] for j in js}, companies=cos, co_roles=co_roles))
+    role_by_hr = defaultdict(list)
+    for r in roles:
+        for hr in r["co_roles"]:
+            role_by_hr[hr].append(r)
+
+    if os.path.exists(OUT):
+        shutil.rmtree(OUT)
+    sitemap = {"vi": [], "en": []}
+
+    def write(lang, path, content, lastmod=None, index=True):
+        fp = os.path.join(OUT, url_for(lang, path).lstrip("/"), "index.html") if path.endswith("/") else os.path.join(OUT, url_for(lang, path).lstrip("/"))
+        os.makedirs(os.path.dirname(fp), exist_ok=True)
+        with open(fp, "w", encoding="utf-8") as fh:
+            fh.write(content)
+        if index:
+            sitemap[lang].append((path, lastmod or TODAY))
+
+    # --- sponsored
+    feat = [s for s in sponsored.get("items", []) if s["starts"] <= TODAY <= s["expires"]][: int(sponsored.get("max_featured", 0))]
+
+    def featured_block(lang):
+        if not feat:
+            return ""
+        t = T[lang]
+        rows = "".join(
+            f'<li class="card featured"><span class="label sp">{e(t["sponsored"])}</span> '
+            f'<a class="t" href="{e(s["url"])}" rel="sponsored nofollow noopener">{e(s["title"])}</a>'
+            f'<div class="meta"><span>{e(s["company_name"])}</span>{"<span>" + e(s["location"]) + "</span>" if s.get("location") else ""}</div>'
+            f'{"<p class=small style=margin-top:8px>" + e(s["blurb"]) + "</p>" if s.get("blurb") else ""}'
+            f'{"<div class=tags>" + badge("💰 " + s["salary"], "sal") + "</div>" if s.get("salary") else ""}</li>' for s in feat)
+        return f'<section class="feat" aria-label="{e(t["featured"])}"><h2>{e(t["featured"])}</h2><ul class="list">{rows}</ul></section>'
+
+    n_vn = sum(1 for j in active if j["region"] in ("vn", "apac"))
+    role_opts_jobs = sorted({r for j in active for r in j["roles"]})
+    co_role_counts = Counter(r for c in companies for r in c["hires_roles"])
+
+    for lang in LANGS:
+        t = T[lang]
+        side = ad_sidebar(lang, ads)
+        # ---------------- home
+        top = [j for j in active if j["region"] in ("vn", "apac") and j["remote"] in ("yes", "hybrid")][:12]
+        role_links = "".join(f'<li><a class="chip" href="{url_for(lang, "/viec-lam-remote/" + r["slug"] + "/")}">{e(r[lang])} <span class="n">{len(r["jobs"])}</span></a></li>' for r in roles)
+        grpA = [c for c in companies if c["group"] == "A"][:10]
+        body = f"""<section class="hero"><h1>{e(t['home_h1'])}</h1><p class="lead">{e(t['home_lead'])}</p>
+<form class="hero-search" action="{url_for(lang, '/viec-lam/')}" method="get" role="search"><label class="sr" for="hq">{e(t['search'])}</label>
+<input id="hq" type="search" name="q" placeholder="{e(t['hero_search_ph'])}" autocomplete="off"><button class="btn primary" type="submit">{e(t['hero_btn'])}</button></form>
+<ul class="chips" aria-label="{e(t['browse_roles'])}">{role_links}</ul>
+<ul class="stats"><li><b>{len(companies)}</b> {e(t['stat_companies'])}</li><li><b>{len(active)}</b> {e(t['stat_jobs'])}</li><li><b>{n_vn}</b> {e(t['stat_vn'])}</li><li><b>{fmt_date(jobs_updated, lang)}</b> {e(t['updated'])}</li></ul></section>
+{featured_block(lang)}
+<section><h2>{e(t['latest_vn'])}</h2><ul class="list grid2">{with_native([job_row(j, co_by[j['company_slug']], lang) for j in top], lang, ads)}</ul>
+<p style="margin-top:16px"><a class="btn" href="{url_for(lang, '/viec-lam/')}">{e(t['see_all_jobs'])} →</a></p></section>
+<section><h2>{e(t['group_A'])}</h2><ul class="list grid2">{''.join(company_card(c, lang, len(jobs_by_co[c['slug']])) for c in grpA)}</ul>
+<p style="margin-top:16px"><a class="btn" href="{url_for(lang, '/cong-ty/')}">{e(t['see_all_companies'])} →</a></p></section>
+<p class="note" style="margin-top:32px">{e(t['contrib_cta'])} <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a></p>"""
+        ld = [{"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": absu(lang, "/"), "inLanguage": lang}]
+        write(lang, "/", page(lang, "/", t["home_title"], t["home_desc"].format(n=len(companies), j=len(active)), body, jsonld=ld, aside=side), jobs_updated)
+
+        # ---------------- company directory
+        mode_opts = [(k, MODE_LABELS[k][0 if lang == "vi" else 1]) for k in MODE_LABELS]
+        tz_opts = [(k, TZ_LABELS[k][0 if lang == "vi" else 1]) for k in TZ_LABELS]
+        role_opts = [(r, f"{r} ({n})") for r, n in sorted(co_role_counts.items(), key=lambda x: (-x[1], x[0]))]
+        form = f"""<form class="filters" id="co-filters" hidden role="search">
+<label class="q">{e(t['search'])}<input type="search" name="q" placeholder="{e(t['search_ph'])}"></label>
+{select('role', t['f_role'], role_opts, lang)}{select('mode', t['f_mode'], mode_opts, lang)}
+{select('group', t['f_group'], [('A', t['group_A']), ('B', t['group_B'])], lang)}{select('tz', t['f_tz'], tz_opts, lang)}
+<div class="row-end"><output name="count" aria-live="polite"></output><button type="reset">{e(t['reset'])}</button></div></form>"""
+        cards = [company_card(c, lang, len(jobs_by_co[c["slug"]])) for c in sorted(companies, key=lambda c: (c["group"], -len(jobs_by_co[c["slug"]]), c["name"].lower()))]
+        body = f"""<div class="pagehead"><h1>{e(t['companies_h1'])}</h1><p class="lead">{e(t['companies_desc'].format(n=len(companies)))}</p></div>{form}
+<ul class="list" id="co-list">{with_native(cards, lang, ads)}</ul><div id="co-empty" hidden>{empty_state(lang)}</div>"""
+        ld = [{"@context": "https://schema.org", "@type": "ItemList", "numberOfItems": len(companies),
+               "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": absu(lang, f"/cong-ty/{c['slug']}/")} for i, c in enumerate(companies)]}]
+        write(lang, "/cong-ty/", page(lang, "/cong-ty/", t["companies_title"].format(n=len(companies)), t["companies_desc"].format(n=len(companies)), body,
+                                      crumbs=[(t["nav_companies"], "/cong-ty/")], jsonld=ld, js=True, aside=side),
+              max(c["last_checked"] for c in companies))
+
+        # ---------------- company pages
+        for c in companies:
+            path = f"/cong-ty/{c['slug']}/"
+            cj = jobs_by_co[c["slug"]]
+            src = sources.get(c["slug"])
+            if not src:
+                srcnote = f'<p class="note">{e(t["no_auto"])}</p>'
+            elif src.get("status") == "error":
+                srcnote = f'<p class="note warn">{e(t["fetch_error"])}</p>'
+            else:
+                srcnote = f'<p class="muted">{e(t["jobs_fetched"])}: {fmt_date(src.get("last_checked"), lang)}</p>'
+            role_links_c = " ".join(
+                (f'<a class="b role" href="{url_for(lang, "/viec-lam-remote/" + role_by_hr[r][0]["slug"] + "/")}">{e(r)}</a>' if role_by_hr.get(r) else badge(r, "role"))
+                for r in c["hires_roles"])
+            site_link = f'<a href="{e(c["website"])}" rel="noopener">{e(c["website"])}</a>' if c["website"] else "—"
+            facts = [(t["hq"], e(c["hq"])), (t["remote_policy"], e(c["remote_policy"])), (t["hiring_mode"], e(c["vn_hiring_mode"])),
+                     (t["timezone"], e(c["timezone_note"])), (t["salary"], e(c["salary_public"])), (t["roles"], role_links_c),
+                     (t["website"], site_link), (t["careers"], f'<a href="{e(c["careers_url"])}" rel="noopener">{e(c["careers_url"])}</a>'),
+                     (t["sources"], "<br>".join(f'<a href="{e(u)}" rel="noopener nofollow">{e(u)}</a>' for u in c["source_urls"])),
+                     (t["last_checked"], fmt_date(c["last_checked"], lang))]
+            dl = "".join(f"<dt>{e(k)}</dt><dd>{v}</dd>" for k, v in facts)
+            jl = f'<ul class="list">{"".join(job_row(j, c, lang) for j in cj)}</ul>' if cj else f'<div class="empty"><b>{e(t["no_jobs"])}</b><a href="{e(c["careers_url"])}" rel="noopener">{e(t["careers"])} ↗</a></div>'
+            rel = sorted((x for x in companies if x["slug"] != c["slug"]),
+                         key=lambda x: (-len(set(x["hires_roles"]) & set(c["hires_roles"])) - (x["group"] == c["group"]), -len(jobs_by_co[x["slug"]]), x["name"].lower()))[:6]
+            relhtml = "".join(company_card(x, lang, len(jobs_by_co[x["slug"]])) for x in rel)
+            v = badge("✓ " + t["verified"], "ok") if c["verified"] else badge(t["unverified"], "warn")
+            note_lang = '<p class="muted small">(Company facts are written in Vietnamese.)</p>' if lang == "en" else ""
+            body = f"""<div class="detail-head">{avatar(c, 'lg')}<div><h1>{e(c['name'])}</h1><div class="tags">{badge(t['group_' + c['group']])}{v}{''.join(badge(MODE_LABELS[m][0 if lang == 'vi' else 1], 'mode') for m in c['_modes'])}</div></div></div>
+<div class="cta"><a class="btn primary" href="{e(c['careers_url'])}" rel="noopener">{e(t['careers'])} ↗</a>{('<a class="btn" href="' + e(c['website']) + '" rel="noopener">' + e(t['website']) + ' ↗</a>') if c['website'] else ''}<a class="btn" href="#jobs">{e(t['open_jobs'])} ({len(cj)})</a></div>
+<div class="panel"><dl class="facts">{dl}</dl>{note_lang}</div>
+<section><h2 id="jobs">{e(t['open_jobs'])} ({len(cj)})</h2>{srcnote}{jl}</section>
+<section><h2>{e(t['related'])}</h2><ul class="list grid2">{relhtml}</ul></section>
+<p style="margin-top:24px" class="small"><a href="{e(CFG['REPO_URL'])}/edit/main/data/companies.json" rel="noopener">✎ {e(t['edit'])}</a></p>
+{('<div class="slot slot-bottom"><span class="label">' + e(t['ad']) + '</span><a href="' + url_for(lang, ads['native']['url']) + '">' + e(ads['native'][lang]) + '</a></div>') if ads.get('enabled') else ''}"""
+            org = {"@context": "https://schema.org", "@type": "Organization", "name": c["name"], "url": c["website"] or c["careers_url"],
+                   "sameAs": [u for u in [c["careers_url"]] if u and u != c["website"]]}
+            if not org["sameAs"]:
+                del org["sameAs"]
+            title = (f"{c['name']}: việc làm remote, chính sách remote & tuyển ở Việt Nam" if lang == "vi"
+                     else f"{c['name']}: remote jobs, remote policy & hiring in Vietnam")
+            desc = (f"{c['name']} ({c['hq']}) – {c['remote_policy']}. Hình thức tuyển ở VN: {c['vn_hiring_mode']}. {len(cj)} việc làm remote đang mở." if lang == "vi"
+                    else f"{c['name']} ({c['hq']}): remote policy, how they hire people in Vietnam, time zone, and {len(cj)} open remote jobs.")
+            write(lang, path, page(lang, path, title, desc[:300], body, crumbs=[(t["nav_companies"], "/cong-ty/"), (c["name"], path)], jsonld=[org], og_type="profile"),
+                  max([c["last_checked"]] + [j["last_checked"] for j in cj]))
+
+        # ---------------- job listing (paginated)
+        per = CFG["JOBS_PER_PAGE"]
+        total = max(1, -(-len(active) // per))
+        co_opts = [(c["slug"], c["name"]) for c in sorted(companies, key=lambda c: c["name"].lower()) if jobs_by_co[c["slug"]]]
+        jform = f"""<form class="filters" id="job-filters" hidden role="search">
+<label class="q">{e(t['search'])}<input type="search" name="q" placeholder="{e(t['search_jobs_ph'])}"></label>
+{select('role', t['f_role'], [(r, r) for r in role_opts_jobs], lang)}{select('company', t['f_company'], co_opts, lang)}
+{select('region', t['f_region'], [(k, t['region_' + k]) for k in REGION_ORDER], lang)}
+{select('remote', t['f_remote'], [(k, t['remote_' + k]) for k in REMOTE_ORDER], lang)}
+<div class="row-end"><output name="count" aria-live="polite"></output><button type="reset">{e(t['reset'])}</button></div></form>"""
+        for n in range(1, total + 1):
+            path = "/viec-lam/" if n == 1 else f"/viec-lam/trang/{n}/"
+            chunk = active[(n - 1) * per: n * per]
+            ptxt = "" if n == 1 else f" – {t['page']} {n}"
+            body = f"""<div class="pagehead"><h1>{e(t['jobs_h1'])}{e(ptxt)}</h1><p class="lead">{e(t['jobs_desc'].format(n=len(active), d=fmt_date(jobs_updated, lang)))}</p></div>
+{featured_block(lang) if n == 1 else ''}{jform if n == 1 else ''}
+<div id="job-empty" hidden>{empty_state(lang)}</div><ul class="list" id="job-list" data-index="/data/jobs-index.json">{with_native([job_row(j, co_by[j['company_slug']], lang) for j in chunk], lang, ads)}</ul>
+<div id="job-more" class="loadmore"></div>{pager(lang, '/viec-lam/', n, total)}"""
+            title = t["jobs_title"].format(page=ptxt) + (" | RemoteJob VN" if lang == "en" else " | việc làm remote Việt Nam")
+            write(lang, path, page(lang, path, title, t["jobs_desc"].format(n=len(active), d=fmt_date(jobs_updated, lang)), body,
+                                   crumbs=[(t["nav_jobs"], "/viec-lam/")] + ([(f"{t['page']} {n}", path)] if n > 1 else []), js=(n == 1), aside=side), jobs_updated)
+
+        # ---------------- job pages
+        gone_keys = {j["key"] for j in gone}
+        for j in active + gone:
+            c = co_by[j["company_slug"]]
+            path = j["path"]
+            is_gone = j["key"] in gone_keys
+            others = [x for x in jobs_by_co[c["slug"]] if x is not j][:8]
+            jr = set(j["roles"]) - {"other", "engineering"}
+            sim = [x for x in active if x["company_slug"] != c["slug"] and set(x["roles"]) & jr and x["region"] == j["region"]][:6] if jr else []
+            rlinks = [r for r in roles if j["key"] in r["keys"]] if not is_gone else []
+            facts = [(t["f_company"], f'<a href="{url_for(lang, "/cong-ty/" + c["slug"] + "/")}">{e(c["name"])}</a>'),
+                     (t["location"], e(j.get("location") or "—")), (t["f_region"], e(t["region_" + j["region"]])),
+                     (t["f_remote"], e(t["remote_" + j["remote"]]))]
+            if j.get("salary"):
+                facts.append((t["salary"], e(j["salary"])))
+            if j.get("date_posted"):
+                facts.append((t["posted"], fmt_date(j["date_posted"], lang)))
+            facts += [(t["first_seen"], fmt_date(j.get("first_seen"), lang)), (t["last_checked"], fmt_date(j["last_checked"], lang)),
+                      (t["hiring_mode"], e(c["vn_hiring_mode"])), (t["timezone"], e(c["timezone_note"]))]
+            if rlinks:
+                facts.append((t["f_role"], " ".join(f'<a class="b role" href="{url_for(lang, "/viec-lam-remote/" + r["slug"] + "/")}">{e(r[lang])}</a>' for r in rlinks)))
+            dl = "".join(f"<dt>{e(k)}</dt><dd>{v}</dd>" for k, v in facts)
+            desc_html = (f'<section><h2>{e(t["description"])}</h2><p class="excerpt">{e(j["description"])}</p><p class="muted small">{e(t["excerpt_note"])}</p></section>' if j.get("description") else "")
+            banner = f'<p class="note warn" role="status">{e(t["removed"])}</p>' if is_gone else ""
+            apply = "" if is_gone else f'<div class="cta"><a class="btn primary" href="{e(j["url"])}" rel="noopener nofollow">{e(t["apply"])} ↗</a><a class="btn" href="{url_for(lang, "/cong-ty/" + c["slug"] + "/")}">{e(c["name"])}</a></div>'
+            more = (f'<section><h2>{e(t["more_at"])} {e(c["name"])}</h2><ul class="list">{"".join(job_row(x, c, lang) for x in others)}</ul>'
+                    f'<p><a href="{url_for(lang, "/cong-ty/" + c["slug"] + "/")}#jobs">{e(c["name"])} →</a></p></section>') if others else ""
+            simh = f'<section><h2>{e(t["similar"])}</h2><ul class="list grid2">{"".join(job_row(x, co_by[x["company_slug"]], lang) for x in sim)}</ul></section>' if sim else ""
+            body = f"""<div class="detail-head">{avatar(c, 'lg')}<div><h1>{e(j['title'])}</h1><p class="muted" style="margin:0 0 8px"><a href="{url_for(lang, '/cong-ty/' + c['slug'] + '/')}">{e(c['name'])}</a>{(' · ' + e(j['location'])) if j.get('location') else ''}</p>
+<div class="tags">{job_badges(j, lang)}<span class="b date">✓ {e(t['checked_short'])} {fmt_date(j['last_checked'], lang)}</span></div></div></div>{banner}{apply}
+<div class="panel"><dl class="facts">{dl}</dl></div>{desc_html}{more}{simh}"""
+            ld = []
+            jp = job_posting_ld(j, c)
+            if jp and not is_gone:
+                ld.append(jp)
+            loc_txt = f" ({j['location']})" if j.get("location") else ""
+            title = (f"{j['title']} – {c['name']} | Việc làm remote" if lang == "vi" else f"{j['title']} – {c['name']} | Remote job")
+            desc = (f"{j['title']} tại {c['name']}{loc_txt}. {t['remote_' + j['remote']]}, khu vực {t['region_' + j['region']]}. Kiểm tra lần cuối {fmt_date(j['last_checked'], lang)}."
+                    if lang == "vi" else f"{j['title']} at {c['name']}{loc_txt}. {t['remote_' + j['remote']]}, region: {t['region_' + j['region']]}. Last checked {j['last_checked']}.")
+            write(lang, path, page(lang, path, title, desc[:300], body, crumbs=[(t["nav_jobs"], "/viec-lam/"), (c["name"], f"/cong-ty/{c['slug']}/"), (j["title"], path)],
+                                   noindex=is_gone, jsonld=ld, og_type="article"), j["last_checked"], index=not is_gone)
+
+        # ---------------- role pages
+        chips = "".join(f'<li><a class="chip" href="{url_for(lang, "/viec-lam-remote/" + r["slug"] + "/")}">{e(r[lang])} <span class="n">{len(r["jobs"])}</span></a></li>' for r in roles)
+        write(lang, "/viec-lam-remote/", page(lang, "/viec-lam-remote/", t["roles_title"], t["roles_desc"],
+                                              f'<div class="pagehead"><h1>{e(t["roles_title"])}</h1><p class="lead">{e(t["roles_desc"])}</p></div><ul class="chips">{chips}</ul>',
+                                              crumbs=[(t["nav_roles"], "/viec-lam-remote/")], aside=side), jobs_updated)
+        for r in roles:
+            base = f"/viec-lam-remote/{r['slug']}/"
+            rtotal = max(1, -(-len(r["jobs"]) // per))
+            for n in range(1, rtotal + 1):
+                path = base if n == 1 else f"{base}trang/{n}/"
+                chunk = r["jobs"][(n - 1) * per: n * per]
+                ptxt = "" if n == 1 else f" – {t['page']} {n}"
+                if lang == "vi":
+                    h1 = f"Việc làm {r['vi']} remote ở Việt Nam{ptxt}"
+                    desc = f"{len(r['jobs'])} việc làm {r['vi']} remote đang mở từ công ty remote-first tuyển ở Việt Nam, ưu tiên tin ghi rõ Việt Nam/APAC. {len(r['companies'])} công ty thường tuyển {r['vi']}."
+                else:
+                    h1 = f"Remote {r['en']} jobs for Vietnam{ptxt}"
+                    desc = f"{len(r['jobs'])} open remote {r['en']} jobs from remote-first companies hiring in Vietnam, Vietnam/APAC first. {len(r['companies'])} companies that hire {r['en']}."
+                cos = "".join(f'<li><a class="chip" href="{url_for(lang, "/cong-ty/" + c["slug"] + "/")}">{e(c["name"])}</a></li>' for c in r["companies"][:40]) if n == 1 else ""
+                others = "".join(f'<li><a class="chip" href="{url_for(lang, "/viec-lam-remote/" + x["slug"] + "/")}">{e(x[lang])}</a></li>' for x in roles if x is not r)
+                jl = f'<ul class="list">{with_native([job_row(j, co_by[j["company_slug"]], lang) for j in chunk], lang, ads)}</ul>' if chunk else empty_state(lang)
+                body = f"""<div class="pagehead"><h1>{e(h1)}</h1><p class="lead">{e(desc)}</p></div>
+{jl}{pager(lang, base, n, rtotal)}
+{('<section><h2>' + e(t['nav_companies']) + '</h2><ul class="chips">' + cos + '</ul></section>') if cos else ''}
+<section><h2>{e(t['nav_roles'])}</h2><ul class="chips">{others}</ul></section>"""
+                write(lang, path, page(lang, path, h1 + (" | RemoteJob VN" if n == 1 else ""), desc, body,
+                                       crumbs=[(t["nav_roles"], "/viec-lam-remote/"), (r[lang], base)] + ([(f"{t['page']} {n}", path)] if n > 1 else []), aside=side),
+                      max([j["last_checked"] for j in chunk] or [TODAY]))
+
+        # ---------------- tools (affiliate) page
+        cats = ""
+        for cat in affiliates["categories"]:
+            items = "".join(
+                f'<li class="card tool-card"><span class="label aff">{e(t["affiliate"])}</span> '
+                f'<a class="t" href="{e(it["url"])}" rel="sponsored nofollow noopener">{e(it["name"])}</a><p class="muted small" style="margin:6px 0 0">{e(it[lang])}</p></li>'
+                for it in cat["items"])
+            cats += f'<section id="{e(cat["id"])}"><h2>{e(cat[lang])}</h2><ul class="list grid2">{items}</ul></section>'
+        toc = "".join(f'<li><a class="chip" href="#{e(cat["id"])}">{e(cat[lang])}</a></li>' for cat in affiliates["categories"])
+        body = (f'<div class="pagehead"><h1>{e(t["tools_h1"])}</h1><p class="lead">{e(t["tools_desc"])}</p></div>'
+                f'<p class="disclosure" id="disclosure"><span class="label aff">{e(t["affiliate"])}</span><span>{e(t["aff_disclosure"])}</span></p>'
+                f'<ul class="chips" style="margin-top:16px">{toc}</ul>{cats}')
+        write(lang, "/cong-cu/", page(lang, "/cong-cu/", t["tools_title"], t["tools_desc"], body, crumbs=[(t["nav_tools"], "/cong-cu/")]), TODAY)
+
+        # ---------------- advertise + about
+        if lang == "vi":
+            adbody = """<h1>Quảng cáo &amp; tin tài trợ</h1>
+<p>RemoteJob VN miễn phí cho người tìm việc. Chi phí vận hành có thể được bù bằng các hình thức không làm phiền:</p>
+<ul><li><b>Vị trí quảng cáo cố định</b>: một ô ở cột phải trên máy tính, và tối đa một thẻ "Quảng cáo" sau mỗi 12 dòng trong danh sách. Không popup, không quảng cáo xen ngang toàn màn hình, không quảng cáo ở đầu trang công ty.</li>
+<li><b>Tin tuyển dụng tài trợ</b>: tối đa 3 tin, gắn nhãn "Tài trợ", hiển thị riêng ở đầu trang việc làm, có ngày hết hạn. Chỉ nhận công ty tuyển remote ở Việt Nam, không nhận cờ bạc/cá cược.</li>
+<li><b>Liên kết affiliate</b> trên trang Công cụ, luôn gắn nhãn "Affiliate".</li></ul>
+<p>Không dùng mạng quảng cáo bên thứ ba, không cookie theo dõi. Liên hệ qua GitHub issue của dự án.</p>"""
+            abbody = f"""<h1>Giới thiệu</h1><p>RemoteJob VN là danh bạ cộng đồng các công ty remote-first có tuyển người ở Việt Nam. Dữ liệu là thông tin công khai, mỗi công ty có link nguồn và ngày kiểm tra.</p>
+<h2 id="privacy">Quyền riêng tư</h2><p>Trang tĩnh, không analytics, không cookie, không script bên thứ ba. Ngôn ngữ chọn bằng đường dẫn (/en/).</p>
+<h2>Tiêu chí</h2><ul><li>Công ty cho làm remote (hoặc remote-friendly, có ghi rõ) và tuyển người ở Việt Nam.</li><li>Không đưa công ty cờ bạc, cá cược, casino, iGaming.</li><li>Chỉ thông tin công khai, có nguồn.</li></ul>
+<h2 id="contribute">Đóng góp</h2><p>Thêm hoặc sửa công ty bằng pull request vào <code>data/companies.json</code>. Xem <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a>.</p>
+<h2>Tin tuyển dụng</h2><p>Tin việc được lấy tự động mỗi ngày từ API tuyển dụng công khai (Greenhouse, Lever, Ashby, Workable, Recruitee). Tin không còn xuất hiện sẽ bị gỡ khỏi danh sách và sitemap.</p>
+<h2 id="license">Giấy phép</h2><p>Dữ liệu: CC BY 4.0. Mã nguồn: MIT.</p>"""
+        else:
+            adbody = """<h1>Advertising &amp; sponsored jobs</h1>
+<p>RemoteJob VN is free for job seekers. Running costs may be covered in non-intrusive ways:</p>
+<ul><li><b>Fixed ad slots</b>: one box in the right column on desktop, and at most one "Ad" card every 12 rows in lists. No popups, no interstitials, no ads at the top of company pages.</li>
+<li><b>Sponsored jobs</b>: at most 3, labeled "Sponsored", shown separately at the top of the jobs page, with an end date. Only companies hiring remote in Vietnam; no gambling/betting.</li>
+<li><b>Affiliate links</b> on the Tools page, always labeled "Affiliate".</li></ul>
+<p>No third-party ad networks, no tracking cookies. Contact us via a GitHub issue.</p>"""
+            abbody = f"""<h1>About</h1><p>RemoteJob VN is a community directory of remote-first companies that hire people in Vietnam. Data is public information; each company has source links and a last-checked date.</p>
+<h2 id="privacy">Privacy</h2><p>Static site, no analytics, no cookies, no third-party scripts. Language is chosen by URL (/en/).</p>
+<h2>Criteria</h2><ul><li>The company allows remote work (or remote-friendly, stated clearly) and hires people in Vietnam.</li><li>No gambling, betting, casino or iGaming companies.</li><li>Public, sourced information only.</li></ul>
+<h2 id="contribute">Contributing</h2><p>Add or edit a company with a pull request to <code>data/companies.json</code>. See <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a>.</p>
+<h2>Job data</h2><p>Jobs are fetched daily from public ATS APIs (Greenhouse, Lever, Ashby, Workable, Recruitee). Postings that disappear are removed from lists and the sitemap.</p>
+<h2 id="license">License</h2><p>Data: CC BY 4.0. Code: MIT.</p>"""
+        write(lang, "/quang-cao/", page(lang, "/quang-cao/", t["ads_title"], t["ads_desc"], adbody, crumbs=[(t["ads_title"], "/quang-cao/")]), TODAY)
+        write(lang, "/gioi-thieu/", page(lang, "/gioi-thieu/", t["about_title"], t["about_desc"], abbody, crumbs=[(t["nav_about"], "/gioi-thieu/")]), TODAY)
+
+    # ---------------- 404, assets, data index, sitemap, robots
+    tv, te = T["vi"], T["en"]
+    nf = page("vi", "/404.html", "404 – Không tìm thấy trang | Page not found", tv["nf_body"],
+              f'<div class="nf"><div class="code">404</div><h1>{e(tv["nf_title"])}</h1><p class="lead" style="margin:0 auto 8px">{e(tv["nf_body"])}</p>'
+              f'<p class="muted" lang="en">{e(te["nf_title"])}. {e(te["nf_body"])}</p>'
+              f'<div class="cta" style="justify-content:center"><a class="btn primary" href="/viec-lam/">{e(tv["nav_jobs"])}</a><a class="btn" href="/cong-ty/">{e(tv["nav_companies"])}</a><a class="btn" href="/">{e(tv["nav_home"])}</a></div></div>',
+              noindex=True, alt=False, js=True)
+    with open(os.path.join(OUT, "404.html"), "w", encoding="utf-8") as fh:
+        fh.write(nf)
+    os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
+    with open(os.path.join(OUT, "assets", f"style.{CSS_HASH}.css"), "w", encoding="utf-8") as fh:
+        fh.write(CSS)
+    with open(os.path.join(OUT, "assets", f"app.{JS_HASH}.js"), "w", encoding="utf-8") as fh:
+        fh.write(_minify_js(JS))
+    with open(os.path.join(ROOT, "site", "_headers"), encoding="utf-8") as fh:
+        headers = fh.read().replace("{THEME_BOOT_SHA}", THEME_BOOT_SHA)
+    with open(os.path.join(OUT, "_headers"), "w", encoding="utf-8") as fh:
+        fh.write(headers)
+    icons(OUT)
+    with open(os.path.join(OUT, "site.webmanifest"), "w", encoding="utf-8") as fh:
+        json.dump({"name": NAME, "short_name": "RemoteJob", "lang": "vi", "start_url": "/", "display": "standalone",
+                   "background_color": "#f8fafc", "theme_color": "#0f766e",
+                   "icons": [{"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+                             {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"},
+                             {"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"}]}, fh)
+    for f in ("favicon.svg", "CNAME"):
+        src = os.path.join(ROOT, "site", f)
+        if os.path.exists(src):
+            shutil.copy(src, os.path.join(OUT, f))
+    og_image(os.path.join(OUT, "og-default.png"))
+    os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
+    idx = {"cos": {c["slug"]: c["name"] for c in companies},
+           "ad": ads.get("native") if ads.get("enabled") else None, "every": ads.get("native_every", 12),
+           "jobs": [[j["slug"], j["title"], j["company_slug"], j["region"], j["remote"], " ".join(j["roles"]), j.get("location") or "", j["last_checked"], j.get("salary") or ""] for j in active]}
+    with open(os.path.join(OUT, "data", "jobs-index.json"), "w", encoding="utf-8") as fh:
+        json.dump(idx, fh, ensure_ascii=False, separators=(",", ":"))
+    for f in ("companies.json", "jobs.json"):  # public open data downloads
+        shutil.copy(os.path.join(ROOT, "data", f), os.path.join(OUT, "data", f))
+
+    for lang in LANGS:
+        urls = []
+        for path, lastmod in sitemap[lang]:
+            urls.append(f"<url><loc>{e(absu(lang, path))}</loc><lastmod>{lastmod}</lastmod>"
+                        f'<xhtml:link rel="alternate" hreflang="vi" href="{e(absu("vi", path))}"/>'
+                        f'<xhtml:link rel="alternate" hreflang="en" href="{e(absu("en", path))}"/>'
+                        f'<xhtml:link rel="alternate" hreflang="x-default" href="{e(absu("vi", path))}"/></url>')
+        with open(os.path.join(OUT, f"sitemap-{lang}.xml"), "w", encoding="utf-8") as fh:
+            fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+                     'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + "\n".join(urls) + "\n</urlset>\n")
+    with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as fh:
+        fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+                 "".join(f"<sitemap><loc>{SITE}/sitemap-{l}.xml</loc><lastmod>{TODAY}</lastmod></sitemap>\n" for l in LANGS) + "</sitemapindex>\n")
+    with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as fh:
+        fh.write(f"User-agent: *\nAllow: /\nDisallow: /data/jobs-index.json\n\nSitemap: {SITE}/sitemap.xml\n")
+    n_pages = sum(len(v) for v in sitemap.values())
+    print(f"built {OUT}: {len(companies)} companies, {len(active)} active jobs, {len(gone)} removed/stale job pages (noindex), "
+          f"{n_pages} sitemap URLs, {sum(1 for j in active if job_posting_ld(j, co_by[j['company_slug']]))} JobPosting blocks per language")
+
+
+def job_posting_ld(j, c):
+    """schema.org JobPosting, only when the required facts exist; otherwise None (no JSON-LD)."""
+    if not (j.get("title") and j.get("url") and j.get("date_posted") and c.get("name")):
+        return None
+    if j.get("remote") != "yes" or j.get("region") not in ("vn", "global"):
+        return None  # only claim TELECOMMUTE + Vietnam eligibility when the posting names Vietnam or is worldwide
+    d = {"@context": "https://schema.org", "@type": "JobPosting", "title": j["title"],
+         "description": f"<p>{html.escape(j.get('description') or j['title'])}</p>",
+         "datePosted": j["date_posted"][:10],
+         "validThrough": (datetime.date.fromisoformat(j["last_checked"][:10]) + datetime.timedelta(days=CFG["JOB_STALE_DAYS"])).isoformat(),
+         "hiringOrganization": {"@type": "Organization", "name": c["name"], "sameAs": c["website"] or c["careers_url"]},
+         "jobLocationType": "TELECOMMUTE",
+         "applicantLocationRequirements": {"@type": "Country", "name": "VN"},
+         "url": j["url"], "directApply": False,
+         "identifier": {"@type": "PropertyValue", "name": c["name"], "value": j["key"].split(":", 1)[-1]}}
+    return d
+
+
+def _draw_logo(size):
+    """Render the SVG logo geometry with Pillow (4x supersampled)."""
+    from PIL import Image, ImageDraw
+    k = size * 4 / 64
+    img = Image.new("RGBA", (size * 4, size * 4), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle((0, 0, size * 4 - 1, size * 4 - 1), int(14 * k), fill="#0f766e")
+    w = int(5 * k)
+    # arch: quadratic-ish curve from (14,40) up to (32,22) down to (50,40)
+    pts = []
+    for i in range(41):
+        x = 14 + 36 * i / 40
+        y = 40 - 18 * (1 - ((x - 32) / 18) ** 2) ** 0.5 * 0.9
+        pts.append((x * k, y * k))
+    d.line(pts, fill="#5eead4", width=w, joint="curve")
+    for x, y in (pts[0], pts[-1]):
+        d.ellipse((x - w / 2, y - w / 2, x + w / 2, y + w / 2), fill="#5eead4")
+    d.ellipse((26 * k, 16 * k, 38 * k, 28 * k), fill="#ffffff")
+    d.line((18 * k, 46 * k, 46 * k, 46 * k), fill="#ffffff", width=w)
+    for x in (18, 46):
+        d.ellipse((x * k - w / 2, 46 * k - w / 2, x * k + w / 2, 46 * k + w / 2), fill="#ffffff")
+    return img.resize((size, size), Image.LANCZOS)
+
+
+def icons(out):
+    """PNG favicons + apple-touch-icon, cached in site/icons/ so builds without Pillow still work."""
+    cache = os.path.join(ROOT, "site", "icons")
+    names = {"favicon-32.png": 32, "icon-192.png": 192, "icon-512.png": 512, "apple-touch-icon.png": 180}
+    if not all(os.path.exists(os.path.join(cache, n)) for n in names):
+        try:
+            os.makedirs(cache, exist_ok=True)
+            for n, sz in names.items():
+                img = _draw_logo(sz)
+                if n == "apple-touch-icon.png":  # iOS wants an opaque square
+                    from PIL import Image
+                    bg = Image.new("RGB", (sz, sz), "#0f766e")
+                    bg.paste(img, (0, 0), img)
+                    img = bg
+                img.save(os.path.join(cache, n), optimize=True)
+        except ImportError:
+            return
+    for n in names:
+        shutil.copy(os.path.join(cache, n), os.path.join(out, n))
+
+
+def og_image(fp):
+    """Branded 1200x630 Open Graph image, cached at site/og-default.png."""
+    src = os.path.join(ROOT, "site", "og-default.png")
+    if not os.path.exists(src):
+        try:
+            from PIL import Image, ImageDraw, ImageFont
+        except ImportError:
+            return
+        img = Image.new("RGB", (1200, 630), "#0b1120")
+        d = ImageDraw.Draw(img)
+        for i in range(630):  # subtle vertical gradient
+            c = int(17 + 10 * i / 630)
+            d.line((0, i, 1200, i), fill=(11, c, 32 + int(8 * i / 630)))
+        d.ellipse((760, -220, 1400, 420), fill="#0f3d3a")
+        d.ellipse((900, 300, 1350, 750), fill="#11312f")
+        fonts = ["/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"]
+        fb = next((f for f in fonts if os.path.exists(f)), None)
+        fr = fb.replace("-Bold", "") if fb and os.path.exists(fb.replace("-Bold", "")) else fb
+        F = lambda f, n: ImageFont.truetype(f, n) if f else ImageFont.load_default()
+        img.paste(_draw_logo(120), (80, 80), _draw_logo(120))
+        d.text((228, 100), "RemoteJob", font=F(fb, 64), fill="#ffffff")
+        wv = d.textlength("RemoteJob ", font=F(fb, 64))
+        d.text((228 + wv, 100), "VN", font=F(fb, 64), fill="#5eead4")
+        d.text((80, 270), "Việc làm remote", font=F(fb, 76), fill="#ffffff")
+        d.text((80, 360), "cho người ở Việt Nam", font=F(fb, 76), fill="#5eead4")
+        d.text((80, 470), "Remote-first companies & jobs hiring in Vietnam", font=F(fr, 34), fill="#cbd5e1")
+        d.rounded_rectangle((80, 535, 80 + d.textlength(SITE.replace("https://", ""), font=F(fr, 28)) + 40, 585), 25, fill="#134e4a")
+        d.text((100, 543), SITE.replace("https://", ""), font=F(fr, 28), fill="#ccfbf1")
+        img.save(src, optimize=True)
+    shutil.copy(src, fp)
+
+
+def _minify_js(js):
+    """Very conservative: drop full-line // comments and leading indentation."""
+    out = []
+    for line in js.splitlines():
+        st = line.strip()
+        if not st or st.startswith("//"):
+            continue
+        out.append(st)
+    return "\n".join(out) + "\n"
+
+
+if __name__ == "__main__":
+    main()

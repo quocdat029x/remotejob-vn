@@ -1,0 +1,1217 @@
+[
+ {
+  "slug": "fram",
+  "ats": "itviec",
+  "token": null,
+  "endpoint": "https://itviec.com/companies/fram",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "gradion",
+  "ats": "lever",
+  "token": "gradion",
+  "endpoint": "https://api.lever.co/v0/postings/gradion?mode=json",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "nkktech",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://nkktech.com/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "coderpush",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://coderpush.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "dwarves",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://memo.d.foundation/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "ominext",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://ominext.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "nsc-software",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://nsc-software.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "asiantech",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.asiantech.vn",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "devwork",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://devwork.vn",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "hatonet",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://hatonet.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "wetheflywheel",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://wetheflywheel.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "vmo",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.vmogroup.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "saigon-technology",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://saigontechnology.com/career",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "vexere",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://vexere.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "smartdev",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.smartdev.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "edgecraft",
+  "ats": "linkedin",
+  "token": null,
+  "endpoint": "https://www.linkedin.com/company/edgecraft-digital",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "cloudx",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://cloudx.com.vn/tin-tuc/tuyen-dung",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "gtemas",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://gtemas.com/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "okiela",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://okiela.io/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "ansol",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://ansol.vn/vi/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "vireon-labs",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://vireonlabs.cloud/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "dikshatek",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/dikshatek-vn",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "orient-software",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.orientsoftware.com/careers/",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "elca-vn",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://careers.elca.ch",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "fizen",
+  "ats": "itviec",
+  "token": null,
+  "endpoint": "https://itviec.com/companies/fizen",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "ateam-vn",
+  "ats": "itviec",
+  "token": null,
+  "endpoint": "https://itviec.com/companies/ateam-viet-nam",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "holistics",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.holistics.io/careers/",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "sunbytes",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://sunbytes.io/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "jt1",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://jt1.vn",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "ikonnect",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.ikonnectvn.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "qode",
+  "ats": "workable",
+  "token": "qode",
+  "endpoint": "https://apply.workable.com/api/v1/widget/accounts/qode",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "kms-tech",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://kms-technology.com/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "consensys",
+  "ats": "ashby",
+  "token": "consensys",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/consensys",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "alpaca",
+  "ats": "greenhouse",
+  "token": "alpaca",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/alpaca/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "auros",
+  "ats": "greenhouse",
+  "token": "aurosglobal",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/aurosglobal/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "what3words",
+  "ats": "ashby",
+  "token": "what3words",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/what3words",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "etg",
+  "ats": "workable",
+  "token": "emerging-travel-group",
+  "endpoint": "https://apply.workable.com/api/v1/widget/accounts/emerging-travel-group",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "bloomtech",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://global.bloomtechcareer.com/en/jobs",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "searchapi",
+  "ats": "ashby",
+  "token": "searchapi",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/searchapi",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "supabase",
+  "ats": "ashby",
+  "token": "supabase",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/supabase",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "tensormesh",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.tensormesh.ai",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "canonical",
+  "ats": "greenhouse",
+  "token": "canonical",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/canonical/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "blockstream",
+  "ats": "ashby",
+  "token": "blockstream",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/blockstream",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "akuity",
+  "ats": "greenhouse",
+  "token": "akuity",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/akuity/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "covergo",
+  "ats": "workable",
+  "token": "covergo",
+  "endpoint": "https://apply.workable.com/api/v1/widget/accounts/covergo",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "employment-hero",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://employmenthero.com/jobs/",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "nebius",
+  "ats": "greenhouse",
+  "token": "nebius",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/nebius/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "circle-so",
+  "ats": "ashby",
+  "token": "circle",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/circle",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "automattic",
+  "ats": "greenhouse",
+  "token": "automatticcareers",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/automatticcareers/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "kitchen-warehouse",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.kitchenwarehouse.com.au/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "portcast",
+  "ats": "lever",
+  "token": "portcast",
+  "endpoint": "https://api.lever.co/v0/postings/portcast?mode=json",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "tether",
+  "ats": "recruitee",
+  "token": "tether",
+  "endpoint": "https://tether.recruitee.com/api/offers/",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "latitude-sh",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.latitude.sh/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "fly-io",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://fly.io/jobs/",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "sourcegraph",
+  "ats": "greenhouse",
+  "token": "sourcegraph91",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/sourcegraph91/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "chess-com",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.chess.com/jobs",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "toptal",
+  "ats": "lever",
+  "token": "toptal",
+  "endpoint": "https://api.lever.co/v0/postings/toptal?mode=json",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "clearer-io",
+  "ats": "lever",
+  "token": "Clearer",
+  "endpoint": "https://api.lever.co/v0/postings/Clearer?mode=json",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "railsware",
+  "ats": "greenhouse",
+  "token": "railsware",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/railsware/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "brave",
+  "ats": "greenhouse",
+  "token": "brave",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/brave/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "planetscale",
+  "ats": "greenhouse",
+  "token": "planetscale",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/planetscale/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "distantjob",
+  "ats": "greenhouse",
+  "token": "distantjob",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/distantjob/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "percona",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.percona.com/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "clickhouse",
+  "ats": "ashby",
+  "token": "clickhouse",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/clickhouse",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "nansen",
+  "ats": "ashby",
+  "token": "nansen",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/nansen",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "startale",
+  "ats": "greenhouse",
+  "token": "startale",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/startale/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "doist",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://doist.com/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "kraken",
+  "ats": "ashby",
+  "token": "kraken.com",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/kraken.com",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "improvado",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://improvado.io/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "alongside",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.alongside.com/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "vast-ai",
+  "ats": "ashby",
+  "token": "vastai",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/vastai",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "binance",
+  "ats": "greenhouse",
+  "token": "binance",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/binance/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "huzzle",
+  "ats": "workable",
+  "token": "huzzle",
+  "endpoint": "https://apply.workable.com/api/v1/widget/accounts/huzzle",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "hyperion360",
+  "ats": "workable",
+  "token": "hyperion360",
+  "endpoint": "https://apply.workable.com/api/v1/widget/accounts/hyperion360",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "lemon-io",
+  "ats": "ashby",
+  "token": "lemon-io",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/lemon-io",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "glints",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://glints.com/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "kake",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://kake.ai",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "bjak",
+  "ats": "workable",
+  "token": "bjak",
+  "endpoint": "https://apply.workable.com/api/v1/widget/accounts/bjak",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "valsea",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://valsea.ai",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "transportme",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.transportme.com.au",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "my-audit-corner",
+  "ats": "itviec",
+  "token": null,
+  "endpoint": "https://itviec.com",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "alpha-bravo",
+  "ats": "itviec",
+  "token": null,
+  "endpoint": "https://itviec.com/companies/alpha-bravo-development",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "inference-loops",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://inferenceloops.com/en/",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "lifted",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/lifted-an-upwork-company",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "coder-trove",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/coder-trove",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "prime-intellect",
+  "ats": "ashby",
+  "token": "primeintellect",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/primeintellect",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "phantom",
+  "ats": "ashby",
+  "token": "phantom",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/phantom",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "fingerprint",
+  "ats": "greenhouse",
+  "token": "fingerprint",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/fingerprint/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "strike",
+  "ats": "greenhouse",
+  "token": "strike",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/strike/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "offchain-labs",
+  "ats": "lever",
+  "token": "offchainlabs",
+  "endpoint": "https://api.lever.co/v0/postings/offchainlabs?mode=json",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "okx",
+  "ats": "greenhouse",
+  "token": "okx",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/okx/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "doit",
+  "ats": "greenhouse",
+  "token": "doitintl",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/doitintl/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "radian-arc",
+  "ats": "greenhouse",
+  "token": "radianarc",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/radianarc/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "udacity",
+  "ats": "greenhouse",
+  "token": "udacity",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/udacity/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "g2i",
+  "ats": "ashby",
+  "token": "g2i",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/g2i",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "techbiz-global",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/techbiz-global",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "caldera",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/caldera",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "logos",
+  "ats": "greenhouse",
+  "token": "logos",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/logos/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "grafana-labs",
+  "ats": "greenhouse",
+  "token": "grafanalabs",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/grafanalabs/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "signoz",
+  "ats": "ashby",
+  "token": "signoz",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/signoz",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "terminal-3",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/terminal-3",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "zigchain",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/zigchain",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "dualentry",
+  "ats": "ashby",
+  "token": "dualentry",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/dualentry",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "vcluster",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/vcluster-labs",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "ciq",
+  "ats": "greenhouse",
+  "token": "ciq",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/ciq/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "yopeso",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/yopeso",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "virtuslab",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/virtuslab",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "xperteez",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/xperteez-technology",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "accelerant",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/accelerant",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "ams-accelerate",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/ams-accelerate-it",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "aubrant",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/aubrant-digital",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "fairarena",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/fairarena",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "biolm",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/biolm",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "saas-group",
+  "ats": "greenhouse",
+  "token": "saasgroup",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/saasgroup/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "gravity9",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/gravity9",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "docusketch",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/docusketch",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "mixrank",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/mixrank",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "bright-data",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/bright-data",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "micro1",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/micro1",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "kloudmate",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/kloudmate",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "tensorops",
+  "ats": "greenhouse",
+  "token": "tensorops",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/tensorops/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "codest",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/codest-ltd-company-no-12590542-vat-number-gb363431020",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "lucenia",
+  "ats": "greenhouse",
+  "token": "lucenia",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/lucenia/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "edb",
+  "ats": "greenhouse",
+  "token": "edb",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/edb/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "unifonic",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/unifonic",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "clanx",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/clanx",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "reality-games",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/reality-games",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "colonist",
+  "ats": "ashby",
+  "token": "colonist",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/colonist",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "qualifyze",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/qualifyze",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "saphetor",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/saphetor",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "novacard",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/novacard",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "zencoder",
+  "ats": "greenhouse",
+  "token": "zencoder",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/zencoder/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "wizdaa",
+  "ats": "himalayas",
+  "token": null,
+  "endpoint": "https://himalayas.app/companies/wizdaa",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "error"
+ },
+ {
+  "slug": "phizenix",
+  "ats": "greenhouse",
+  "token": "phizenix",
+  "endpoint": "https://boards-api.greenhouse.io/v1/boards/phizenix/jobs",
+  "method": "api",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ },
+ {
+  "slug": "knorex",
+  "ats": "custom",
+  "token": null,
+  "endpoint": "https://www.knorex.com/careers",
+  "method": "html",
+  "last_checked": "2026-10-28",
+  "status": "ok"
+ }
+]

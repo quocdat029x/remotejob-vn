@@ -1,0 +1,32 @@
+name: Add a company
+description: Suggest a remote-first company that hires people in Vietnam
+labels: [new-company]
+body:
+  - type: markdown
+    attributes:
+      value: "Public facts only. Do not include personal data (names of individuals, emails, phone numbers)."
+  - type: input
+    id: name
+    attributes: {label: Company name}
+    validations: {required: true}
+  - type: input
+    id: careers
+    attributes: {label: Careers page URL}
+    validations: {required: true}
+  - type: textarea
+    id: facts
+    attributes:
+      label: Remote policy and how they hire in Vietnam
+      description: Direct hire, EOR, contractor? Time zone expectations? Public salary info?
+    validations: {required: true}
+  - type: textarea
+    id: sources
+    attributes: {label: Public source URLs}
+    validations: {required: true}
+  - type: checkboxes
+    id: policy
+    attributes:
+      label: Checklist
+      options:
+        - label: This is not a gambling, betting, casino or iGaming company.
+          required: true

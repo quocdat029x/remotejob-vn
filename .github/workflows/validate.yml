@@ -1,0 +1,29 @@
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate data (schema, policy, privacy)
+        run: python3 scripts/validate.py
+      - name: Build site
+        run: python3 scripts/build.py
+      - name: Check JSON-LD
+        run: python3 scripts/check_jsonld.py
+      - name: Check asset budgets (CSS < 30 KB, JS < 20 KB)
+        run: |
+          css=$(stat -c %s dist/assets/style.*.css); js=$(stat -c %s dist/assets/app.*.js)
+          echo "css=$css js=$js"
+          test "$css" -lt 30720 && test "$js" -lt 20480

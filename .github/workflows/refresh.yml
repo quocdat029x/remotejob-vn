@@ -1,0 +1,37 @@
+name: refresh-jobs
+
+on:
+  schedule:
+    - cron: "17 22 * * *"   # daily 22:17 UTC = 05:17 Asia/Ho_Chi_Minh
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-jobs
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh jobs from public ATS APIs (1 request/second)
+        run: python3 scripts/refresh_jobs.py --delay 1.0
+      - name: Validate
+        run: python3 scripts/validate.py
+      - name: Build (sanity check)
+        run: python3 scripts/build.py && python3 scripts/check_jsonld.py
+      - name: Commit data changes
+        run: |
+          if git diff --quiet -- data/; then echo "No changes"; exit 0; fi
+          git config user.name "remotejob-vn-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "chore(data): daily job refresh $(date -u +%Y-%m-%d)"
+          git push

@@ -1,0 +1,2802 @@
+[
+ {
+  "slug": "ansol",
+  "name": "ANSOL",
+  "website": "https://ansol.vn",
+  "careers_url": "https://ansol.vn/vi/careers",
+  "group": "A",
+  "hq": "Hà Nội / TP.HCM",
+  "remote_policy": "Remote-first; Backend \"Hà Nội / Từ xa\", ML/AI \"TP.HCM / Từ xa\"; DevOps \"Hà Nội / Kết hợp\"",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "backend",
+   "ml"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://ansol.vn/vi/careers"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "asiantech",
+  "name": "Asian Technology Solutions",
+  "website": "https://www.asiantech.vn",
+  "careers_url": "https://www.asiantech.vn",
+  "group": "A",
+  "hq": "Việt Nam",
+  "remote_policy": "100% remote (freelance 2 tháng)",
+  "vn_hiring_mode": "Freelance",
+  "hires_roles": [
+   "devops",
+   "azure"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Tới 55 triệu VND",
+  "source_urls": [
+   "https://itviec.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "ateam-vn",
+  "name": "Ateam Việt Nam",
+  "website": "https://www.a-tm.co.jp",
+  "careers_url": "https://itviec.com/companies/ateam-viet-nam",
+  "group": "A",
+  "hq": "TP.HCM (công ty mẹ Nhật)",
+  "remote_policy": "Remote; phải sống gần TP.HCM",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "game-dev"
+  ],
+  "timezone_note": "Giờ VN/Nhật",
+  "salary_public": "Tới 2.000 USD",
+  "source_urls": [
+   "https://itviec.com/it-jobs/remote"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "cloudx",
+  "name": "CloudX (Công ty CP CloudX)",
+  "website": "https://cloudx.com.vn",
+  "careers_url": "https://cloudx.com.vn/tin-tuc/tuyen-dung",
+  "group": "A",
+  "hq": "Hà Nội",
+  "remote_policy": "Tin DevOps \"remote 100%\" và Senior SysAdmin remote",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "sysadmin"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://cloudx.com.vn/tin-tuc/tuyen-dung"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "coderpush",
+  "name": "CoderPush",
+  "website": "https://coderpush.com",
+  "careers_url": "https://coderpush.com",
+  "group": "A",
+  "hq": "TP.HCM",
+  "remote_policy": "Tự nhận remote-first, văn phòng HN/HCM tùy chọn; tin DevOps hiện tại là hybrid Hà Nội",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "cloud",
+   "backend",
+   "ai"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Tới 90 triệu gross (vị trí AI Python senior)",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/view/4477562579"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "devwork",
+  "name": "Devwork",
+  "website": "https://devwork.vn",
+  "careers_url": "https://devwork.vn",
+  "group": "A",
+  "hq": "Việt Nam (nền tảng tuyển dụng)",
+  "remote_policy": "100% remote",
+  "vn_hiring_mode": "Qua nền tảng",
+  "hires_roles": [
+   "devops",
+   "azure"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "30-40 triệu VND (~1.200-1.600 USD)",
+  "source_urls": [
+   "https://devwork.vn"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "dikshatek",
+  "name": "Dikshatek (VN)",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/dikshatek-vn",
+  "group": "A",
+  "hq": "Việt Nam (theo Himalayas)",
+  "remote_policy": "Tin \"Remote DevOps\"; LinkedIn có tin \"[HCM - HYBRID]\"",
+  "vn_hiring_mode": "Trực tiếp (chưa xác minh)",
+  "hires_roles": [
+   "devops",
+   "data"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/dikshatek-vn/jobs/remote-devops-engineer",
+   "https://himalayas.app/companies/dikshatek-co/jobs/senior-devops_remote-job"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "dwarves",
+  "name": "Dwarves Foundation",
+  "website": "https://d.foundation",
+  "careers_url": "https://memo.d.foundation/careers",
+  "group": "A",
+  "hq": "TP.HCM",
+  "remote_policy": "Remote-friendly (văn phòng HCM/HN/Đà Lạt)",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "platform",
+   "backend"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://memo.d.foundation/careers"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "edgecraft",
+  "name": "Edgecraft Digital Việt Nam",
+  "website": "https://edgecraft.digital",
+  "careers_url": "https://www.linkedin.com/company/edgecraft-digital",
+  "group": "A",
+  "hq": "Việt Nam",
+  "remote_policy": "\"Remote work within Vietnam\"",
+  "vn_hiring_mode": "Trực tiếp (fractional)",
+  "hires_roles": [
+   "cloud",
+   "architect"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/search?keywords=Edgecraft%20Digital"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "elca-vn",
+  "name": "ELCA Vietnam",
+  "website": "https://www.elca.ch",
+  "careers_url": "https://careers.elca.ch",
+  "group": "A",
+  "hq": "TP.HCM (tập đoàn Thụy Sĩ)",
+  "remote_policy": "Hybrid",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "platform"
+  ],
+  "timezone_note": "Giờ VN, khách Thụy Sĩ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://careers.elca.ch"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "fizen",
+  "name": "FIZEN",
+  "website": "https://fizen.io",
+  "careers_url": "https://itviec.com/companies/fizen",
+  "group": "A",
+  "hq": "Hà Nội / TP.HCM",
+  "remote_policy": "Remote ở HN/HCM (theo tin ITviec)",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "ba",
+   "product"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Tới 1.500 USD (BA)",
+  "source_urls": [
+   "https://itviec.com/it-jobs/remote"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "fram",
+  "name": "fram^",
+  "website": "https://fram.vn",
+  "careers_url": "https://itviec.com/companies/fram",
+  "group": "A",
+  "hq": "TP.HCM (chủ sở hữu Thụy Điển)",
+  "remote_policy": "Remote cho vị trí SRE; Senior DevOps ghi \"flexible remote\"",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "sre",
+   "devops"
+  ],
+  "timezone_note": "Giờ VN, khách hàng EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/view/4475677848",
+   "https://itviec.com/it-jobs/remote"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "gradion",
+  "name": "Gradion (trước là NFQ Vietnam)",
+  "website": "https://gradion.com",
+  "careers_url": "https://jobs.lever.co/gradion",
+  "group": "A",
+  "hq": "TP.HCM / Đức",
+  "remote_policy": "Hybrid; ứng viên ở Hà Nội hoặc Cần Thơ được làm remote",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "backend"
+  ],
+  "timezone_note": "9:00-18:00 VN + on-call theo ca cho khách EU",
+  "salary_public": "Chưa công bố; thưởng tới 2 tháng lương",
+  "source_urls": [
+   "https://jobs.lever.co/gradion/b67e9d22-2494-4a9f-8aa8-6496e927c593"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "gtemas",
+  "name": "GTEMAS",
+  "website": "https://gtemas.com",
+  "careers_url": "https://gtemas.com/careers",
+  "group": "A",
+  "hq": "Hà Nội / TP.HCM / Đà Nẵng",
+  "remote_policy": "Hybrid & remote; nhiều vị trí \"Vietnam (Remote/Hybrid)\"",
+  "vn_hiring_mode": "Hợp đồng/full-time",
+  "hires_roles": [
+   "devops",
+   "backend"
+  ],
+  "timezone_note": "Khách US/EU/APAC",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://gtemas.com/careers",
+   "https://gtemas.com/careers/senior-devops-engineer"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "hatonet",
+  "name": "Hatonet",
+  "website": "https://hatonet.com",
+  "careers_url": "https://hatonet.com",
+  "group": "A",
+  "hq": "Việt Nam",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Qua nền tảng",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Tới 32 triệu VND",
+  "source_urls": [
+   "https://hatonet.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "holistics",
+  "name": "Holistics",
+  "website": "https://www.holistics.io",
+  "careers_url": "https://www.holistics.io/careers/",
+  "group": "A",
+  "hq": "Singapore / TP.HCM (đội kỹ thuật ở VN)",
+  "remote_policy": "Hybrid WFO+WFH; các vị trí remote theo giờ Mỹ",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "backend",
+   "data"
+  ],
+  "timezone_note": "Vị trí remote cần giờ Mỹ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.holistics.io/careers/"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "ikonnect",
+  "name": "iKonnect (agency)",
+  "website": "https://www.ikonnectvn.com",
+  "careers_url": "https://www.ikonnectvn.com",
+  "group": "A",
+  "hq": "Việt Nam (agency)",
+  "remote_policy": "Fully remote cho ứng viên ở châu Á; overlap 1-2 giờ/ngày với Mỹ",
+  "vn_hiring_mode": "Qua agency (contractor)",
+  "hires_roles": [
+   "devops",
+   "blockchain"
+  ],
+  "timezone_note": "Overlap 1-2h với Mỹ",
+  "salary_public": "\"Competitive\"",
+  "source_urls": [
+   "https://www.ikonnectvn.com/jobs/devops-engineer-blockchain-contractor-jo322"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "jt1",
+  "name": "JT1 (agency)",
+  "website": "https://jt1.vn",
+  "careers_url": "https://jt1.vn",
+  "group": "A",
+  "hq": "TP.HCM (agency tuyển dụng)",
+  "remote_policy": "Vị trí remote theo giờ VN",
+  "vn_hiring_mode": "Qua agency",
+  "hires_roles": [
+   "platform",
+   "devops"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "2.000-2.500 USD (OVD273)",
+  "source_urls": [
+   "https://jt1.vn"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "kms-tech",
+  "name": "KMS Technology",
+  "website": "https://kms-technology.com",
+  "careers_url": "https://kms-technology.com/careers",
+  "group": "A",
+  "hq": "TP.HCM / Mỹ",
+  "remote_policy": "Chưa xác minh (chủ yếu văn phòng/hybrid)",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "cloud"
+  ],
+  "timezone_note": "Giờ VN, khách Mỹ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://kms-technology.com/careers"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "nkktech",
+  "name": "NKKTech",
+  "website": "https://nkktech.com",
+  "careers_url": "https://nkktech.com/careers",
+  "group": "A",
+  "hq": "Hà Nội / Singapore",
+  "remote_policy": "Remote-friendly",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "platform",
+   "ai-infra"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://nkktech.com/careers/devops-engineer"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "nsc-software",
+  "name": "NSC Software",
+  "website": "https://nsc-software.com",
+  "careers_url": "https://nsc-software.com",
+  "group": "A",
+  "hq": "Việt Nam",
+  "remote_policy": "Remote cho Senior DevOps",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "ai"
+  ],
+  "timezone_note": "8:00-17:00 VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://joboko.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "okiela",
+  "name": "Okiela",
+  "website": "https://okiela.io",
+  "careers_url": "https://okiela.io/careers",
+  "group": "A",
+  "hq": "Việt Nam (gốc VN)",
+  "remote_policy": "Remote-first",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "engineering"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://okiela.io/careers"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "ominext",
+  "name": "Ominext",
+  "website": "https://ominext.com",
+  "careers_url": "https://ominext.com",
+  "group": "A",
+  "hq": "Hà Nội",
+  "remote_policy": "Tin DevOps 100% remote",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "blockchain"
+  ],
+  "timezone_note": "Yêu cầu core hours 20:00-24:00 GMT+7 (quá mốc 23h của Dat)",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.topcv.vn"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "orient-software",
+  "name": "Orient Software",
+  "website": "https://www.orientsoftware.com",
+  "careers_url": "https://www.orientsoftware.com/careers/",
+  "group": "A",
+  "hq": "TP.HCM",
+  "remote_policy": "Hybrid, 2 ngày WFH/tuần",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "azure"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.orientsoftware.com/careers/"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "qode",
+  "name": "Qode (nền tảng tuyển dụng)",
+  "website": "https://qode.world",
+  "careers_url": "https://apply.workable.com/qode",
+  "group": "A",
+  "hq": "TP.HCM",
+  "remote_policy": "Có tin remote cho ứng viên ở VN",
+  "vn_hiring_mode": "Qua nền tảng",
+  "hires_roles": [
+   "sre",
+   "devops"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://apply.workable.com/qode"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "saigon-technology",
+  "name": "Saigon Technology",
+  "website": "https://saigontechnology.com",
+  "careers_url": "https://saigontechnology.com/career",
+  "group": "A",
+  "hq": "TP.HCM",
+  "remote_policy": "Hybrid có hỗ trợ WFH; một số tin full-remote (.NET)",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "dotnet"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://saigontechnology.com/career"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "smartdev",
+  "name": "SmartDev",
+  "website": "https://www.smartdev.com",
+  "careers_url": "https://www.smartdev.com",
+  "group": "A",
+  "hq": "Đà Nẵng / Hà Nội",
+  "remote_policy": "On-site + remote/hybrid tùy vị trí",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "sre",
+   "devops",
+   "ai"
+  ],
+  "timezone_note": "Giờ VN, khách Mỹ/EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.remoterocketship.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "sunbytes",
+  "name": "Sunbytes",
+  "website": "https://sunbytes.io",
+  "careers_url": "https://sunbytes.io/careers",
+  "group": "A",
+  "hq": "TP.HCM (Hà Lan - Việt Nam)",
+  "remote_policy": "\"Hybrid & remote flexibility\"",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "backend"
+  ],
+  "timezone_note": "Giờ VN, khách EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://sunbytes.io/careers"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "vexere",
+  "name": "Vexere",
+  "website": "https://vexere.com",
+  "careers_url": "https://vexere.com",
+  "group": "A",
+  "hq": "TP.HCM",
+  "remote_policy": "JD ghi \"remote-first hoặc hybrid, gặp offline theo kế hoạch 2 lần/tuần\"",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "backend"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/search?keywords=Vexere"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "vireon-labs",
+  "name": "Vireon Labs",
+  "website": "https://vireonlabs.cloud",
+  "careers_url": "https://vireonlabs.cloud/careers",
+  "group": "A",
+  "hq": "TP.HCM",
+  "remote_policy": "Remote-first; vị trí ở HCM là remote hoặc hybrid",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "engineering"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://vireonlabs.cloud/careers"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "vmo",
+  "name": "VMO Holdings",
+  "website": "https://www.vmogroup.com",
+  "careers_url": "https://www.vmogroup.com",
+  "group": "A",
+  "hq": "Hà Nội",
+  "remote_policy": "Phần lớn on-site/hybrid; có tin [REMOTE] riêng lẻ",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "ai"
+  ],
+  "timezone_note": "Có tin DevOps ca đêm (đã hết hạn)",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/search?keywords=VMO%20remote"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "wetheflywheel",
+  "name": "We The Flywheel",
+  "website": "https://wetheflywheel.com",
+  "careers_url": "https://wetheflywheel.com",
+  "group": "A",
+  "hq": "TP.HCM",
+  "remote_policy": "Remote-first",
+  "vn_hiring_mode": "Hợp đồng 10-40 giờ/tuần",
+  "hires_roles": [
+   "engineering"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://wetheflywheel.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "accelerant",
+  "name": "Accelerant",
+  "website": "https://accelerant.ai",
+  "careers_url": "https://himalayas.app/companies/accelerant",
+  "group": "B",
+  "hq": "Mỹ (insurtech)",
+  "remote_policy": "Remote (Global)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai-platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/accelerant/jobs/ai-platform-engineer-global"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "akuity",
+  "name": "Akuity",
+  "website": "https://akuity.io",
+  "careers_url": "https://akuity.io/careers",
+  "group": "B",
+  "hq": "Mỹ (team Argo CD)",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/akuity/jobs/staff-engineer"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "alongside",
+  "name": "Alongside",
+  "website": "https://www.alongside.com",
+  "careers_url": "https://www.alongside.com/careers",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote Vietnam (contractor)",
+  "vn_hiring_mode": "Contractor",
+  "hires_roles": [
+   "backend"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/alongside/jobs/backend-engineer-remote-vietnam"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "alpaca",
+  "name": "Alpaca",
+  "website": "https://alpaca.markets",
+  "careers_url": "https://alpaca.markets/hiring",
+  "group": "B",
+  "hq": "Mỹ (San Mateo)",
+  "remote_policy": "Remote-first",
+  "vn_hiring_mode": "Trực tiếp/EOR (chưa xác minh)",
+  "hires_roles": [
+   "sre",
+   "platform"
+  ],
+  "timezone_note": "Team APAC",
+  "salary_public": "Chưa công bố; setup 500 USD + 150 USD/tháng",
+  "source_urls": [
+   "https://job-boards.greenhouse.io/alpaca/jobs/6186847004",
+   "https://himalayas.app/companies/alpaca/jobs/senior-sre-apac"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "alpha-bravo",
+  "name": "Alpha Bravo Development",
+  "website": null,
+  "careers_url": "https://itviec.com/companies/alpha-bravo-development",
+  "group": "B",
+  "hq": "Mỹ (agency, xây team VN)",
+  "remote_policy": "Remote (ITviec)",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "ai"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://itviec.com/it-jobs/remote"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "ams-accelerate",
+  "name": "AMS Accelerate IT",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/ams-accelerate-it",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai",
+   "platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/ams-accelerate-it/jobs/senior-ai-platform-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "aubrant",
+  "name": "Aubrant Digital",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/aubrant-digital",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/aubrant-digital/jobs/senior-devops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "auros",
+  "name": "Auros",
+  "website": "https://www.auros.global",
+  "careers_url": "https://www.auros.global/careers",
+  "group": "B",
+  "hq": "Hồng Kông / Singapore",
+  "remote_policy": "Global-first; một số vị trí fully remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops",
+   "sre"
+  ],
+  "timezone_note": "Châu Á/Úc",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://job-boards.greenhouse.io/aurosglobal/jobs/4696822005",
+   "https://www.auros.global/careers"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "automattic",
+  "name": "Automattic",
+  "website": "https://automattic.com",
+  "careers_url": "https://automattic.com/work-with-us/",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Fully remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "systems"
+  ],
+  "timezone_note": "Async toàn cầu",
+  "salary_public": "120.000-180.000 USD/năm",
+  "source_urls": [
+   "https://job-boards.greenhouse.io/automatticcareers/jobs/5980233"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "binance",
+  "name": "Binance",
+  "website": "https://www.binance.com",
+  "careers_url": "https://www.binance.com/en/careers",
+  "group": "B",
+  "hq": "Phân tán",
+  "remote_policy": "Nhiều vị trí \"fully remote\" có liệt kê Vietnam",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "various"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.binance.com/en/careers"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "biolm",
+  "name": "BioLM",
+  "website": "https://biolm.ai",
+  "careers_url": "https://himalayas.app/companies/biolm",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/biolm/jobs/lead-platform-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "bjak",
+  "name": "BJAK",
+  "website": "https://bjak.my",
+  "careers_url": "https://himalayas.app/companies/bjak",
+  "group": "B",
+  "hq": "Malaysia",
+  "remote_policy": "Remote (một số tin ghi remote tại VN)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devsecops",
+   "cloud-security",
+   "ai"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/bjak/jobs/devsecops-engineer",
+   "https://himalayas.app/companies/bjak/jobs/cloud-infrastructure-security-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "blockstream",
+  "name": "Blockstream",
+  "website": "https://blockstream.com",
+  "careers_url": "https://jobs.ashbyhq.com/blockstream",
+  "group": "B",
+  "hq": "Canada (phân tán)",
+  "remote_policy": "Fully remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "platform",
+   "devops"
+  ],
+  "timezone_note": "Giờ APAC",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/blockstream/8d562d06-9708-4a5c-b74a-d6e672b8f308"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "bloomtech",
+  "name": "BLOOMTECH",
+  "website": "https://bloomtech.co.jp",
+  "careers_url": "https://global.bloomtechcareer.com/en/jobs",
+  "group": "B",
+  "hq": "Nhật Bản (Tokyo, công ty tuyển dụng)",
+  "remote_policy": "Nhiều vị trí \"Fully Remote\" nhưng địa điểm là Nhật",
+  "vn_hiring_mode": "Qua agency",
+  "hires_roles": [
+   "devops",
+   "engineering"
+  ],
+  "timezone_note": "Giờ Nhật (sớm hơn VN 2 tiếng)",
+  "salary_public": "Theo từng tin",
+  "source_urls": [
+   "https://global.bloomtechcareer.com/en/jobs"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "brave",
+  "name": "Brave",
+  "website": "https://brave.com",
+  "careers_url": "https://brave.com/careers/",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "build",
+   "ci"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/brave/jobs/senior-build-release-ci-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "bright-data",
+  "name": "Bright Data",
+  "website": "https://brightdata.com",
+  "careers_url": "https://himalayas.app/companies/bright-data",
+  "group": "B",
+  "hq": "Israel",
+  "remote_policy": "Remote (Worldwide)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "backend"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/bright-data/jobs/experienced-backend-javascript-developer-worldwide"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "caldera",
+  "name": "Caldera",
+  "website": "https://caldera.xyz",
+  "careers_url": "https://himalayas.app/companies/caldera",
+  "group": "B",
+  "hq": "Mỹ (web3 rollups)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "infra",
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/caldera/jobs/senior-infrastructure-engineer-devops"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "canonical",
+  "name": "Canonical",
+  "website": "https://canonical.com",
+  "careers_url": "https://canonical.com/careers",
+  "group": "B",
+  "hq": "Anh (London)",
+  "remote_policy": "Home based - Worldwide",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre",
+   "mlops"
+  ],
+  "timezone_note": "Tự chọn giờ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://job-boards.greenhouse.io/canonical/jobs/4468036"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "chess-com",
+  "name": "Chess.com",
+  "website": "https://www.chess.com",
+  "careers_url": "https://www.chess.com/jobs",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Fully remote",
+  "vn_hiring_mode": "Contractor (chưa xác minh)",
+  "hires_roles": [
+   "sre"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/chess-com/jobs/site-reliability-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "ciq",
+  "name": "CIQ",
+  "website": "https://ciq.com",
+  "careers_url": "https://himalayas.app/companies/ciq",
+  "group": "B",
+  "hq": "Mỹ (Rocky Linux)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "linux",
+   "infra"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/ciq/jobs/senior-principal-linux-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "circle-so",
+  "name": "Circle (circle.so)",
+  "website": "https://circle.so",
+  "careers_url": "https://jobs.ashbyhq.com/circle",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Fully remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai-platform"
+  ],
+  "timezone_note": "Async",
+  "salary_public": "170.000 USD/năm",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/circle/cb085d54-568c-46b3-829f-b18885c6cda2"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "clanx",
+  "name": "ClanX",
+  "website": "https://clanx.ai",
+  "careers_url": "https://himalayas.app/companies/clanx",
+  "group": "B",
+  "hq": "Ấn Độ",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai"
+  ],
+  "timezone_note": "Giờ Ấn Độ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/clanx/jobs/ai-engineer-remote"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "clearer-io",
+  "name": "Clearer.io (AppHub)",
+  "website": "https://www.clearer.io",
+  "careers_url": "https://jobs.lever.co/Clearer",
+  "group": "B",
+  "hq": "Úc / VN",
+  "remote_policy": "100% remote tại VN",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "engineering"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.lever.co/Clearer"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-28"
+ },
+ {
+  "slug": "clickhouse",
+  "name": "ClickHouse",
+  "website": "https://clickhouse.com",
+  "careers_url": "https://clickhouse.com/company/careers",
+  "group": "B",
+  "hq": "Mỹ / Hà Lan",
+  "remote_policy": "Remote (APJ)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre",
+   "infra"
+  ],
+  "timezone_note": "APJ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://clickhouse.com/company/careers"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "coder-trove",
+  "name": "Coder Trove",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/coder-trove",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote, location Vietnam",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai"
+  ],
+  "timezone_note": "UTC+7",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/coder-trove/jobs/senior-generative-ai-engineer"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "colonist",
+  "name": "Colonist",
+  "website": "https://colonist.io",
+  "careers_url": "https://himalayas.app/companies/colonist",
+  "group": "B",
+  "hq": "Chưa xác minh (game cờ bàn online)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/colonist/jobs/devops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "consensys",
+  "name": "Consensys",
+  "website": "https://consensys.io",
+  "careers_url": "https://jobs.ashbyhq.com/consensys",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Fully remote",
+  "vn_hiring_mode": "Trực tiếp/EOR (chưa xác minh hình thức)",
+  "hires_roles": [
+   "sre",
+   "devops"
+  ],
+  "timezone_note": "Ca giờ APAC, follow-the-sun với EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/consensys/af2af29f-f290-4cbf-aec4-edaeed225f26"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-28"
+ },
+ {
+  "slug": "covergo",
+  "name": "CoverGo",
+  "website": "https://covergo.com",
+  "careers_url": "https://covergo.com/careers",
+  "group": "B",
+  "hq": "Hồng Kông",
+  "remote_policy": "100% remote",
+  "vn_hiring_mode": "Trực tiếp/EOR (chưa xác minh)",
+  "hires_roles": [
+   "fullstack",
+   "observability"
+  ],
+  "timezone_note": "APAC",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/view/4469880087",
+   "https://himalayas.app/companies/covergo/jobs/full-stack-engineer-squad-lead-support-observability-focus"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-28"
+ },
+ {
+  "slug": "distantjob",
+  "name": "DistantJob",
+  "website": "https://distantjob.com",
+  "careers_url": "https://distantjob.com/jobs/",
+  "group": "B",
+  "hq": "Canada (agency)",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Contractor qua agency",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Tùy khách",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/distantjob/jobs/sr-devops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "docusketch",
+  "name": "DocuSketch",
+  "website": "https://www.docusketch.com",
+  "careers_url": "https://himalayas.app/companies/docusketch",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/docusketch/jobs/senior-devops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "doist",
+  "name": "Doist",
+  "website": "https://doist.com",
+  "careers_url": "https://doist.com/careers",
+  "group": "B",
+  "hq": "Phân tán",
+  "remote_policy": "Fully remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "engineering"
+  ],
+  "timezone_note": "Async",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://doist.com/careers"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "doit",
+  "name": "DoiT International",
+  "website": "https://www.doit.com",
+  "careers_url": "https://job-boards.greenhouse.io/doitintl",
+  "group": "B",
+  "hq": "Israel/Mỹ (phân tán)",
+  "remote_policy": "Remote APAC cho một số vị trí",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "cloud",
+   "solutions"
+  ],
+  "timezone_note": "APAC",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://job-boards.greenhouse.io/doitintl/jobs/7822567003"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "dualentry",
+  "name": "DualEntry",
+  "website": "https://www.dualentry.com",
+  "careers_url": "https://himalayas.app/companies/dualentry",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ (có thể giờ Mỹ)",
+  "salary_public": "100.000-165.000 USD/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/dualentry/jobs/devops-engineer-senior-staff-2447305852"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "edb",
+  "name": "EDB (EnterpriseDB)",
+  "website": "https://www.enterprisedb.com",
+  "careers_url": "https://himalayas.app/companies/enterprisedb",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ml",
+   "postgres"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/enterprisedb/jobs/machine-learning-engineer-governance-ml-platform"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "etg",
+  "name": "Emerging Travel Group (ETG)",
+  "website": "https://www.emergingtravel.com",
+  "careers_url": "https://apply.workable.com/j/E09695A11E",
+  "group": "B",
+  "hq": "Phân tán (travel-tech, RateHawk/ZenHotels)",
+  "remote_policy": "Fully remote; văn phòng/hybrid là tùy chọn",
+  "vn_hiring_mode": "Trực tiếp (chưa xác minh hình thức)",
+  "hires_roles": [
+   "sre",
+   "observability",
+   "data-platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://apply.workable.com/j/E09695A11E"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "employment-hero",
+  "name": "Employment Hero",
+  "website": "https://employmenthero.com",
+  "careers_url": "https://employmenthero.com/jobs/",
+  "group": "B",
+  "hq": "Úc (Sydney)",
+  "remote_policy": "Remote-first; có tin \"(Remote, Vietnam)\"",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "devops",
+   "backend"
+  ],
+  "timezone_note": "Giờ Úc (sớm hơn VN 3-4 tiếng)",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://employmenthero.com/jobs/",
+   "https://www.linkedin.com/jobs/search?keywords=Employment%20Hero%20Vietnam"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "fairarena",
+  "name": "Fairarena",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/fairarena",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "backend",
+   "cloud-infra"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/fairarena/jobs/founding-software-engineer-backend-cloud-infrastructure"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "fingerprint",
+  "name": "Fingerprint",
+  "website": "https://fingerprint.com",
+  "careers_url": "https://fingerprint.com/careers/",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre",
+   "infra"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://job-boards.greenhouse.io/fingerprint"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "fly-io",
+  "name": "Fly.io",
+  "website": "https://fly.io",
+  "careers_url": "https://fly.io/jobs/",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Fully remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "infra-ops"
+  ],
+  "timezone_note": "Async",
+  "salary_public": "90.000-200.000 USD/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/fly/jobs/infrastructure-ops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "g2i",
+  "name": "G2i",
+  "website": "https://www.g2i.co",
+  "careers_url": "https://himalayas.app/companies/g2i",
+  "group": "B",
+  "hq": "Mỹ (marketplace)",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Freelance",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Tùy khách",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/g2i/jobs/devops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "glints",
+  "name": "Glints",
+  "website": "https://glints.com",
+  "careers_url": "https://glints.com/careers",
+  "group": "B",
+  "hq": "Singapore",
+  "remote_policy": "Remote cho một số vị trí, chỉ ứng viên VN",
+  "vn_hiring_mode": "Trực tiếp (chưa xác minh)",
+  "hires_roles": [
+   "ai",
+   "ml"
+  ],
+  "timezone_note": "APAC",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/search?keywords=Glints%20remote"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "grafana-labs",
+  "name": "Grafana Labs",
+  "website": "https://grafana.com",
+  "careers_url": "https://job-boards.greenhouse.io/grafanalabs",
+  "group": "B",
+  "hq": "Mỹ (remote-first)",
+  "remote_policy": "Remote-first (theo từng nước)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre",
+   "observability"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://job-boards.greenhouse.io/grafanalabs"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "gravity9",
+  "name": "gravity9",
+  "website": "https://www.gravity9.com",
+  "careers_url": "https://himalayas.app/companies/gravity9",
+  "group": "B",
+  "hq": "Anh / Ba Lan",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops",
+   "azure",
+   "ml"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/gravity9/jobs/senior-devops-engineer-azure"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "huzzle",
+  "name": "Huzzle (nền tảng)",
+  "website": "https://huzzle.app",
+  "careers_url": "https://apply.workable.com/huzzle",
+  "group": "B",
+  "hq": "Anh (nền tảng tuyển dụng)",
+  "remote_policy": "Remote; applicant location Vietnam",
+  "vn_hiring_mode": "Qua nền tảng",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Giờ Mỹ/Anh",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://apply.workable.com/huzzle"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "hyperion360",
+  "name": "Hyperion360",
+  "website": "https://hyperion360.com",
+  "careers_url": "https://hyperion360.com",
+  "group": "B",
+  "hq": "Mỹ (staffing)",
+  "remote_policy": "Fully remote; location Vietnam",
+  "vn_hiring_mode": "Contractor qua staffing",
+  "hires_roles": [
+   "backend"
+  ],
+  "timezone_note": "Giờ khách Mỹ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://hyperion360.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "improvado",
+  "name": "Improvado",
+  "website": "https://improvado.io",
+  "careers_url": "https://improvado.io/careers",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Fully remote, VN đủ điều kiện",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Yêu cầu giờ EST (quá 23h VN)",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://improvado.io/careers"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "inference-loops",
+  "name": "Inference Loops",
+  "website": "https://inferenceloops.com",
+  "careers_url": "https://inferenceloops.com/en/",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote-first, GMT+7±2",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai",
+   "engineering"
+  ],
+  "timezone_note": "GMT+7±2 (rất hợp)",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://inferenceloops.com/en/"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "kake",
+  "name": "Kake",
+  "website": "https://kake.ai",
+  "careers_url": "https://kake.ai",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote-first",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "engineering"
+  ],
+  "timezone_note": "Cần overlap giờ Pacific Mỹ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/search?keywords=Kake%20Vietnam"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "kitchen-warehouse",
+  "name": "Kitchen Warehouse",
+  "website": "https://www.kitchenwarehouse.com.au",
+  "careers_url": "https://www.kitchenwarehouse.com.au/careers",
+  "group": "B",
+  "hq": "Úc",
+  "remote_policy": "100% remote tại VN (tin ITviec)",
+  "vn_hiring_mode": "Trực tiếp qua ITviec",
+  "hires_roles": [
+   "devops",
+   "platform"
+  ],
+  "timezone_note": "Giờ Úc",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://itviec.com/it-jobs/remote-devops-platform-engineer-kitchen-warehouse-pty-ltd-3024"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "kloudmate",
+  "name": "KloudMate",
+  "website": "https://kloudmate.com",
+  "careers_url": "https://himalayas.app/companies/kloudmate",
+  "group": "B",
+  "hq": "Ấn Độ (observability)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "golang",
+   "observability"
+  ],
+  "timezone_note": "Giờ Ấn Độ",
+  "salary_public": "8-16 lakh INR/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/kloudmate/jobs/full-stack-golang-developer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "knorex",
+  "name": "KNOREX",
+  "website": "https://www.knorex.com",
+  "careers_url": "https://www.knorex.com/careers",
+  "group": "B",
+  "hq": "Singapore (có team VN)",
+  "remote_policy": "Có phúc lợi WFH; mức remote chưa xác minh",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "mlops"
+  ],
+  "timezone_note": "Giờ VN/SG",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.knorex.com/careers"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "kraken",
+  "name": "Kraken",
+  "website": "https://www.kraken.com",
+  "careers_url": "https://www.kraken.com/careers",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre",
+   "infra"
+  ],
+  "timezone_note": "Toàn cầu",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/kraken.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "latitude-sh",
+  "name": "Latitude.sh",
+  "website": "https://www.latitude.sh",
+  "careers_url": "https://www.latitude.sh/careers",
+  "group": "B",
+  "hq": "Brazil / Mỹ",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Contractor",
+  "hires_roles": [
+   "sre"
+  ],
+  "timezone_note": "Team châu Mỹ, rủi ro lệch giờ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/latitude-sh/jobs/senior-site-reliability-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "lemon-io",
+  "name": "Lemon.io",
+  "website": "https://lemon.io",
+  "careers_url": "https://lemon.io/for-developers/",
+  "group": "B",
+  "hq": "Ukraine/Mỹ (marketplace)",
+  "remote_policy": "Remote; Europe/LATAM/APAC/US",
+  "vn_hiring_mode": "Freelance",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Tùy khách",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.workingnomads.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "lifted",
+  "name": "Lifted (an Upwork Company)",
+  "website": "https://www.upwork.com",
+  "careers_url": "https://himalayas.app/companies/lifted-an-upwork-company",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote, location Vietnam",
+  "vn_hiring_mode": "Contractor",
+  "hires_roles": [
+   "ai-eval"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/lifted-an-upwork-company/jobs/copy-of-ai-code-reviewer-systems-evaluation-engineer-2-8189759150"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "logos",
+  "name": "Logos / Institute of Free Technology",
+  "website": "https://logos.co",
+  "careers_url": "https://himalayas.app/companies/logos",
+  "group": "B",
+  "hq": "Thụy Sĩ (phân tán)",
+  "remote_policy": "Remote (worldwide)",
+  "vn_hiring_mode": "Contractor (chưa xác minh)",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Async",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/logos/jobs/devops-engineer-vac-dst"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "lucenia",
+  "name": "Lucenia",
+  "website": "https://lucenia.io",
+  "careers_url": "https://himalayas.app/companies/lucenia-inc",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "search",
+   "data-plane"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/lucenia-inc/jobs/senior-software-engineer-control-plane"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "micro1",
+  "name": "micro1",
+  "website": "https://www.micro1.ai",
+  "careers_url": "https://himalayas.app/companies/micro1",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai",
+   "ml-platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "220.000-300.000 USD/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/micro1/jobs/ai-ml-engineer-internal-platforms"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "mixrank",
+  "name": "Mixrank",
+  "website": "https://mixrank.com",
+  "careers_url": "https://himalayas.app/companies/mixrank",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (Global)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "swe"
+  ],
+  "timezone_note": "Async",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/mixrank/jobs/software-engineer-remote-global-full-time"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "my-audit-corner",
+  "name": "My Audit Corner",
+  "website": null,
+  "careers_url": "https://itviec.com",
+  "group": "B",
+  "hq": "Pháp",
+  "remote_policy": "100% remote (ITviec)",
+  "vn_hiring_mode": "Contractor",
+  "hires_roles": [
+   "engineering"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://itviec.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "nansen",
+  "name": "Nansen",
+  "website": "https://www.nansen.ai",
+  "careers_url": "https://www.nansen.ai/careers",
+  "group": "B",
+  "hq": "Singapore",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "data"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.nansen.ai/careers"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "nebius",
+  "name": "Nebius",
+  "website": "https://nebius.com",
+  "careers_url": "https://careers.nebius.com",
+  "group": "B",
+  "hq": "Hà Lan (Amsterdam)",
+  "remote_policy": "Remote APAC (theo aggregator); trang chính thức ghi Singapore",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre",
+   "network"
+  ],
+  "timezone_note": "APAC",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://careers.nebius.com/?gh_jid=4988410101",
+   "https://himalayas.app/companies/nebius/jobs/staff-site-reliability-engineer-network-infrastructure-apac"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "novacard",
+  "name": "Novacard",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/novacard",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre",
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/novacard/jobs/site-reliability-engineer-sre"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "offchain-labs",
+  "name": "Offchain Labs",
+  "website": "https://offchainlabs.com",
+  "careers_url": "https://jobs.lever.co/offchainlabs",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "backend",
+   "infra"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.lever.co/offchainlabs"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "okx",
+  "name": "OKX",
+  "website": "https://www.okx.com",
+  "careers_url": "https://www.okx.com/join-us",
+  "group": "B",
+  "hq": "Seychelles/Hồng Kông/Singapore",
+  "remote_policy": "Chủ yếu văn phòng SG/HK; vài vị trí ghi APAC",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "agent-infra"
+  ],
+  "timezone_note": "APAC",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.okx.com/join-us"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "percona",
+  "name": "Percona",
+  "website": "https://www.percona.com",
+  "careers_url": "https://www.percona.com/careers",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Remote-first",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "database",
+   "infra"
+  ],
+  "timezone_note": "Toàn cầu",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.percona.com/careers"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "phantom",
+  "name": "Phantom",
+  "website": "https://phantom.com",
+  "careers_url": "https://jobs.ashbyhq.com/phantom",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops",
+   "sre"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/phantom"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "phizenix",
+  "name": "Phizenix",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/phizenix",
+  "group": "B",
+  "hq": "Chưa xác minh (staffing)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/phizenix/jobs/principal-platform-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "planetscale",
+  "name": "PlanetScale",
+  "website": "https://planetscale.com",
+  "careers_url": "https://planetscale.com/careers",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "database",
+   "swe"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "120.000-290.000 USD/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/planetscale/jobs/software-engineer-planetscale-postgres"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "portcast",
+  "name": "Portcast",
+  "website": "https://www.portcast.io",
+  "careers_url": "https://www.portcast.io/careers",
+  "group": "B",
+  "hq": "Singapore",
+  "remote_policy": "Remote-first (châu Á/châu Âu)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ml"
+  ],
+  "timezone_note": "Châu Á/châu Âu",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.linkedin.com/jobs/view/4455524377",
+   "https://himalayas.app/companies/portcast/jobs/senior-machine-learning-engineer"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "prime-intellect",
+  "name": "Prime Intellect",
+  "website": "https://www.primeintellect.ai",
+  "careers_url": "https://jobs.ashbyhq.com/primeintellect",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote; có vị trí ghi APAC",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "gpu-infra"
+  ],
+  "timezone_note": "APAC",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/primeintellect"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "qualifyze",
+  "name": "Qualifyze",
+  "website": "https://www.qualifyze.com",
+  "careers_url": "https://himalayas.app/companies/qualifyze",
+  "group": "B",
+  "hq": "Đức",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "65.000-70.000 EUR/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/qualifyze/jobs/senior-devops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "radian-arc",
+  "name": "Radian Arc",
+  "website": "https://radianarc.com",
+  "careers_url": "https://himalayas.app/companies/radian-arc",
+  "group": "B",
+  "hq": "Úc (GPUaaS)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai-infra",
+   "storage"
+  ],
+  "timezone_note": "Giờ Úc",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/radian-arc/jobs/staff-storage-platform-engineer-ai-storage-remote"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "railsware",
+  "name": "Railsware",
+  "website": "https://railsware.com",
+  "careers_url": "https://railsware.com/careers/",
+  "group": "B",
+  "hq": "Ukraine / Ba Lan",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/railsware/jobs/senior-devops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "reality-games",
+  "name": "Reality Games",
+  "website": "https://realitygames.co",
+  "careers_url": "https://himalayas.app/companies/reality-games",
+  "group": "B",
+  "hq": "Ba Lan (game mobile)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sysadmin",
+   "devops"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/reality-games/jobs/sysadmin-devops"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "saas-group",
+  "name": "saas.group",
+  "website": "https://saas.group",
+  "careers_url": "https://himalayas.app/companies/saas-group",
+  "group": "B",
+  "hq": "Đức (phân tán)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "platform"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/saas-group/jobs/senior-platform-engineer-504438484"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "saphetor",
+  "name": "Saphetor (VarSome)",
+  "website": "https://saphetor.com",
+  "careers_url": "https://himalayas.app/companies/saphetor",
+  "group": "B",
+  "hq": "Thụy Sĩ / Hy Lạp",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/saphetor/jobs/senior-devops-engineer-1055789064"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "searchapi",
+  "name": "SearchApi",
+  "website": "https://www.searchapi.io",
+  "careers_url": "https://jobs.ashbyhq.com/searchapi",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote; danh sách ~60 nước có \"Remote - Vietnam\"",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "infra",
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/searchapi/967846e7-f2bc-464c-beca-c276c925f965"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "signoz",
+  "name": "SigNoz",
+  "website": "https://signoz.io",
+  "careers_url": "https://jobs.ashbyhq.com/signoz",
+  "group": "B",
+  "hq": "Ấn Độ / Mỹ",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "observability"
+  ],
+  "timezone_note": "Giờ Ấn Độ (gần VN)",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/signoz"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "sourcegraph",
+  "name": "Sourcegraph",
+  "website": "https://sourcegraph.com",
+  "careers_url": "https://sourcegraph.com/jobs",
+  "group": "B",
+  "hq": "Mỹ (phân tán)",
+  "remote_policy": "Fully remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "74.000-148.000 USD/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/sourcegraph-com/jobs/software-engineer-platform-ic3"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "startale",
+  "name": "Startale",
+  "website": "https://startale.com",
+  "careers_url": "https://startale.com",
+  "group": "B",
+  "hq": "Nhật Bản (Tokyo)",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "blockchain"
+  ],
+  "timezone_note": "Giờ Nhật",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://startale.com"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "strike",
+  "name": "Strike",
+  "website": "https://strike.me",
+  "careers_url": "https://strike.me/careers",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://job-boards.greenhouse.io/strike"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "supabase",
+  "name": "Supabase",
+  "website": "https://supabase.com",
+  "careers_url": "https://supabase.com/careers",
+  "group": "B",
+  "hq": "Mỹ/Singapore (phân tán)",
+  "remote_policy": "Fully remote, tuyển toàn cầu",
+  "vn_hiring_mode": "Chưa xác minh (contractor/EOR)",
+  "hires_roles": [
+   "sre",
+   "platform"
+  ],
+  "timezone_note": "Async, toàn cầu",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/supabase/ed6cedb1-b9bf-4609-ac5c-c75c33b31bf3"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "techbiz-global",
+  "name": "TechBiz Global",
+  "website": "https://techbiz.global",
+  "careers_url": "https://himalayas.app/companies/techbiz-global",
+  "group": "B",
+  "hq": "Đức (agency)",
+  "remote_policy": "Remote",
+  "vn_hiring_mode": "Qua agency",
+  "hires_roles": [
+   "devops",
+   "llmops"
+  ],
+  "timezone_note": "Tùy khách",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/techbiz-global/jobs/senior-ai-devops-llmops"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "tensormesh",
+  "name": "Tensormesh",
+  "website": "https://www.tensormesh.ai",
+  "careers_url": "https://www.tensormesh.ai",
+  "group": "B",
+  "hq": "Mỹ (startup AI, LMCache)",
+  "remote_policy": "Remote/hybrid; đang xây core team ở VN",
+  "vn_hiring_mode": "Trực tiếp (chưa xác minh)",
+  "hires_roles": [
+   "mlops",
+   "ai-infra"
+  ],
+  "timezone_note": "Chưa rõ; HQ Mỹ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/tensormesh/jobs/senior-mlops-engineer"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "tensorops",
+  "name": "TensorOps",
+  "website": "https://www.tensorops.ai",
+  "careers_url": "https://himalayas.app/companies/tensorops",
+  "group": "B",
+  "hq": "Israel/Mỹ",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/tensorops/jobs/mid-senior-ai-engineer-1041352212"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "terminal-3",
+  "name": "Terminal 3",
+  "website": "https://www.terminal3.io",
+  "careers_url": "https://himalayas.app/companies/terminal-3",
+  "group": "B",
+  "hq": "Hồng Kông (web3 identity)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Contractor",
+  "hires_roles": [
+   "devops",
+   "azure"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/terminal-3/jobs/devops-engineer-azure-contractor"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "tether",
+  "name": "Tether",
+  "website": "https://tether.io",
+  "careers_url": "https://tether.recruitee.com",
+  "group": "B",
+  "hq": "El Salvador (phân tán)",
+  "remote_policy": "100% remote",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/tether-operations-limited/jobs/devops-engineer-100-remote"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "codest",
+  "name": "The Codest",
+  "website": "https://thecodest.co",
+  "careers_url": "https://himalayas.app/companies/codest-ltd-company-no-12590542-vat-number-gb363431020",
+  "group": "B",
+  "hq": "Ba Lan / Anh",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "21.000-25.000 PLN/tháng",
+  "source_urls": [
+   "https://himalayas.app/companies/codest-ltd-company-no-12590542-vat-number-gb363431020/jobs/devops-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "toptal",
+  "name": "Toptal",
+  "website": "https://www.toptal.com",
+  "careers_url": "https://www.toptal.com/freelance-jobs/developers/devops",
+  "group": "B",
+  "hq": "Mỹ (mạng freelancer)",
+  "remote_policy": "Remote freelance",
+  "vn_hiring_mode": "Freelance",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Tùy khách, thường Mỹ",
+  "salary_public": "Theo giờ",
+  "source_urls": [
+   "https://www.toptal.com/freelance-jobs/developers/devops"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "transportme",
+  "name": "Transportme",
+  "website": "https://www.transportme.com.au",
+  "careers_url": "https://www.transportme.com.au",
+  "group": "B",
+  "hq": "Úc (có team TP.HCM)",
+  "remote_policy": "Remote-first AU/VN",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "engineering"
+  ],
+  "timezone_note": "Giờ Úc",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://www.transportme.com.au"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "udacity",
+  "name": "Udacity",
+  "website": "https://www.udacity.com",
+  "careers_url": "https://www.udacity.com/jobs",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (mentor contractor)",
+  "vn_hiring_mode": "Contractor",
+  "hires_roles": [
+   "cloud",
+   "mentor"
+  ],
+  "timezone_note": "Có múi giờ APAC",
+  "salary_public": "Theo giờ",
+  "source_urls": [
+   "https://www.udacity.com/jobs"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "unifonic",
+  "name": "Unifonic",
+  "website": "https://www.unifonic.com",
+  "careers_url": "https://himalayas.app/companies/unifonic",
+  "group": "B",
+  "hq": "Ả Rập Xê Út",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "devops",
+   "sre"
+  ],
+  "timezone_note": "Giờ Trung Đông",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/unifonic/jobs/senior-site-reliability-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "valsea",
+  "name": "VALSEA",
+  "website": "https://valsea.ai",
+  "careers_url": "https://valsea.ai",
+  "group": "B",
+  "hq": "Đông Nam Á (trụ sở chưa xác minh)",
+  "remote_policy": "Remote-first VN/ID/IN",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "ai-infra",
+   "gpu"
+  ],
+  "timezone_note": "Giờ châu Á",
+  "salary_public": "Tới 1.400 USD (GPU ASR Lead, tin cũ)",
+  "source_urls": [
+   "https://valsea.ai"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "vast-ai",
+  "name": "Vast.ai",
+  "website": "https://vast.ai",
+  "careers_url": "https://jobs.ashbyhq.com/vastai",
+  "group": "B",
+  "hq": "Mỹ (marketplace GPU)",
+  "remote_policy": "Remote; có tin location \"Vietnam\" (isRemote=true)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "support",
+   "ai-infra"
+  ],
+  "timezone_note": "Chưa rõ (support thường theo ca)",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/vastai/5651f430-c1df-4242-84f3-e5d27e22c349"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "vcluster",
+  "name": "vCluster Labs",
+  "website": "https://www.vcluster.com",
+  "careers_url": "https://himalayas.app/companies/vcluster-labs",
+  "group": "B",
+  "hq": "Mỹ / Đức",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "k8s",
+   "backend"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "60.000-125.000 EUR/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/vcluster-labs/jobs/senior-software-engineer-backend"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "virtuslab",
+  "name": "VirtusLab",
+  "website": "https://virtuslab.com",
+  "careers_url": "https://himalayas.app/companies/virtuslab",
+  "group": "B",
+  "hq": "Ba Lan",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "platform",
+   "logging"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/virtuslab/jobs/software-systems-logging-platform-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "what3words",
+  "name": "what3words",
+  "website": "https://what3words.com",
+  "careers_url": "https://jobs.ashbyhq.com/what3words",
+  "group": "B",
+  "hq": "Anh (London)",
+  "remote_policy": "Hybrid tại \"Vietnam Office\" (Ashby: workplaceType=Hybrid); các vị trí kỹ thuật đặt tại VN",
+  "vn_hiring_mode": "Trực tiếp qua văn phòng VN (hình thức pháp nhân chưa xác minh)",
+  "hires_roles": [
+   "devops",
+   "backend",
+   "frontend"
+  ],
+  "timezone_note": "UTC+7 (theo Himalayas)",
+  "salary_public": "3.500-4.500 USD/tháng (Staff DevOps, theo Himalayas)",
+  "source_urls": [
+   "https://jobs.ashbyhq.com/what3words/4ba7ab50-ccbe-45cd-940b-160b93c15c40",
+   "https://himalayas.app/companies/what3words/jobs/staff-devops-engineer-2998203642"
+  ],
+  "verified": true,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "wizdaa",
+  "name": "Wizdaa",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/wizdaa",
+  "group": "B",
+  "hq": "Chưa xác minh",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "platform"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/wizdaa/jobs/senior-platform-architect"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "xperteez",
+  "name": "Xperteez Technology",
+  "website": null,
+  "careers_url": "https://himalayas.app/companies/xperteez-technology",
+  "group": "B",
+  "hq": "Chưa xác minh (staffing)",
+  "remote_policy": "Remote - Contract",
+  "vn_hiring_mode": "Contractor",
+  "hires_roles": [
+   "devops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/xperteez-technology/jobs/devops-engineer-remote-contract"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "yopeso",
+  "name": "Yopeso",
+  "website": "https://yopeso.com",
+  "careers_url": "https://himalayas.app/companies/yopeso",
+  "group": "B",
+  "hq": "Moldova / Romania",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "sre",
+   "devops",
+   "database"
+  ],
+  "timezone_note": "Giờ EU",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/yopeso/jobs/site-reliability-engineer-sre"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "zencoder",
+  "name": "Zencoder",
+  "website": "https://zencoder.ai",
+  "careers_url": "https://himalayas.app/companies/zencoder",
+  "group": "B",
+  "hq": "Mỹ",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "swe",
+   "ai"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://himalayas.app/companies/zencoder/jobs/staff-software-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ },
+ {
+  "slug": "zigchain",
+  "name": "ZIGChain",
+  "website": "https://zigchain.com",
+  "careers_url": "https://himalayas.app/companies/zigchain",
+  "group": "B",
+  "hq": "Chưa xác minh (web3)",
+  "remote_policy": "Remote (worldwide theo Himalayas)",
+  "vn_hiring_mode": "Chưa xác minh",
+  "hires_roles": [
+   "infra",
+   "ops"
+  ],
+  "timezone_note": "Chưa rõ",
+  "salary_public": "40.000-50.000 USD/năm",
+  "source_urls": [
+   "https://himalayas.app/companies/zigchain/jobs/infrastructure-systems-operations-engineer"
+  ],
+  "verified": false,
+  "last_checked": "2026-10-26"
+ }
+]

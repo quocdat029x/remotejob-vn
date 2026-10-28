@@ -1,0 +1,9 @@
+{
+ "SITE_URL": "https://remotejob.nguyenquocdat.dev",
+ "SITE_NAME": "RemoteJob VN",
+ "DEFAULT_LANG": "vi",
+ "JOB_STALE_DAYS": 30,
+ "REMOVED_PAGE_KEEP_DAYS": 30,
+ "JOBS_PER_PAGE": 50,
+ "REPO_URL": "https://github.com/quocdat029x/remotejob-vn"
+}
