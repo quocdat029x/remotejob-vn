@@ -175,10 +175,45 @@
     return prefix + "/quang-cao/";
   }
   // House or affiliate creative only. Never mount an AdSense unit in this dialog.
+  var ixActive = null;
+  function ixUnlock() {
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+    var locked = document.querySelectorAll("[data-ix-inert],[inert]");
+    for (var i = 0; i < locked.length; i++) {
+      locked[i].inert = false;
+      locked[i].removeAttribute("data-ix-inert");
+    }
+  }
+  function ixLock() {
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    var kids = document.body.children;
+    for (var j = 0; j < kids.length; j++) {
+      var n = kids[j];
+      if (n.classList.contains("ix") || n.hasAttribute("data-ix-inert")) continue;
+      n.setAttribute("data-ix-inert", "");
+      n.inert = true;
+    }
+  }
+  function ixDrop(node) {
+    if (!node || !node.parentNode) return;
+    if (node.open && node.close) { try { node.close(); } catch (e) { /* already closed */ } }
+    node.parentNode.removeChild(node);
+  }
+  // Always clears the overlay. The in-flight redirect flag must not block this:
+  // bfcache can restore a page whose countdown already called leave().
+  function ixDismissActive() {
+    var current = ixActive;
+    ixActive = null;
+    if (current) current.dismiss();
+    ixDrop(document.querySelector(".ix"));
+    ixUnlock();
+  }
   function openIx(href) {
-    var root = document.createElement("div");
+    ixDismissActive();
+    var root = document.createElement("dialog");
     root.className = "ix";
-    root.setAttribute("role", "dialog");
     root.setAttribute("aria-modal", "true");
     root.setAttribute("aria-labelledby", "rj-ix-title");
     var house = safeHref(ixCfg.href);
@@ -193,12 +228,19 @@
       '<button type="button" class="btn primary" data-ix-go>' + esc(ixCfg.go || "Continue to job") + "</button></div>" +
       '<p class="ix-count" id="rj-ix-count" aria-live="polite"></p></div>';
     document.body.appendChild(root);
-    var gone = false, timer = null;
-    function leave() {
-      if (gone) return;
-      gone = true;
-      if (timer) clearInterval(timer);
+    ixLock();
+    var sent = false, timer = null;
+    function dismiss() {
+      if (timer) { clearInterval(timer); timer = null; }
       document.removeEventListener("keydown", onKey, true);
+      ixDrop(root);
+      if (ixActive === api) ixActive = null;
+      ixUnlock();
+    }
+    function leave() {
+      dismiss();
+      if (sent) return;
+      sent = true;
       location.assign(href);
     }
     function onKey(e) {
@@ -210,21 +252,26 @@
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
+    var api = { dismiss: dismiss };
+    ixActive = api;
+    try { root.showModal(); } catch (e) { /* the fixed overlay still covers the page */ }
     document.addEventListener("keydown", onKey, true);
+    root.addEventListener("cancel", function (e) { e.preventDefault(); leave(); });
+    root.addEventListener("click", function (e) { if (e.target === root) leave(); });
     root.querySelector("[data-ix-x]").addEventListener("click", leave);
     root.querySelector("[data-ix-go]").addEventListener("click", leave);
-    var houseLink = root.querySelector("[data-ix-house]");
-    if (houseLink) houseLink.addEventListener("click", function () {
-      gone = true;
-      if (timer) clearInterval(timer);
-      document.removeEventListener("keydown", onKey, true);
-    });
-    var supportLink = root.querySelector("[data-ix-support]");
-    if (supportLink) supportLink.addEventListener("click", function () {
-      gone = true;
-      if (timer) clearInterval(timer);
-      document.removeEventListener("keydown", onKey, true);
-    });
+    function disarmLink(link) {
+      if (!link) return;
+      link.addEventListener("click", function () {
+        sent = true;
+        if (timer) { clearInterval(timer); timer = null; }
+        // After this click's default navigation is queued. Removing the anchor
+        // inside the click handler can cancel it, so close on the next turn.
+        setTimeout(dismiss, 0);
+      });
+    }
+    disarmLink(root.querySelector("[data-ix-house]"));
+    disarmLink(root.querySelector("[data-ix-support]"));
     var countEl = root.querySelector("#rj-ix-count");
     var left = ixCfg.seconds || 5;
     var tpl = ixCfg.count || "{n}";
@@ -234,7 +281,8 @@
       if (left <= 0) leave();
       else countEl.textContent = tpl.replace("{n}", String(left));
     }, 1000);
-    root.querySelector("[data-ix-x]").focus();
+    var closeBtn = root.querySelector("[data-ix-x]");
+    if (closeBtn) closeBtn.focus();
   }
   var ixNode = document.getElementById("rj-ix");
   var ixCfg = null;
@@ -242,6 +290,11 @@
     try { ixCfg = JSON.parse(ixNode.textContent); } catch (e) { ixCfg = null; }
   }
   if (ixCfg) {
+    window.addEventListener("pagehide", ixDismissActive);
+    window.addEventListener("pageshow", function (ev) { if (ev.persisted) ixDismissActive(); });
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") ixDismissActive();
+    });
     document.addEventListener("click", function (ev) {
       var el = ev.target;
       if (el && !el.closest && el.parentElement) el = el.parentElement;

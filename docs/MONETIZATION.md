@@ -43,8 +43,12 @@ shown when someone lands from search.
 - **Creative** comes from `data/ads.json` → `interstitial` (house/sponsored placeholder by default:
   title, body, internal CTA, 5 second countdown). The visible label is `Quảng cáo / Advertisement`.
 - **Controls.** A visible close button, a "Continue to job" / "Tiếp tục tới tin tuyển dụng" button, and
-  an automatic continue after `seconds` (default 5, clamped to 3–15). Escape does the same as close:
-  dismisses the dialog and continues to the job. Focus is trapped (`role="dialog"`, `aria-modal`).
+  an automatic continue after `seconds` (default 5, clamped to 3–15). Escape and a click on the dimmed
+  backdrop do the same as close: they dismiss the dialog and continue to the job. Closing is never
+  ignored because a redirect already started. The dialog is a modal `<dialog>`: it is closed, and the
+  scroll lock and `inert` state are cleared, before `location.assign`. `pagehide`, a bfcache
+  `pageshow`, and `visibilitychange` to hidden do that again so Back cannot restore a stuck overlay.
+  Focus is trapped (`aria-modal`).
 - **Bots.** The script does not open the dialog when `navigator.webdriver` is true or the user agent
   looks like a crawler (Googlebot, Bingbot, HeadlessChrome, and similar).
 - **Layout.** The dialog node is created on click. It is not in the HTML, so it does not affect LCP or CLS.
