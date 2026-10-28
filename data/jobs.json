@@ -1,5 +1,465 @@
 [
  {
+  "key": "accelerant:57ae5e12-9e90-481d-8a27-3653a955d669",
+  "company_slug": "accelerant",
+  "title": "Agentic MGA Forward Deployed Underwriter",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/57ae5e12-9e90-481d-8a27-3653a955d669",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:ad55ef1d-d19c-48ae-953c-4c9cfb6ddde9",
+  "company_slug": "accelerant",
+  "title": "AI Platform Engineer (Global)",
+  "location": "Global remote",
+  "url": "https://ats.rippling.com/accelerant/jobs/ad55ef1d-d19c-48ae-953c-4c9cfb6ddde9",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "platform",
+   "ai-ml"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:4d831986-8d43-4345-8a82-191c4db83a0a",
+  "company_slug": "accelerant",
+  "title": "Ceded Reinsurance Analyst",
+  "location": "Germany",
+  "url": "https://ats.rippling.com/accelerant/jobs/4d831986-8d43-4345-8a82-191c4db83a0a",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "unknown",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:06825821-d50d-4503-bbe5-53093c0a1d66",
+  "company_slug": "accelerant",
+  "title": "Cloud Engineer",
+  "location": "Remote (United Kingdom)",
+  "url": "https://ats.rippling.com/accelerant/jobs/06825821-d50d-4503-bbe5-53093c0a1d66",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "infra"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:b0e648f2-3b69-4783-9db5-82ebbffed277",
+  "company_slug": "accelerant",
+  "title": "Customer Success Director, Captives",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/b0e648f2-3b69-4783-9db5-82ebbffed277",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:40d06329-d9f2-49cd-9fd4-1089cc83278c",
+  "company_slug": "accelerant",
+  "title": "Data Engineer",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/40d06329-d9f2-49cd-9fd4-1089cc83278c",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "data"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:5dc3ac98-49ab-40a7-a56b-cbc0eabb9bbf",
+  "company_slug": "accelerant",
+  "title": "Forward Deployed Data Solution Engineer",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/5dc3ac98-49ab-40a7-a56b-cbc0eabb9bbf",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "data"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:a03a3098-ac03-4559-ac38-40fae37bdeb4",
+  "company_slug": "accelerant",
+  "title": "Full Stack Engineer",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/a03a3098-ac03-4559-ac38-40fae37bdeb4",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "fullstack"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:e9689850-af5e-419d-817f-03b44a9c3a9c",
+  "company_slug": "accelerant",
+  "title": "Operations Manager",
+  "location": "Remote (United Kingdom)",
+  "url": "https://ats.rippling.com/accelerant/jobs/e9689850-af5e-419d-817f-03b44a9c3a9c",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:389df93e-c692-4715-aab5-28ca09066f7e",
+  "company_slug": "accelerant",
+  "title": "Operations Specialist",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/389df93e-c692-4715-aab5-28ca09066f7e",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:159ad868-3bbf-4fa9-bc81-41bfdfba9027",
+  "company_slug": "accelerant",
+  "title": "Operations Specialist",
+  "location": "Remote (United Kingdom)",
+  "url": "https://ats.rippling.com/accelerant/jobs/159ad868-3bbf-4fa9-bc81-41bfdfba9027",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:ed7eea88-676f-4102-afeb-0385cf968dda",
+  "company_slug": "accelerant",
+  "title": "Principal Data Scientist – Machine Learning & AI",
+  "location": "UK Remote",
+  "url": "https://ats.rippling.com/accelerant/jobs/ed7eea88-676f-4102-afeb-0385cf968dda",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "data",
+   "ai-ml"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:d1794d36-3f03-49a4-ae31-f1498cbe3b77",
+  "company_slug": "accelerant",
+  "title": "Principal Machine Learning Engineer",
+  "location": "United Kingdom",
+  "url": "https://ats.rippling.com/accelerant/jobs/d1794d36-3f03-49a4-ae31-f1498cbe3b77",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "ai-ml"
+  ],
+  "region": "other",
+  "remote": "unknown",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:fc525eaa-c00d-4a3a-bbe5-bfb419959587",
+  "company_slug": "accelerant",
+  "title": "Product Area Lead Architect (EU, UK, US)",
+  "location": "UK Remote",
+  "url": "https://ats.rippling.com/accelerant/jobs/fc525eaa-c00d-4a3a-bbe5-bfb419959587",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "engineering"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:0653da4a-572a-41cd-a0ff-9dfbd7efbded",
+  "company_slug": "accelerant",
+  "title": "Product Design Engineer",
+  "location": "US, UK, Canada Remote",
+  "url": "https://ats.rippling.com/accelerant/jobs/0653da4a-572a-41cd-a0ff-9dfbd7efbded",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "engineering"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:416e5cd2-bc20-4f94-8939-e6a4947da3da",
+  "company_slug": "accelerant",
+  "title": "Product Manager Data Platform",
+  "location": "US - Remote",
+  "url": "https://ats.rippling.com/accelerant/jobs/416e5cd2-bc20-4f94-8939-e6a4947da3da",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "platform",
+   "data",
+   "product-design"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:4a4a809e-1f59-4385-853a-9e82c483cdf9",
+  "company_slug": "accelerant",
+  "title": "Risk Exchange FP&A Manager",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/4a4a809e-1f59-4385-853a-9e82c483cdf9",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:1621d38f-255b-41c4-a951-3f0bbc2f9378",
+  "company_slug": "accelerant",
+  "title": "Senior Analyst — Solvency II Reporting",
+  "location": "Belgium",
+  "url": "https://ats.rippling.com/accelerant/jobs/1621d38f-255b-41c4-a951-3f0bbc2f9378",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "unknown",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:8556e537-cda5-47ba-9038-1dd62a8c6c07",
+  "company_slug": "accelerant",
+  "title": "Senior Software Development Engineer in Test (SDET)",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/8556e537-cda5-47ba-9038-1dd62a8c6c07",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "qa"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:bc2d5120-9136-46d3-94da-3d6d44446753",
+  "company_slug": "accelerant",
+  "title": "Senior Software Engineer",
+  "location": "EU/UK",
+  "url": "https://ats.rippling.com/accelerant/jobs/bc2d5120-9136-46d3-94da-3d6d44446753",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "engineering"
+  ],
+  "region": "other",
+  "remote": "unknown",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:ab6a4286-37a7-473e-8588-dfe4c49ef4af",
+  "company_slug": "accelerant",
+  "title": "Senior SRE",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/ab6a4286-37a7-473e-8588-dfe4c49ef4af",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "sre"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:73868472-66ae-428f-bd9a-7e14131b120c",
+  "company_slug": "accelerant",
+  "title": "Senior Treasury Analyst",
+  "location": "United Kingdom",
+  "url": "https://ats.rippling.com/accelerant/jobs/73868472-66ae-428f-bd9a-7e14131b120c",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "unknown",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:5b36630d-bd9c-482b-9dfa-ec09c4703a30",
+  "company_slug": "accelerant",
+  "title": "Underwriter — Loss Sensitive & Captive Solutions",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/5b36630d-bd9c-482b-9dfa-ec09c4703a30",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "accelerant:eb57b411-0fa8-4a4a-852f-5571b0766289",
+  "company_slug": "accelerant",
+  "title": "US Assurance Specialist",
+  "location": "Remote (United States)",
+  "url": "https://ats.rippling.com/accelerant/jobs/eb57b411-0fa8-4a4a-852f-5571b0766289",
+  "salary": null,
+  "ats": "rippling",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
   "key": "akuity:4181022009",
   "company_slug": "akuity",
   "title": "Community Manager - Open Source",
@@ -37938,6 +38398,120 @@
   "last_checked": "2026-10-28"
  },
  {
+  "key": "knorex:4C4DCB8C86",
+  "company_slug": "knorex",
+  "title": "Cross Channel Performance Strategist",
+  "location": "India",
+  "url": "https://apply.workable.com/j/4C4DCB8C86",
+  "salary": null,
+  "ats": "workable",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": "2026-09-17",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "knorex:4E4362FAAB",
+  "company_slug": "knorex",
+  "title": "Digital Sales Director",
+  "location": "United States",
+  "url": "https://apply.workable.com/j/4E4362FAAB",
+  "salary": null,
+  "ats": "workable",
+  "roles": [
+   "sales-marketing"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": "2026-10-07",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "knorex:6E182B6CB6",
+  "company_slug": "knorex",
+  "title": "HR Intern",
+  "location": "Pune, India",
+  "url": "https://apply.workable.com/j/6E182B6CB6",
+  "salary": null,
+  "ats": "workable",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": null,
+  "date_posted": "2026-10-13",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "knorex:0098BC0345",
+  "company_slug": "knorex",
+  "title": "Junior Ad Operations Strategist",
+  "location": "Pune, India",
+  "url": "https://apply.workable.com/j/0098BC0345",
+  "salary": null,
+  "ats": "workable",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": null,
+  "date_posted": "2026-09-17",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "knorex:76504EFFEE",
+  "company_slug": "knorex",
+  "title": "Junior Software Engineer (RTB)",
+  "location": "Ho Chi Minh City, Vietnam",
+  "url": "https://apply.workable.com/j/76504EFFEE",
+  "salary": null,
+  "ats": "workable",
+  "roles": [
+   "engineering"
+  ],
+  "region": "vn",
+  "remote": "no",
+  "description": null,
+  "date_posted": "2026-10-14",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "knorex:D80BDF2F84",
+  "company_slug": "knorex",
+  "title": "MLOps Engineer",
+  "location": "Ho Chi Minh City, Vietnam",
+  "url": "https://apply.workable.com/j/D80BDF2F84",
+  "salary": null,
+  "ats": "workable",
+  "roles": [
+   "ai-ml"
+  ],
+  "region": "vn",
+  "remote": "no",
+  "description": null,
+  "date_posted": "2026-10-13",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
   "key": "kraken:c9af6dfa-b61f-4092-bf5e-ba40b0d502cf",
   "company_slug": "kraken",
   "title": "Affiliate Growth Lead, US",
@@ -54333,6 +54907,316 @@
   "last_checked": "2026-10-28"
  },
  {
+  "key": "percona:6baef2e6-cad5-4327-8d88-c73d479c1f81",
+  "company_slug": "percona",
+  "title": "Director, Global Partnerships & Channels",
+  "location": "Americas / Florida / Chicago / Dublin / Atlanta / London / Lisbon / Boston, MA / Toronto",
+  "url": "https://jobs.ashbyhq.com/percona/6baef2e6-cad5-4327-8d88-c73d479c1f81",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "Percona is hiring a Director of Channels & Alliances to lead our shift from a direct-led go-to-market model to a partner-amplified one. Partners extend our reach, add delivery capacity, and let us transact in markets we can't serve directly today. Percona is a fully open source database software and services company. We help organizations run MySQL, PostgreSQL, Valkey/Redis, Maria DB, and MongoDB at scale, on premises and in the cloud. You will own the full partner portfolio across two of our categories: Hyperscalers - Cloud distribution, easy procurement, On Prem referrals, Hyperscaler …",
+  "date_posted": "2026-10-13",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:1b48c239-ee02-4f2b-9b11-cbd2c0eae00f",
+  "company_slug": "percona",
+  "title": "Executive Assistant to the CEO (Remote)",
+  "location": "Budapest / Dublin / London / Zagreb / Amsterdam / Warsaw / Lisbon / Athens",
+  "url": "https://jobs.ashbyhq.com/percona/1b48c239-ee02-4f2b-9b11-cbd2c0eae00f",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "At Percona, we believe an open world is a better world. Our mission is to enable everyone to innovate freely by providing the best open source database software, support, and services. We make databases and applications run better through a unique combination of expertise and open source software built with the community for you. Our technical teams are experts in MySQL, MongoDB, PostgreSQL, and MariaDB. Percona is proud to be a remote-only and globally dispersed workforce – we have colleagues in more than 50 countries! We offer a collaborative, highly-engaged culture where your ideas are …",
+  "date_posted": "2026-08-17",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:48b4e7c4-4f8c-4696-add9-e35ab0701964",
+  "company_slug": "percona",
+  "title": "Growth Marketing Manager, Cloud Native (Talent Pool)",
+  "location": "Budapest",
+  "url": "https://jobs.ashbyhq.com/percona/48b4e7c4-4f8c-4696-add9-e35ab0701964",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "GROWTH MARKETING MANAGER, CLOUD NATIVE Talent Pooling Opportunity We are currently building a talent pool for this role and welcoming applications from candidates who may be interested in joining us in early Q4. Please note that this is a forward-planning recruitment process, so there may be a delay in responding to applications. We appreciate your patience and will be in touch with suitable candidates as the process progresses. ABOUT THE ROLE Percona is hiring a Growth Marketing Manager to own growth for our Cloud Native (Kubernetes) product line: PostgreSQL, MySQL, and MongoDB Kubernetes …",
+  "date_posted": "2026-08-24",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:9a75d812-79f1-4738-9cf2-3c85a1b110c2",
+  "company_slug": "percona",
+  "title": "GTM Coordinator, Cloud Native (Talent Pool)",
+  "location": "Budapest / Chennai / Delhi / Bulgaria / Zagreb / Prague / Warsaw / Lisbon / Hyderabad / Athens / Madrid",
+  "url": "https://jobs.ashbyhq.com/percona/9a75d812-79f1-4738-9cf2-3c85a1b110c2",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "GTM COORDINATOR, CLOUD NATIVE (TALENT POOL) Talent Pooling Opportunity We are currently building a talent pool for this role and welcoming applications from candidates who may be interested in joining us in early Q4. Please note that this is a forward-planning recruitment process, so there may be a delay in responding to applications. We appreciate your patience and will be in touch with suitable candidates as the process progresses. ABOUT THE ROLE Percona is hiring a GTM Coordinator to support go-to-market execution for our Cloud Native product line: PostgreSQL, MySQL, and MongoDB Kubernetes …",
+  "date_posted": "2026-08-24",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:6e58d8cb-26da-475d-82c0-92129bd5641f",
+  "company_slug": "percona",
+  "title": "Manager, Technical Account Management (TAM) Team (Remote)",
+  "location": "Americas",
+  "url": "https://jobs.ashbyhq.com/percona/6e58d8cb-26da-475d-82c0-92129bd5641f",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As the leading provider of open source database solutions, Percona helps organizations achieve their business and technical goals through world-class database software, support, and services. We are looking for an experienced, customer-focused Technical Account Manager (TAM) Team Manager to lead our global team of Technical Account Managers. Our TAMs serve as trusted advisors and technical advocates for some of Percona's largest and most complex enterprise customers, helping them navigate technical challenges, coordinate internal resources, and maximize the value of their partnership with …",
+  "date_posted": "2026-10-20",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:412f18cf-9329-4b74-89fa-7fae7aee022f",
+  "company_slug": "percona",
+  "title": "MongoDB Database Support Engineer (Remote)",
+  "location": "Americas / Sao Paulo / Buenos Aires / Mexico City / Montevideo",
+  "url": "https://jobs.ashbyhq.com/percona/412f18cf-9329-4b74-89fa-7fae7aee022f",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "data",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "If you are passionate about all things MongoDB, love helping customers succeed, and want to play a critical role in the evolution of technical support for open source databases, Percona's MongoDB Engineer position was made for you. You will serve on the front line, providing our customers with best of breed professional technical support services for MongoDB, resolving complex problems for customers with demanding deployments and business needs. At the same time, you will form the backbone of our MongoDB support organization, assisting your fellow support engineers, leading the way in …",
+  "date_posted": "2026-06-05",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:e2c7b0ce-e95e-45fe-8462-03a4e67460f7",
+  "company_slug": "percona",
+  "title": "MySQL Database Support Engineer (AMERICAS - Remote)",
+  "location": "Americas / Sao Paulo / Buenos Aires / Montevideo",
+  "url": "https://jobs.ashbyhq.com/percona/e2c7b0ce-e95e-45fe-8462-03a4e67460f7",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "data",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "Percona Support is a global, elite team of engineers who love getting to the bottom of weird and interesting database behaviour. We understand our customer’s business needs and the nuances of their technical environments. This allows us to help our customers see the big picture and identify opportunities to improve their overall database infrastructures. What you’ll be doing… You’ll be teaming up with some of the most well-known database experts in the industry who are even better teammates, friends and mentors. You’ll have the opportunity to develop your own skills and become more powerful …",
+  "date_posted": "2026-08-07",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:d49c11d8-3762-4c2b-8bc5-a7a84c74e6d6",
+  "company_slug": "percona",
+  "title": "PostgreSQL Database Support Engineer - AMERICAS (Remote)",
+  "location": "Americas / Vancouver / Sao Paulo / Buenos Aires / Mexico City / Toronto / Montevideo",
+  "url": "https://jobs.ashbyhq.com/percona/d49c11d8-3762-4c2b-8bc5-a7a84c74e6d6",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "data",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "Percona Support is a global, elite team of engineers who love getting to the bottom of weird and interesting database behaviour. We understand our customers’ business needs and the nuances of their technical environments. This allows us to help our customers see the big picture and identify opportunities to improve their overall database infrastructures. *THIS ROLE IS BASED IN THE AMERICAS TIME ZONE* What you’ll be doing… You’ll be teaming with some of the most well-known database experts in the industry who are even better teammates, friends and mentors. You’ll have the opportunity to …",
+  "date_posted": "2025-05-07",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:99ee2a07-7925-4b8e-9b3c-fb5e43cacc50",
+  "company_slug": "percona",
+  "title": "PostgreSQL Database Support Engineer - EMEA (Remote)",
+  "location": "EMEA / Bucharest / Dublin / UK / Warsaw / Lisbon / Frankfurt / Paris",
+  "url": "https://jobs.ashbyhq.com/percona/99ee2a07-7925-4b8e-9b3c-fb5e43cacc50",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "data",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "Percona Support is a global, elite team of engineers who love getting to the bottom of weird and interesting database behaviour. We understand our customers’ business needs and the nuances of their technical environments. This allows us to help our customers see the big picture and identify opportunities to improve their overall database infrastructures. What you’ll be doing… You’ll be teaming with some of the most well-known database experts in the industry who are even better teammates, friends and mentors. You’ll have the opportunity to develop your own skills and become more powerful than …",
+  "date_posted": "2026-07-24",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:6ea107a9-92a2-479f-8cde-89723bb5c594",
+  "company_slug": "percona",
+  "title": "Practice Lead: AWS (Remote)",
+  "location": "Worldwide / Chicago / New York / Charlotte / Vancouver / Bucharest / Berlin / Dublin / Bangalore, India / Bulgaria / Buenos Aires / London / Amsterdam / Prague / Lisbon / Boston, MA / Ahmedabad / Toronto / Raleigh",
+  "url": "https://jobs.ashbyhq.com/percona/6ea107a9-92a2-479f-8cde-89723bb5c594",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "other"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "PRACTICE LEAD: AWS The Practice Lead for AWS is a hands-on leader dedicated to helping customers get the most out of open-source databases running on AWS and the broader AWS ecosystem around them (EKS, Aurora, RDS, ElastiCache, MSK, and the like). While the primary focus is on database environments, the Lead provides architectural guidance across the surrounding infrastructure whenever it affects database performance, cost, or reliability. As a recognized thought leader, the Practice Lead stays at the forefront of how the AWS platform is evolving, offering strategic advice and direct …",
+  "date_posted": "2026-08-27",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:8ce13995-833b-4cec-a56b-f859ad8c19d5",
+  "company_slug": "percona",
+  "title": "Product Manager - Percona Monitoring and Management (Remote)",
+  "location": "EMEA / Madrid / Dublin / Bulgaria / Rome / Zagreb / Warsaw / Lisbon / Budapest",
+  "url": "https://jobs.ashbyhq.com/percona/8ce13995-833b-4cec-a56b-f859ad8c19d5",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "product-design"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As the Product Manager for Percona Monitoring and Management (PMM), you will own the product strategy and execution for Percona's open source observability platform for databases. You will work closely with engineering, design, product leadership, customers, and the open source community to define the future of PMM. This is a highly technical product role. Our users are database administrators, SREs, platform engineers, DevOps engineers, cloud engineers, and developers who rely on PMM to monitor and optimize mission-critical database environments. We're looking for someone with an …",
+  "date_posted": "2026-07-13",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:90673210-45ab-47e3-8906-9ce20e1039e1",
+  "company_slug": "percona",
+  "title": "Product Marketing Manager",
+  "location": "Budapest",
+  "url": "https://jobs.ashbyhq.com/percona/90673210-45ab-47e3-8906-9ce20e1039e1",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "PRODUCT MARKETING MANAGER/GTM OWNER (CLOUD NATIVE) Talent Pooling Opportunity We are currently building a talent pool for this role and welcoming applications from candidates who may be interested in joining us in early Q4. Please note that this is a forward-planning recruitment process, so there may be a delay in responding to applications. We appreciate your patience and will be in touch with suitable candidates as the process progresses. ABOUT THE ROLE Percona is hiring a Product Marketing Manager/ Go-To-Market (GTM) Owner to lead and execute go-to-market strategies for our Cloud Native …",
+  "date_posted": "2026-08-24",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:94c8439d-9db3-4238-a073-9c21a0409e90",
+  "company_slug": "percona",
+  "title": "Senior Backend Engineer (Go)",
+  "location": "EMEA",
+  "url": "https://jobs.ashbyhq.com/percona/94c8439d-9db3-4238-a073-9c21a0409e90",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "backend"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "Percona is looking for a remote, full-time Senior Backend Software Engineer to join the PMM team and help build the next generation of Percona Monitoring and Management (PMM). PMM is a free and open-source observability and database management platform for monitoring, troubleshooting, and managing MySQL, PostgreSQL, MongoDB, and the infrastructure they run on. You will work primarily on the backend of PMM, building services, APIs, database integrations, and distributed components in Go. You will work with modern observability technologies including OpenTelemetry, Prometheus, VictoriaMetrics, …",
+  "date_posted": "2026-10-05",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:1c3652f1-258f-4ef2-82b5-429251cc25c6",
+  "company_slug": "percona",
+  "title": "Solutions Marketing Manager (Remote)",
+  "location": "EMEA / Madrid / Bucharest / Rome / Warsaw / Lisbon / Athens",
+  "url": "https://jobs.ashbyhq.com/percona/1c3652f1-258f-4ef2-82b5-429251cc25c6",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "This role manages product marketing for document databases (MongoDB), MySQL, and MariaDB. Percona is fully remote, and open source in our identity. Location: Remote (EMEA or Americas preferred, for core-hours overlap with the team) Reports to: Director of Solutions Marketing (Solutions Marketing is Percona's product marketing function) WHY THIS ROLE EXISTS Percona sells support, services, and expertise alongside database software. Our software and our services combine to provide users and customers with secure open source databases, free of vendor lock-in. On this team, we help communicate …",
+  "date_posted": "2026-10-15",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:74eb45a3-fb7f-4078-bb62-97048b7623e8",
+  "company_slug": "percona",
+  "title": "Sr. Software Engineer - Go/MongoDB (Remote)",
+  "location": "EMEA",
+  "url": "https://jobs.ashbyhq.com/percona/74eb45a3-fb7f-4078-bb62-97048b7623e8",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "backend"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "MongoDB Tools Team Team: MongoDB Tools (Product and Engineering) Location: Remote Projects: percona/percona-clustersync-mongodb https://github.com/percona/percona-clustersync-mongodb and percona/percona-backup-mongodb https://github.com/percona/percona-backup-mongodb ABOUT THE TEAM The MongoDB Tools Team builds Percona's open source operational tooling for MongoDB. Two projects sit at the center of what we do. Percona ClusterSync for MongoDB (PCSM) clones and continuously replicates data between clusters. Percona Backup for MongoDB (PBM) is a distributed, low-impact backup and restore …",
+  "date_posted": "2026-07-28",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "percona:60e9cd47-cebb-47d2-b1c1-811f3fb4889e",
+  "company_slug": "percona",
+  "title": "Technical Writer - PostgreSQL (Remote)",
+  "location": "Worldwide / Rome / Prague / Warsaw / Lisbon / Madrid",
+  "url": "https://jobs.ashbyhq.com/percona/60e9cd47-cebb-47d2-b1c1-811f3fb4889e",
+  "salary": null,
+  "ats": "ashby",
+  "roles": [
+   "other"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "We are looking for a talented and flexible Technical Writer to join one of our distributed open-source software development teams. You will work on the PostgreSQL database and related components, in close collaboration with our dedicated PostgreSQL team. Percona Distribution for PostgreSQL https://www.percona.com/postgresql/brings together essential enterprise components from the broader PostgreSQL open-source community into a single, integrated distribution designed and tested to ensure compatibility. You will represent our voice to our technical customers and provide complete, clear …",
+  "date_posted": "2026-08-27",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
   "key": "phantom:f4fcc35e-bdc0-498b-a5f0-ac553d146531",
   "company_slug": "phantom",
   "title": "AI Engineer",
@@ -56049,6 +56933,368 @@
   "remote": "yes",
   "description": "TECHNICAL ACCOUNT MANAGER OWN YOUR INTELLIGENCE Prime Intellect is building the open superintelligence stack: the infrastructure frontier AI labs build internally, made available to every ambitious AI team. Our platform, Lab, unifies compute, environments, evaluations, secure sandboxes, high-performance training, and deployment into one full-stack system for post-training at frontier scale - from SFT and RL to tool use, agent workflows, and continuously improving production models. We are building open frontier AI: open-source models trained end to end for long-horizon tasks like autonomous …",
   "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2785456",
+  "company_slug": "qualifyze",
+  "title": "Business Operations Engineer",
+  "location": "barcelona, Catalunya [Cataluña], Spain",
+  "url": "https://qualifyzegmbh.recruitee.com/o/business-operations-engineer-2",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "About Qualifyze, Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-15",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2799659",
+  "company_slug": "qualifyze",
+  "title": "Customer Success Manager",
+  "location": "Remote job",
+  "url": "https://qualifyzegmbh.recruitee.com/o/customer-success-manager-6",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-27",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2788746",
+  "company_slug": "qualifyze",
+  "title": "Customer Success Manager",
+  "location": "Jersey City, New Jersey, United States",
+  "url": "https://qualifyzegmbh.recruitee.com/o/customer-success-manager-5",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-19",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2761666",
+  "company_slug": "qualifyze",
+  "title": "Customer Success Manager",
+  "location": "Hyderabad, Telangāna, India",
+  "url": "https://qualifyzegmbh.recruitee.com/o/customer-success-manager-4",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-01",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2732166",
+  "company_slug": "qualifyze",
+  "title": "Customer Success Manager - Chinese speaker",
+  "location": "Barcelona, Catalunya [Cataluña], Spain",
+  "url": "https://qualifyzegmbh.recruitee.com/o/customer-success-manager-chinese-speaker",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-14",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2740003",
+  "company_slug": "qualifyze",
+  "title": "Freelance Auditor",
+  "location": "Worldwide, Hessen, Germany",
+  "url": "https://qualifyzegmbh.recruitee.com/o/freelance-auditor",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "other"
+  ],
+  "region": "global",
+  "remote": "no",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 GxP audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life …",
+  "date_posted": "2026-09-09",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2052340",
+  "company_slug": "qualifyze",
+  "title": "Future Opportunities at Qualifyze",
+  "location": "Barcelona (hybrid), Catalunya [Cataluña], Spain",
+  "url": "https://qualifyzegmbh.recruitee.com/o/future-opportunities",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "Hi there! Many thanks for your interest in Qualifyze. We understand you are interested in working with us, but cannot find a role that suits you at this moment. No problem, this open application allows you to tell us about yourself and your professional interests, as well as upload your CV. We will review all applications carefully and once we have an opening that may suit you, we will reach out. In the meantime, take care. Qualifyze Talent Acquisition Team",
+  "date_posted": "2025-03-04",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2783832",
+  "company_slug": "qualifyze",
+  "title": "Head of People",
+  "location": "Barcelona, Catalunya [Cataluña], Spain",
+  "url": "https://qualifyzegmbh.recruitee.com/o/head-of-people-1",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,600 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences sector.",
+  "date_posted": "2026-10-15",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2648254",
+  "company_slug": "qualifyze",
+  "title": "Java Backend Engineering Team Lead (remote)",
+  "location": "Remote job",
+  "url": "https://qualifyzegmbh.recruitee.com/o/java-backend-engineering-team-lead-remote",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "backend"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "About Qualifyze, Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-06-22",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2744680",
+  "company_slug": "qualifyze",
+  "title": "Quality Auditor (Eastern Europe)",
+  "location": "Warsaw, Mazowieckie, Poland",
+  "url": "https://qualifyzegmbh.recruitee.com/o/quality-auditor-eastern-europe",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "qa"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-09-14",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2664720",
+  "company_slug": "qualifyze",
+  "title": "Quality Auditor (Spain)",
+  "location": "Remote job",
+  "url": "https://qualifyzegmbh.recruitee.com/o/quality-auditor-spain",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "qa"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-09-08",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2294140",
+  "company_slug": "qualifyze",
+  "title": "Senior Backend Engineer (remote)",
+  "location": "Remote job",
+  "url": "https://qualifyzegmbh.recruitee.com/o/senior-backend-engineer-remote",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "backend"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "About Qualifyze, Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-07-29",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2771188",
+  "company_slug": "qualifyze",
+  "title": "Senior Business Operations Engineer",
+  "location": "Remote job",
+  "url": "https://qualifyzegmbh.recruitee.com/o/senior-business-operations-engineer-1",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2688623",
+  "company_slug": "qualifyze",
+  "title": "Senior Data Engineer (remote)",
+  "location": "Remote job",
+  "url": "https://qualifyzegmbh.recruitee.com/o/senior-data-engineer-remote",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "data"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "About Qualifyze, Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-07-29",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2774090",
+  "company_slug": "qualifyze",
+  "title": "Senior DevOps Engineer",
+  "location": "Remote job",
+  "url": "https://qualifyzegmbh.recruitee.com/o/senior-devops-engineer-2",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "devops"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-08",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2775169",
+  "company_slug": "qualifyze",
+  "title": "Senior Product Manager - Core Platform",
+  "location": "Anywhere in Germany, Hessen, Germany",
+  "url": "https://qualifyzegmbh.recruitee.com/o/senior-product-manager-core-platform",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "platform",
+   "product-design"
+  ],
+  "region": "global",
+  "remote": "no",
+  "description": "About Qualifyze, Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-07",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2669408",
+  "company_slug": "qualifyze",
+  "title": "Senior Product Manager - Procurement and/or Supply Chain",
+  "location": "Barcelona, Catalunya [Cataluña], Spain",
+  "url": "https://qualifyzegmbh.recruitee.com/o/senior-product-manager-procurement-andor-supply-chain",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "product-design"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-07-14",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2787578",
+  "company_slug": "qualifyze",
+  "title": "Senior Tech Talent Acquisition Partner",
+  "location": "Barcelona, Catalunya [Cataluña], Spain",
+  "url": "https://qualifyzegmbh.recruitee.com/o/senior-tech-talent-acquisition-partner",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "About Qualifyze: Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-19",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "qualifyze:2782892",
+  "company_slug": "qualifyze",
+  "title": "Team Leads Analytics",
+  "location": "Barcelona, Catalunya [Cataluña], Spain",
+  "url": "https://qualifyzegmbh.recruitee.com/o/team-leads-analytics",
+  "salary": null,
+  "ats": "recruitee",
+  "roles": [
+   "data"
+  ],
+  "region": "other",
+  "remote": "no",
+  "description": "About Qualifyze, Founded in 2019, Qualifyze is a leading company in supply chain compliance management in the Life Sciences industry, trusted by over 1,500 pharmaceutical and healthcare companies globally. Our digital suite of solutions connects manufacturers, suppliers, and a global network of more than 250 auditors and quality experts. With a track record of over 4,500 audits across 85+ countries and the largest and most accurate supplier network and data analytics tools, Qualifyze stands as the all-in-one partner for quality compliance and supply chain risk mitigation in the Life Sciences …",
+  "date_posted": "2026-10-14",
   "status": "open",
   "first_seen": "2026-10-28",
   "last_checked": "2026-10-28"
@@ -61395,6 +62641,602 @@
   "remote": "no",
   "description": "About Us Vast.ai http://Vast.ai's cloud powers AI projects and businesses all over the world. We are democratizing and decentralizing AI computing — reshaping our future for the benefit of humanity. Our mission is to organize, optimize, and orient the world's computation. We value elegance, ownership, integrity, and continuous learning. You'll have the opportunity to dive into state-of-the-art AI systems while collaborating with a globally distributed team. About the Role This is a technical support role focused on escalated infrastructure issues that go beyond frontline triage. You'll be the …",
   "date_posted": null,
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:79e83222-641f-4df7-b050-f16c0715ad38",
+  "company_slug": "vcluster",
+  "title": "AI Infrastructure Engineer",
+  "location": "Remote / Singapore",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/79e83222-641f-4df7-b050-f16c0715ad38",
+  "salary": "SGD 155K – SGD 175K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "infra",
+   "ai-ml"
+  ],
+  "region": "apac",
+  "remote": "yes",
+  "description": "As vCluster’s AI Infrastructure Specialist, you will work directly with customers at the earliest and most critical stage of their journey: from bare metal GPU nodes through to a production-ready deployment. This is not a traditional professional services role; you operate pre-sale as part of a proof of value engagement scoped to reach production. You will be one of the first team members a neocloud or AI Factory engages with at a technical depth, and the playbooks you develop will scale the motion for the next hire and customer. vCluster is gaining rapid traction with GPU AI Clouds and …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:19a7f22e-ee7d-419b-bc9e-e2fa61dff2d1",
+  "company_slug": "vcluster",
+  "title": "AI Infrastructure Engineer",
+  "location": "Remote / United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/19a7f22e-ee7d-419b-bc9e-e2fa61dff2d1",
+  "salary": "$140K – $165K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "infra",
+   "ai-ml"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster’s AI Infrastructure Specialist, you will work directly with customers at the earliest and most critical stage of their journey: from bare metal GPU nodes through to a production-ready deployment. This is not a traditional professional services role; you operate pre-sale as part of a proof of value engagement scoped to reach production. You will be one of the first team members a neocloud or AI Factory engages with at a technical depth, and the playbooks you develop will scale the motion for the next hire and customer. vCluster is gaining rapid traction with GPU AI Clouds and …",
+  "date_posted": "2026-03-30",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:28b78a97-9d69-4cf8-858d-0657d08caa07",
+  "company_slug": "vcluster",
+  "title": "AI Infrastructure Engineer",
+  "location": "Remote / EMEA / United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/28b78a97-9d69-4cf8-858d-0657d08caa07",
+  "salary": "€90K – €105K • Offers Equity • Offers Bonus • Multiple Ranges",
+  "ats": "ashby",
+  "roles": [
+   "infra",
+   "ai-ml"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster’s AI Infrastructure Specialist, you will work directly with customers at the earliest and most critical stage of their journey: from bare metal GPU nodes through to a production-ready deployment. This is not a traditional professional services role; you operate pre-sale as part of a proof of value engagement scoped to reach production. You will be one of the first team members a neocloud or AI Factory engages with at a technical depth, and the playbooks you develop will scale the motion for the next hire and customer. vCluster is gaining rapid traction with GPU AI Clouds and …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:d013e453-00e0-4bc3-ac8b-fb88bd8b8fb4",
+  "company_slug": "vcluster",
+  "title": "Customer Success Engineer",
+  "location": "Remote / USA - New York City / United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/d013e453-00e0-4bc3-ac8b-fb88bd8b8fb4",
+  "salary": "$150K – $175K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Customer Success Engineer at vCluster, you aren't just managing accounts — you are the primary architect of customer outcomes after the deal closes. Sitting at the intersection of technical depth and customer strategy, you ensure our customers — from hyper-growth AI Clouds to Global Fortune 500 enterprises — realize the full value of their investment and keep expanding it. You are not a reactive support resource. You are a proactive partner who drives adoption, identifies expansion opportunities, and spots churn before it becomes visible. You build deep relationships with Platform …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:eadbab72-f3f2-4309-8219-d4c28a71028c",
+  "company_slug": "vcluster",
+  "title": "Customer Success Engineer",
+  "location": "Remote / Australia",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/eadbab72-f3f2-4309-8219-d4c28a71028c",
+  "salary": "A$150K – A$175K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Customer Success Engineer at vCluster, you aren't just managing accounts — you are the primary architect of customer outcomes after the deal closes. Sitting at the intersection of technical depth and customer strategy, you ensure our customers — from hyper-growth AI Clouds to Global Fortune 500 enterprises — realize the full value of their investment and keep expanding it. You are not a reactive support resource. You are a proactive partner who drives adoption, identifies expansion opportunities, and spots churn before it becomes visible. You build deep relationships with Platform …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:5b48b641-cf7e-48f6-a4ae-95c387c2ebd6",
+  "company_slug": "vcluster",
+  "title": "Customer Success Engineer",
+  "location": "Remote",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/5b48b641-cf7e-48f6-a4ae-95c387c2ebd6",
+  "salary": "$150K – $175K • Offers Equity • Offers Commission • Multiple Ranges",
+  "ats": "ashby",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Customer Success Engineer at vCluster, you aren't just managing accounts — you are the primary architect of customer outcomes after the deal closes. Sitting at the intersection of technical depth and customer strategy, you ensure our customers — from hyper-growth AI Clouds to Global Fortune 500 enterprises — realize the full value of their investment and keep expanding it. You are not a reactive support resource. You are a proactive partner who drives adoption, identifies expansion opportunities, and spots churn before it becomes visible. You build deep relationships with Platform …",
+  "date_posted": "2026-07-08",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:b071e601-0352-42c5-aa35-5597fd7a044d",
+  "company_slug": "vcluster",
+  "title": "Customer Success Engineer",
+  "location": "EMEA",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/b071e601-0352-42c5-aa35-5597fd7a044d",
+  "salary": "€100K – €115K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Customer Success Engineer at vCluster, you aren't just managing accounts — you are the primary architect of customer outcomes after the deal closes. Sitting at the intersection of technical depth and customer strategy, you ensure our customers — from hyper-growth AI Clouds to Global Fortune 500 enterprises — realize the full value of their investment and keep expanding it. You are not a reactive support resource. You are a proactive partner who drives adoption, identifies expansion opportunities, and spots churn before it becomes visible. You build deep relationships with Platform …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:3dc34e16-8854-4a09-b829-f8c97328e636",
+  "company_slug": "vcluster",
+  "title": "Engineering Tech Lead (Product Security)",
+  "location": "Remote / Canada / EMEA",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/3dc34e16-8854-4a09-b829-f8c97328e636",
+  "salary": "$150K – $200K • Offers Equity • Offers Bonus • Multiple Ranges",
+  "ats": "ashby",
+  "roles": [
+   "security"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "vCluster Labs is looking for an Engineering Tech Lead focused on Product Security to help us build secure infrastructure software from the ground up. You'll bring hands-on penetration testing and deep Kubernetes expertise to our products, while reviewing security-sensitive designs, threat modeling new features, investigating vulnerabilities, and helping teams make sound security decisions as the platform evolves. As an Engineering Tech Lead (Product Security), your role will include: - Penetration testing: Test our products and infrastructure for exploitable weaknesses, with a focus on …",
+  "date_posted": "2026-10-20",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:c6a9423d-5f1f-4f47-ae49-1bf5888b0fdc",
+  "company_slug": "vcluster",
+  "title": "Engineering Tech Lead (vNode)",
+  "location": "United States / EMEA / Germany",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/c6a9423d-5f1f-4f47-ae49-1bf5888b0fdc",
+  "salary": "$138K – $220K • Offers Equity • Offers Bonus • Multiple Ranges",
+  "ats": "ashby",
+  "roles": [
+   "backend"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As an Engineering Tech Lead at vCluster Labs, you aren't just shipping container runtime features; you are defining how Kubernetes operators get VM-grade tenant isolation without the VM tax. vNode replaces virtual kubelets and microVMs with a runtime built on Linux user namespaces and seccomp, and the person in this seat owns where that runtime goes next. You will partner directly with the vNode founding engineers, run the technical bar for the team, and ship the work that decides whether AI Clouds and regulated enterprises can adopt vNode as their default isolation layer. As an Engineering …",
+  "date_posted": "2026-05-27",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:acc888cc-65f3-4430-b88b-552ac56a6d93",
+  "company_slug": "vcluster",
+  "title": "Enterprise Account Executive",
+  "location": "Remote / USA - New York City",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/acc888cc-65f3-4430-b88b-552ac56a6d93",
+  "salary": "$300K – $320K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Enterprise Account Executive, you aren’t just selling software; we are defining a category. In this role, you will be the CEO of your territory, tasked with identifying, navigating, and closing large-scale agreements with the world's leading organizations. You will be selling a technical platform that solves critical problems for Engineering, DevOps, Security, and Data leaders. As an Enterprise Account Executive, your role will include: - Strategic Territory Management: Own a dedicated patch of Enterprise accounts. Build a comprehensive territory plan to uncover new …",
+  "date_posted": "2026-10-20",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:7c145ed7-1fdc-4bba-ad3f-173fac5891cf",
+  "company_slug": "vcluster",
+  "title": "Enterprise Account Executive",
+  "location": "Remote / USA - San Francisco",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/7c145ed7-1fdc-4bba-ad3f-173fac5891cf",
+  "salary": "$280K – $330K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Enterprise Account Executive, you aren’t just selling software; we are defining a category. In this role, you will be the CEO of your territory, tasked with identifying, navigating, and closing large-scale agreements with the world's leading organizations. You will be selling a technical platform that solves critical problems for Engineering, DevOps, Security, and Data leaders. As an Enterprise Account Executive, your role will include: - Strategic Territory Management: Own a dedicated patch of Enterprise accounts. Build a comprehensive territory plan to uncover new …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:162791fa-8af3-4daf-9b71-de569d4bffdc",
+  "company_slug": "vcluster",
+  "title": "Enterprise Account Executive",
+  "location": "Remote / USA- Texas / USA - Chicago",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/162791fa-8af3-4daf-9b71-de569d4bffdc",
+  "salary": "$280K – $330K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Enterprise Account Executive, you aren’t just selling software; we are defining a category. In this role, you will be the CEO of your territory, tasked with identifying, navigating, and closing large-scale agreements with the world's leading organizations. You will be selling a technical platform that solves critical problems for Engineering, DevOps, Security, and Data leaders. As an Enterprise Account Executive, your role will include: - Strategic Territory Management: Own a dedicated patch of Enterprise accounts. Build a comprehensive territory plan to uncover new …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:09b7d1a7-bc9a-4633-8ab5-628f23fdc763",
+  "company_slug": "vcluster",
+  "title": "Enterprise Account Executive",
+  "location": "Remote / United Arab Emirates",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/09b7d1a7-bc9a-4633-8ab5-628f23fdc763",
+  "salary": "AED 900K – AED 1M • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing",
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Enterprise Account Executive, you aren’t just selling software; we are defining a category. In this role, you will be the CEO of your territory, tasked with identifying, navigating, and closing large-scale agreements with the world's leading organizations. You will be selling a technical platform that solves critical problems for Engineering, DevOps, Security, and Data leaders. As an Enterprise Account Executive, your role will include: - Strategic Territory Management: Own a dedicated patch of Enterprise accounts. Build a comprehensive territory plan to uncover new …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:c2a6aa99-f443-402a-bd17-2bd350b29ae8",
+  "company_slug": "vcluster",
+  "title": "Regional Sales Director, West",
+  "location": "USA - San Francisco / USA - Los Angeles",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/c2a6aa99-f443-402a-bd17-2bd350b29ae8",
+  "salary": "$400K – $440K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster’s Regional Sales Director, you aren’t just managing a territory; you are building the engine of a category-defining company. We have moved past the \"early adopter\" phase and are now the architectural standard for AI Factories and GPU-heavy enterprises. In this role, you will be the strategic architect of your region, tasked with hiring an elite team, instilling a high-octane hunting mentality, and owning the GTM strategy. You will be leading a team that sells a mission-critical platform to the world's most sophisticated Engineering, DevOps, and AI leaders. As a Regional Sales …",
+  "date_posted": "2026-09-15",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:83473460-ee46-405a-b569-038345dffc55",
+  "company_slug": "vcluster",
+  "title": "Revenue Operations Engineer",
+  "location": "United Kingdom",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/83473460-ee46-405a-b569-038345dffc55",
+  "salary": "£75K – £95K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Revenue Operations Engineer at vCluster Labs, you aren't just keeping the CRM tidy; you are building the automated engine that tells our sellers which accounts matter and why. You will design Clay pipelines, enrichment workflows, and AI agents that surface the right accounts to sales and SDRs, and you will make sure they keep working long after launch. You own the GTM stack for our EMEA team, from Salesforce workflows to the integrations that tie HubSpot, Notion, and Slack together. As a Revenue Operations Engineer, your role will include: - Account intelligence and enrichment: You will …",
+  "date_posted": "2026-10-27",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:363a8a20-05c2-4ee8-8b2f-d232589736ea",
+  "company_slug": "vcluster",
+  "title": "Revenue Operations Specialist",
+  "location": "United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/363a8a20-05c2-4ee8-8b2f-d232589736ea",
+  "salary": "$100K – $125K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "support-ops"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Revenue Operations Specialist at vCluster Labs, you aren’t just working a Salesforce ticket queue; you are building the revenue engine behind a sales team that is scaling fast. You will own quote-to-cash, reporting, and day-to-day Salesforce support for our US team, with a real say in how our processes and automations get built. You will join a small, automation-forward RevOps team at an inflection point, where the systems you design now become how we sell for years. vCluster Labs is the company behind vCluster, which provisions fully isolated tenant clusters on Kubernetes, bare metal, …",
+  "date_posted": "2026-10-13",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:e67564fd-b699-42b5-819d-67361e5038f3",
+  "company_slug": "vcluster",
+  "title": "Senior Product Designer",
+  "location": "Remote / EMEA",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/e67564fd-b699-42b5-819d-67361e5038f3",
+  "salary": "€75K – €100K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "product-design"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Senior Product Designer at vCluster Labs, you are the voice for how engineers actually experience the vCluster Platform. You'll partner closely with a fast moving frontend engineering team to turn ambiguous, deeply technical problems into interfaces that make sense. As a Senior Product Designer, your role will include: - Product & UI Design: Design and deliver polished UI for the vCluster Platform, from early concept through pixel-perfect execution. - Engineering Partnership: Work day-to-day with frontend engineers to scope and execute product design work, and stay close enough to …",
+  "date_posted": "2026-10-22",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:3233c152-6b3a-473c-b836-c3e9cbf3f8dd",
+  "company_slug": "vcluster",
+  "title": "Senior Product Manager",
+  "location": "Remote / Canada / EMEA / United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/3233c152-6b3a-473c-b836-c3e9cbf3f8dd",
+  "salary": "$170K – $200K • Offers Equity • Offers Bonus • Multiple Ranges",
+  "ats": "ashby",
+  "roles": [
+   "product-design"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Senior Product Manager at vCluster Labs, you'll partner directly with the Head of Product and engineering leadership on the decisions that shape where the product goes next. You'd be joining at a pivotal moment as we scale. As a Senior Product Manager, your role will include: - Technical Direction: Align on business priorities and technical direction for your product surface, and translate that into specs engineering can execute against. - Founder Partnership: Work directly with the Head of Product and Engineering leadership on the architecture tradeoffs that determine the product's …",
+  "date_posted": "2026-09-29",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:3dc36a55-ed19-4f73-acbb-9de6474f479a",
+  "company_slug": "vcluster",
+  "title": "Senior Software Engineer (Backend)",
+  "location": "EMEA",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/3dc36a55-ed19-4f73-acbb-9de6474f479a",
+  "salary": "€60K – €125K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "backend"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Senior Software Engineer (Backend), you aren’t just writing code; you are defining the future of tenant isolation. In this role, you will serve as a core architect of the vCluster Platform, tasked with navigating complex Kubernetes internals to build tools used by the world's leading engineering teams. As a Senior Software Engineer (Backend), your role will include: - Kubernetes Deep-Dive: Work intimately with Kubernetes internals to push the boundaries of container orchestration. - Go Development: Write high-performance, resilient Go code to power the core logic of the …",
+  "date_posted": "2026-10-15",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:f38d2779-22a3-4560-9609-4c1f18b7cd4b",
+  "company_slug": "vcluster",
+  "title": "Senior Software Engineer (Backend)",
+  "location": "United States / Canada",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/f38d2779-22a3-4560-9609-4c1f18b7cd4b",
+  "salary": "$130K – $180K • Offers Equity • Offers Bonus • Multiple Ranges",
+  "ats": "ashby",
+  "roles": [
+   "backend"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Senior Software Engineer (Backend), you aren’t just writing code; you are defining the future of Kubernetes multi-tenancy. In this role, you will serve as a core architect of the vCluster Platform, tasked with navigating complex Kubernetes internals to build tools used by the world's leading engineering teams. As a Senior Software Engineer (Backend), your role will include: - Kubernetes Deep-Dive: Work intimately with Kubernetes internals to push the boundaries of container orchestration. - Go Development: Write high-performance, resilient Go code to power the core logic of …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:124d9219-af4c-4a03-86c4-afe54ec32c34",
+  "company_slug": "vcluster",
+  "title": "Senior Software Quality Engineer",
+  "location": "Remote / Canada / EMEA / United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/124d9219-af4c-4a03-86c4-afe54ec32c34",
+  "salary": "€65K – €110K • Offers Equity • Offers Bonus • Multiple Ranges",
+  "ats": "ashby",
+  "roles": [
+   "qa"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Senior Software Quality Engineer at vCluster Labs, you aren't just writing test cases; you are the architect of how we know our product works. You'll own test strategy end-to-end across a fast-moving codebase, build the automation frameworks that give engineering the confidence to ship daily, and be the voice for testability and reliability in every design conversation you're part of. As a Senior Software Quality Engineer, your role will include: - Test framework ownership: Lead the design, development, and maintenance of automated test frameworks spanning backend services and UI, built …",
+  "date_posted": "2026-10-16",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:a2d36886-8fa6-4d68-a2e1-62f660a067ce",
+  "company_slug": "vcluster",
+  "title": "Social Media Manager",
+  "location": "United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/a2d36886-8fa6-4d68-a2e1-62f660a067ce",
+  "salary": "$105K – $125K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Social Media Manager at vCluster Labs, you aren't just filling a content calendar; you are the reason vCluster shows up in every conversation that moves the AI infrastructure industry, within hours instead of weeks. Our customers are the AI Clouds and GPU infrastructure providers building the next generation of compute, and this market moves every day: rankings, funding rounds, launches, outages, hot takes. You will watch all of it, decide what's worth saying, and bring our CEO and leaders finished options to choose from. As a Social Media Manager, your role will include: - Industry …",
+  "date_posted": "2026-10-07",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:da2fa3ef-21d7-448a-abef-fe2e1a787717",
+  "company_slug": "vcluster",
+  "title": "Sr. Demand Generation Manager",
+  "location": "United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/da2fa3ef-21d7-448a-abef-fe2e1a787717",
+  "salary": "$125K – $145K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "other"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Sr. Demand Generation Manager at vCluster Labs, you aren't just running campaigns, you are building the targeted account motion that turns the right platform engineers and infrastructure leaders at the right enterprises and AI Cloud providers into pipeline. There's no existing playbook. You write it. You own paid channels, account-focused programs, and the reporting that proves what's working. If you've done B2B demand gen in the technical infrastructure space and you know the difference between a broad PLG motion and a precision account campaign, this is yours to own. As a Demand …",
+  "date_posted": "2026-10-07",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:f9e2f4f6-1566-41d4-b434-5904418331b5",
+  "company_slug": "vcluster",
+  "title": "Sr. Director, OEM, Storage and ISV",
+  "location": "United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/f9e2f4f6-1566-41d4-b434-5904418331b5",
+  "salary": "$225K – $280K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "infra"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "Every AI Factory is a stack: GPU servers, storage, networking, and the software that turns them into products. As Sr. Director, OEM, Storage & ISV at vCluster Labs, you make vCluster the tenant layer in that stack, validated and sold by the companies that build the hardware and the software around it. You will own our relationships with server OEMs such as Supermicro and HPE, storage partners such as VAST Data and WEKA, and network and software ISVs such as F5 and Netris. This is a builder’s seat with a number attached. Every AI Factory ships with servers, storage, and a network fabric. Each …",
+  "date_posted": "2026-09-10",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:183dfe72-4542-47fe-b182-a484addf245f",
+  "company_slug": "vcluster",
+  "title": "Sr. Director, VAR & Channel Partnerships",
+  "location": "United States / EMEA",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/183dfe72-4542-47fe-b182-a484addf245f",
+  "salary": "$225K – $280K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "sales-marketing"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As Sr. Director, VAR & Channel Partnerships at vCluster Labs, you aren’t just signing reseller agreements; you are building and leading the global partner channel that lets the world’s AI infrastructure resellers sell tenant isolation without us in the room. Enterprises do not buy AI infrastructure one product at a time. They buy it from the reseller who already holds the paper, the services capacity, and the trust. Your first targets are the partners where our path to the money is right now: WWT and Computacenter, then SHI, CDW, and the national and regional VARs that actually sell AI …",
+  "date_posted": "2026-10-09",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:cc532bad-b05a-43c3-8a28-a2bd99966769",
+  "company_slug": "vcluster",
+  "title": "Sr. Global Alliance Director, NVIDIA and AI Clouds",
+  "location": "USA - San Francisco",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/cc532bad-b05a-43c3-8a28-a2bd99966769",
+  "salary": "$225K – $280K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "ai-ml"
+  ],
+  "region": "global",
+  "remote": "yes",
+  "description": "As a Sr. Global Alliance Director, NVIDIA and AI Clouds at vCluster Labs, you aren't just managing a partner relationship; you are building the alliance that decides how the world's AI factories get built. NVIDIA is the center of gravity of the AI infrastructure ecosystem, and vCluster is the tenancy layer that turns raw GPU infrastructure into secure, isolated, sellable cluster products - raising GPU utilization, compressing time-to-tenant from weeks to minutes, and delivering hard Tenant Isolation without hard silos for AI Clouds, sovereign AI builders, and enterprises. You will own the …",
+  "date_posted": "2026-08-19",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:d854972d-96ec-4f99-b517-76994916f112",
+  "company_slug": "vcluster",
+  "title": "Sr. Partner Solutions Engineer",
+  "location": "United States",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/d854972d-96ec-4f99-b517-76994916f112",
+  "salary": "$140K – $180K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "engineering"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Senior Partner Solutions Engineer at vCluster Labs, you aren’t just supporting partner deals; you are building the technical foundation of our partner ecosystem from the ground up. You will be our first dedicated partner-facing pre-sales engineer, turning relationships with NVIDIA, WWT, AMD, and AI Cloud providers like Nebius into validated reference architectures, enabled partner architects, and partner-sourced pipeline. Where there’s a GPU, vCluster needs to be there, and you are the person who makes that real: someone who can whiteboard a GPU cloud architecture with an NVIDIA solution …",
+  "date_posted": "2026-07-22",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:d0e64a70-9293-4bc0-8a79-5ffd11e7e131",
+  "company_slug": "vcluster",
+  "title": "Sr. Solutions Engineer",
+  "location": "Remote / United Arab Emirates",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/d0e64a70-9293-4bc0-8a79-5ffd11e7e131",
+  "salary": "AED 540K – AED 715K • Offers Equity • Offers Commission",
+  "ats": "ashby",
+  "roles": [
+   "engineering"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As a Senior Solutions Engineer at vCluster, you aren't just giving product demos; you are the technical architect of our enterprise customers' success. Sitting at the high-stakes intersection of Sales and Engineering, you will be a key contributor to our market dominance by leading the \"Technical Win\" for our most complex, multi-stakeholder deals as we define the Kubernetes virtualization category. YOUR ROLE AND IMPACT: - Complex Opportunity Leadership: Own the technical strategy for large-scale enterprise engagements. You will partner with Account Executives to navigate highly regulated …",
+  "date_posted": "2026-03-18",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:b7b2cc41-1d09-4b5c-a2e8-c8408d06fc60",
+  "company_slug": "vcluster",
+  "title": "Staff Software Engineer",
+  "location": "EMEA",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/b7b2cc41-1d09-4b5c-a2e8-c8408d06fc60",
+  "salary": "€75K – €145K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "engineering"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Staff Software Engineer, you aren’t just writing code; you are defining the future of tenant isolation. In this role, you will serve as a core architect of the vCluster Platform, tasked with navigating complex Kubernetes internals to build tools used by the world's leading engineering teams. As a Staff Software Engineer (Backend), your role will include: - Kubernetes Deep-Dive: Work intimately with Kubernetes internals to push the boundaries of container orchestration. - Go Development: Write high-performance, resilient Go code to power the core logic of the vCluster …",
+  "date_posted": "2026-10-15",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:d17b6d62-a120-43d5-959e-ce2026b89bea",
+  "company_slug": "vcluster",
+  "title": "Staff Software Engineer",
+  "location": "United States / Canada",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/d17b6d62-a120-43d5-959e-ce2026b89bea",
+  "salary": "$180K – $220K • Offers Equity • Offers Bonus • Multiple Ranges",
+  "ats": "ashby",
+  "roles": [
+   "engineering"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Staff Software Engineer, you aren’t just writing code; you are defining the future of Kubernetes multi-tenancy. In this role, you will serve as a core architect of the vCluster Platform, tasked with navigating complex Kubernetes internals to build tools used by the world's leading engineering teams. As a Staff Software Engineer (Backend), your role will include: - Kubernetes Deep-Dive: Work intimately with Kubernetes internals to push the boundaries of container orchestration. - Go Development: Write high-performance, resilient Go code to power the core logic of the vCluster …",
+  "date_posted": "2026-10-06",
+  "status": "open",
+  "first_seen": "2026-10-28",
+  "last_checked": "2026-10-28"
+ },
+ {
+  "key": "vcluster:64142e45-1ffc-4113-a515-05246328a2d5",
+  "company_slug": "vcluster",
+  "title": "Staff Software Engineer (CTO Org)",
+  "location": "Germany / EMEA",
+  "url": "https://jobs.ashbyhq.com/vClusterLabs/64142e45-1ffc-4113-a515-05246328a2d5",
+  "salary": "€75K – €145K • Offers Equity • Offers Bonus",
+  "ats": "ashby",
+  "roles": [
+   "engineering"
+  ],
+  "region": "other",
+  "remote": "yes",
+  "description": "As vCluster Labs’ Staff Software Engineer, you will operate as a specialized technical leader, working directly with the CTO to explore new frontiers in our technology. You will bridge the gap between rapid prototyping, architectural research, and product evolution, taking on responsibilities that go far beyond standard coding to shape the future of our Kubernetes virtualization platform. As a Staff Software Engineer, your role will include: - Rapid Prototyping & Innovation: Act as a specialized engineer who identifies interesting product opportunities, researches solutions, and quickly …",
+  "date_posted": "2026-04-27",
   "status": "open",
   "first_seen": "2026-10-28",
   "last_checked": "2026-10-28"

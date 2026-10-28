@@ -5,11 +5,19 @@ A scraped link becomes a job only if it passes all of the rules below.
 
 ## 1. Is it a single job posting?
 
-- **API sources** (Greenhouse, Lever, Ashby, Workable, Recruitee): the URL must match the ATS posting pattern
+- **API sources** (Greenhouse, Lever, Ashby, Workable, Recruitee, SmartRecruiters, Personio, Teamtailor, BambooHR, Breezy, JazzHR, Pinpoint, Rippling): the URL must match the ATS posting pattern
   - Greenhouse `/jobs/<digits>` or `gh_jid=<digits>`
   - Lever / Ashby `/<company>/<uuid>`
   - Workable `/j/<CODE>`
   - Recruitee `/o/<slug>`
+  - SmartRecruiters `jobs.smartrecruiters.com/<company>/<id>`
+  - Personio `jobs.personio.de|com/job/<id>`
+  - Teamtailor `/jobs/<id>`
+  - BambooHR `bamboohr.com/careers/<id>`
+  - Breezy `breezy.hr/p/<id>`
+  - JazzHR `applytojob.com/apply/<id>/<slug>`
+  - Pinpoint `/postings/<slug>`
+  - Rippling `ats.rippling.com/<company>/jobs/<id>`
 - **HTML sources**: per-host allowlist of posting URL shapes, for example ITviec `/it-jobs/<slug>-<id>`, LinkedIn
   `/jobs/view/<id>`, Himalayas `/companies/<c>/jobs/<slug>`, CloudX `-aid<id>`, iKonnect `-jo<id>`,
   `*.applytojob.com/apply/<id>/<slug>`. Category, search and listing pages are dropped.
@@ -51,6 +59,12 @@ A scraped link becomes a job only if it passes all of the rules below.
 - One request per second (`--delay`, minimum 1.0 s), 25 s timeout, no retries, identifying User-Agent with the repo URL.
 - HTML careers pages are not scraped by default (`--include-html` to opt in); sources that fail are marked
   `status: error` in `data/sources.json` and their existing jobs are kept until they become stale.
+- Jobs whose source is still not an API are link-checked weekly by `scripts/linkcheck_jobs.py`
+  (HEAD, then one GET if HEAD is 400/404/405/410/501). HTTP 404/410, or a redirect to the company
+  careers page, the company homepage, or another generic listing path, sets `status: removed` and
+  `removed_on`. A live posting updates `last_checked`. Timeouts, connection errors, 401/403/429,
+  and other 5xx responses leave the job untouched. TopCV and ITviec are not scraped; an existing
+  public ITviec posting URL can still be link-checked.
 
 ## 6. Aggregators do not crowd out direct employers
 

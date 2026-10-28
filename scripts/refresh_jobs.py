@@ -2,8 +2,11 @@
 """Refresh data/jobs.json from public ATS APIs, politely.
 
 Adapted from the original careers monitor (fetch.py):
-- Only public, unauthenticated JSON endpoints (Greenhouse, Lever, Ashby, Workable, Recruitee) by default.
+- Only public, unauthenticated JSON/XML feeds by default (Greenhouse, Lever, Ashby,
+  Workable, Recruitee, plus SmartRecruiters, Personio, Teamtailor, BambooHR, Breezy,
+  JazzHR, Pinpoint and Rippling when a source uses one).
   HTML careers pages are skipped unless --include-html is given (link scraping is noisy; see docs/JOB_FILTER_RULES.md).
+  Jobs with no feed are link-checked by scripts/linkcheck_jobs.py instead.
 - At most ~1 request per second (--delay), one request per source, no retries, 25 s timeout,
   identifying User-Agent.
 - Every link goes through the same filter rules as the seed import (scripts/jobfilter.py).
@@ -21,18 +24,22 @@ Usage:
 """
 import argparse, datetime, hashlib, html as H, json, os, re, sys, time, urllib.parse, urllib.request
 sys.path.insert(0, os.path.dirname(__file__))
+import ats_feeds
+import data_health
 import jobfilter as jf
 import policy
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CFG = json.load(open(os.path.join(ROOT, "site.config.json"), encoding="utf-8"))
 UA = {"User-Agent": f"RemoteJobVN-JobRefresh/1.0 (+{CFG['REPO_URL']})", "Accept": "application/json,text/html;q=0.8,*/*;q=0.5"}
-API_ATS = {"greenhouse", "lever", "ashby", "workable", "recruitee"}
 JOBRX = re.compile(r"/(jobs?|careers?|positions?|openings?|vacanc|tuyen-dung|it-jobs|o/|apply)", re.I)
 
 
-def get(url):
-    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=25) as r:
+def get(url, accept=None):
+    headers = dict(UA)
+    if accept:
+        headers["Accept"] = accept
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=25) as r:
         return r.read().decode("utf-8", "replace")
 
 
@@ -53,6 +60,9 @@ def iso_date(s):
 
 def fetch_source(src):
     """Return a list of raw job dicts: key, title, location, url, salary, desc, date_posted."""
+    handled = ats_feeds.fetch_jobs(src, get, lambda: time.sleep(1.0))
+    if handled is not None:
+        return handled
     slug, ats, ep = src["slug"], src["ats"], src["endpoint"]
     out = []
     if ats == "greenhouse":
@@ -122,7 +132,7 @@ def main():
     jobs = json.load(open(path("jobs.json"), encoding="utf-8"))
     only = set(a.only.split(",")) if a.only else None
     todo = [s for s in sources if (not only or s["slug"] in only) and s["slug"] in co_by and not policy.exclusion_reason(co_by[s["slug"]])
-            and (s["ats"] in API_ATS or a.include_html)]
+            and (s["ats"] in jf.API_ATS or a.include_html)]
 
     by_key = {j["key"]: j for j in jobs}
     report = []
@@ -176,10 +186,19 @@ def main():
     jobs.sort(key=lambda j: (j["company_slug"], j["title"].lower()))
 
     print("\n".join(report))
-    print(f"{len(todo)} source(s) fetched; jobs total {len(jobs)} ({sum(1 for j in jobs if j.get('status', 'open') == 'open')} open)")
+    attempted = len(todo)
+    failed = sum(1 for s in todo if s.get("status") == "error")
+    ratio = (failed / attempted) if attempted else 0.0
+    print(f"{attempted} source(s) fetched; jobs total {len(jobs)} ({sum(1 for j in jobs if j.get('status', 'open') == 'open')} open)")
+    print(f"HEALTH attempted={attempted} failed={failed} ratio={ratio:.3f}")
     if a.dry_run:
         print("dry run: nothing written")
         return
+    data_health.merge_status(ROOT, {
+        "last_api_refresh": today,
+        "last_api_attempted": attempted,
+        "last_api_failed": failed,
+    })
 
     def dump(n, obj):
         with open(path(n), "w", encoding="utf-8") as fh:

@@ -6,10 +6,11 @@ The canonical domain is configured in one place: `SITE_URL` in `site.config.json
 sitemaps, robots.txt, Open Graph tags, JSON-LD and `dist/CNAME` all follow.
 
 > The site is hosted on Cloudflare Pages. GitHub Actions does not deploy it. The daily
-> `refresh.yml` workflow commits `data/` to the repository default branch, and Pages rebuilds from that push.
-> Scheduled workflows run from the GitHub default branch. This repository should use `main`.
-> If GitHub still shows `master` (the original empty commit), set **Settings → General → Default branch**
-> to `main`, and set the Pages production branch to `main` as well.
+> `refresh.yml` workflow commits `data/` to `main`, and Pages rebuilds from that push.
+> Scheduled workflows run from the GitHub default branch, which is `main`.
+> `refresh.yml` and `linkcheck.yml` still check out `ref: main` and push `HEAD:main`
+> explicitly, so a data commit is not redirected if the default branch is ever changed.
+> The Pages production branch is `main`.
 
 ## Cloudflare Pages
 
@@ -43,10 +44,29 @@ in the project so it matches `.python-version`.
    There is no personal tracking and no cookie.
 7. `dist/404.html` is used automatically for unknown paths.
 
-The daily `refresh.yml` workflow commits updated `data/` to the default branch with the built-in
-`GITHUB_TOKEN` (`contents: write` only). It does not use any other secret. Each such commit triggers
-a Cloudflare Pages rebuild. The refresh calls public ATS APIs at about one request per second and
-does not sign in.
+The daily `refresh.yml` workflow checks out `main` and commits updated `data/` to `main` with the
+built-in `GITHUB_TOKEN` (`contents: write`, and `issues: write` for the health issue below). It does
+not use any other secret. Each such commit triggers a Cloudflare Pages rebuild. The refresh calls
+public ATS APIs at about one request per second and does not sign in.
+
+`linkcheck.yml` runs weekly (Mondays) and does the same checkout and push for job URLs that still
+have no public feed: HEAD, then GET only when HEAD is not enough, one request per second. A 404, 410,
+or redirect to a generic careers page marks the job removed. Network errors leave it untouched.
+
+If the refresh workflow fails, or more than 30% of the API sources attempted in that run fail, the
+workflow opens or updates a single GitHub issue titled "Data refresh health" with the label
+`data-health`. A later refresh that succeeds and stays under that threshold closes the issue.
+The weekly link-check workflow opens the same issue if the workflow itself fails.
+
+After a data commit, `scripts/indexnow.py` submits new, changed, and removed job URLs to
+`https://api.indexnow.org/indexnow` (one batch, no retries). The public IndexNow key is
+`indexnow_key` in `site.config.json` and is written to `dist/<key>.txt`. A last-checked bump
+alone is not submitted. An IndexNow outage does not fail the refresh.
+
+When `adsense_client` is set, the build widens the CSP copied into `dist/_headers` with the Google
+ad hosts documented in `docs/MONETIZATION.md`. `site/_headers` stays the cookieless baseline so an
+empty publisher id does not change the policy. `/llms.txt` and `/llms-full.txt` are served as
+`text/plain; charset=utf-8`.
 
 There is no GitHub Pages workflow. Hosting is Cloudflare Pages, which is what applies `dist/_headers`.
 

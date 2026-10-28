@@ -1,6 +1,8 @@
-# Daily job refresh. Auth is the default GITHUB_TOKEN only (contents: write). No other secrets.
-# Public ATS APIs, about one request per second, no sign-in. A data commit on the default
-# branch is what makes Cloudflare Pages rebuild. See docs/DEPLOY.md.
+# Daily job refresh. Auth is the default GITHUB_TOKEN only.
+# Checks out and pushes `main` explicitly, even though scheduled workflows
+# already run from the default branch (which is main).
+# Public ATS APIs, about one request per second, no sign-in.
+# A data commit on main is what makes Cloudflare Pages rebuild. See docs/DEPLOY.md.
 name: refresh-jobs
 
 on:
@@ -10,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: refresh-jobs
@@ -18,26 +21,81 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
+    outputs:
+      unhealthy: ${{ steps.health.outputs.unhealthy }}
+      summary: ${{ steps.health.outputs.summary }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.repository.default_branch }}
+          ref: main
+          fetch-depth: 2
           persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version-file: ".python-version"
       - name: Refresh jobs from public ATS APIs (1 request/second)
+        id: refresh
         run: python3 scripts/refresh_jobs.py --delay 1.0
+      - name: Record API failure ratio
+        id: health
+        if: success()
+        run: python3 scripts/data_health.py --github-output
       - name: Validate
         run: python3 scripts/validate.py
       - name: Build (sanity check)
         run: python3 scripts/build.py && python3 scripts/check_jsonld.py
-      - name: Commit data changes to the default branch
+      - name: Commit data changes to main
+        id: commit
         run: |
-          if git diff --quiet -- data/; then echo "No changes"; exit 0; fi
           git config user.name "remotejob-vn-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes"
+            exit 0
+          fi
           git add data/
           git commit -m "chore(data): daily job refresh $(date -u +%Y-%m-%d)"
-          git push origin "HEAD:${{ github.event.repository.default_branch }}"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: IndexNow
+        if: steps.commit.outputs.changed == 'true'
+        run: python3 scripts/indexnow.py
+
+  alert:
+    needs: refresh
+    if: always() && (needs.refresh.result == 'failure' || needs.refresh.outputs.unhealthy == 'true')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - name: Open or update the data-health issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          HEALTH_SUMMARY: ${{ needs.refresh.outputs.summary }}
+          WORKFLOW_RESULT: ${{ needs.refresh.result }}
+        run: python3 scripts/data_health.py --open-issue --workflow-result "${{ needs.refresh.result }}" --reason "${{ needs.refresh.outputs.summary }}"
+
+  recover:
+    needs: refresh
+    if: needs.refresh.result == 'success' && needs.refresh.outputs.unhealthy != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - name: Close the data-health issue when the refresh is healthy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/data_health.py --close-issue

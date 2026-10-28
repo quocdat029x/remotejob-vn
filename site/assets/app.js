@@ -166,6 +166,7 @@
     if (h && /^https:\/\//i.test(h)) return h;
     return prefix + "/quang-cao/";
   }
+  // House or affiliate creative only. Never mount an AdSense unit in this dialog.
   function openIx(href) {
     var root = document.createElement("div");
     root.className = "ix";

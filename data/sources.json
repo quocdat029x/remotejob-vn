@@ -559,10 +559,10 @@
  },
  {
   "slug": "percona",
-  "ats": "custom",
-  "token": null,
-  "endpoint": "https://www.percona.com/careers",
-  "method": "html",
+  "ats": "ashby",
+  "token": "percona",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/percona",
+  "method": "api",
   "last_checked": "2026-10-28",
   "status": "ok"
  },
@@ -928,12 +928,12 @@
  },
  {
   "slug": "vcluster",
-  "ats": "himalayas",
-  "token": null,
-  "endpoint": "https://himalayas.app/companies/vcluster-labs",
-  "method": "html",
+  "ats": "ashby",
+  "token": "vClusterLabs",
+  "endpoint": "https://api.ashbyhq.com/posting-api/job-board/vClusterLabs",
+  "method": "api",
   "last_checked": "2026-10-28",
-  "status": "error"
+  "status": "ok"
  },
  {
   "slug": "ciq",
@@ -973,12 +973,12 @@
  },
  {
   "slug": "accelerant",
-  "ats": "himalayas",
-  "token": null,
-  "endpoint": "https://himalayas.app/companies/accelerant",
-  "method": "html",
+  "ats": "rippling",
+  "token": "accelerant",
+  "endpoint": "https://ats.rippling.com/api/v1/board/accelerant/jobs",
+  "method": "api",
   "last_checked": "2026-10-28",
-  "status": "error"
+  "status": "ok"
  },
  {
   "slug": "ams-accelerate",
@@ -1153,12 +1153,12 @@
  },
  {
   "slug": "qualifyze",
-  "ats": "himalayas",
-  "token": null,
-  "endpoint": "https://himalayas.app/companies/qualifyze",
-  "method": "html",
+  "ats": "recruitee",
+  "token": "qualifyzegmbh",
+  "endpoint": "https://qualifyzegmbh.recruitee.com/api/offers/",
+  "method": "api",
   "last_checked": "2026-10-28",
-  "status": "error"
+  "status": "ok"
  },
  {
   "slug": "saphetor",
@@ -1207,10 +1207,10 @@
  },
  {
   "slug": "knorex",
-  "ats": "custom",
-  "token": null,
-  "endpoint": "https://www.knorex.com/careers",
-  "method": "html",
+  "ats": "workable",
+  "token": "knorex",
+  "endpoint": "https://apply.workable.com/api/v1/widget/accounts/knorex",
+  "method": "api",
   "last_checked": "2026-10-28",
   "status": "ok"
  }
