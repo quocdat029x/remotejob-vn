@@ -17,7 +17,9 @@
 | Company | `/cong-ty/covergo/` | `/en/cong-ty/covergo/` |
 | Jobs | `/viec-lam/`, `/viec-lam/trang/2/` | `/en/viec-lam/` |
 | Job | `/viec-lam/covergo-senior-full-stack-engineer-net-vue-react-fully-remote/` | `/en/viec-lam/…` |
-| Role pages | `/viec-lam-remote/devops/`, `/sre/`, `/platform/`, `/ai-llm/`, `/mlops/`, `/dev/`, `/data/`, `/security/`, `/blockchain/` | `/en/viec-lam-remote/…` |
+| Role pages | `/viec-lam-remote/devops/`, `/sre/`, `/platform/`, `/ai-llm/`, `/mlops/`, `/dev/`, `/data/`, `/security/`, `/blockchain/` plus finer roles such as `/backend/`, `/frontend/`, `/qa/`, `/product/` when that role has at least 3 open jobs | `/en/viec-lam-remote/…` |
+| Skill, hours, level, salary | `/viec-lam-remote/python/`, `/kubernetes/`, `/gio-eu-apac/`, `/gio-my/`, `/senior/`, `/luong-cong-khai/` — same three-job minimum, skipped when the data is thinner | `/en/viec-lam-remote/…` |
+| Feeds | `/feed.xml` (RSS), `/atom.xml`, `/feed.json` | `/en/feed.xml`, `/en/atom.xml`, `/en/feed.json` |
 | Post a job | `/dang-tin/` | `/en/dang-tin/` |
 | Tools | `/cong-cu/` | `/en/cong-cu/` |
 | Privacy | `/chinh-sach-bao-mat/` | `/en/privacy/` |
@@ -39,7 +41,8 @@
 | `ItemList` | company directory | always |
 | `BreadcrumbList` | every page except home | always, matches the visible breadcrumbs |
 | `Organization` | company pages | always (`name`, `url`, `sameAs` = careers page) |
-| `JobPosting` | job pages | **only** when title, hiringOrganization, url **and** datePosted are present, the job is remote and names Vietnam or is open worldwide (APAC-only postings are skipped because they may not include Vietnam). Uses `jobLocationType: TELECOMMUTE` and `applicantLocationRequirements: {Country: VN}`; `validThrough` = last checked + 30 days. Otherwise omitted. |
+| `JobPosting` | job pages | **only** when title, hiringOrganization, url **and** datePosted are present, the job is still `open`, remote, and names Vietnam or is open worldwide (APAC-only postings are skipped because they may not include Vietnam). Uses `jobLocationType: TELECOMMUTE` and `applicantLocationRequirements: {Country: Vietnam}`. `validThrough` is last checked + 30 days when `last_checked` exists, and is omitted otherwise. A published salary string is copied into the description; a structured `baseSalary` is not invented. Removed or stale jobs do not emit JobPosting. |
+| `FAQPage` | category hubs with at least 3 open jobs | questions are the page's own counts (jobs, companies, region, salary). |
 
 Seed jobs have no posting date, so they get `JobPosting` only after `refresh_jobs.py` reads `datePosted`
 from the ATS API. `python3 scripts/check_jsonld.py` validates all blocks; the Rich Results Test
@@ -74,8 +77,9 @@ the only change is `last_checked`. There is no retry.
 
 ## Internal linking
 
-Company ↔ jobs ↔ role pages: each job links to its company and similar jobs, each company links to its jobs,
-role pages for its `hires_roles` and 6 related companies, and role pages link to each other and to companies hiring that role.
+Company ↔ jobs ↔ category hubs: each job links to its company, similar jobs, and the role, skill, timezone, seniority, and salary hubs it actually matches. Each company links to its jobs, role pages for its `hires_roles`, and hubs that contain its open jobs. Hub pages link to related hubs. The home page links to popular categories. Hubs are omitted (or, for the original role URLs, `noindex`) when fewer than 3 direct-employer jobs are open. Onsite postings are not counted on these pages.
+
+`/feed.xml` and `/en/feed.xml` are RSS 2.0 of the newest direct-employer jobs. Atom and JSON Feed sit beside them (`/atom.xml`, `/feed.json`, and the `/en/` copies). HTML pages advertise them with `<link rel="alternate">`.
 
 ## Core Web Vitals
 

@@ -90,6 +90,9 @@ p{margin:0 0 var(--s3)}
 .crumbs li+li::before{content:"/";margin-right:var(--s1);color:var(--border-strong)}
 .crumbs a{color:var(--text-2);text-decoration:none}.crumbs a:hover{text-decoration:underline}
 .pagehead{margin-bottom:var(--s5)}
+.faq h3{margin-top:var(--s4)}
+.faq h3:first-child{margin-top:0}
+.faq p{max-width:68ch}
 .lead{color:var(--text-2);font-size:var(--fs-lg);max-width:68ch}
 
 /* hero */

@@ -13,7 +13,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 import adsense  # noqa: E402
 import jobfilter as jf  # noqa: E402
 import legal_pages  # noqa: E402
+import hubs  # noqa: E402
 import llms  # noqa: E402
+import og_card  # noqa: E402
 import support_page  # noqa: E402
 from site_text import T, MODE_LABELS, TZ_LABELS, ROLE_PAGES  # noqa: E402
 
@@ -159,7 +161,27 @@ def avatar(c, size=""):
     return f'<span class="avatar {size}" style="background:{col}" aria-hidden="true">{e(initials(c["name"]))}</span>'
 
 
-def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="website", alt=True, alternates=None):
+def feed_link_tags(lang):
+    label = hubs.UI[lang]["feed_title"]
+    specs = (
+        ("application/rss+xml", "/feed.xml"),
+        ("application/atom+xml", "/atom.xml"),
+        ("application/feed+json", "/feed.json"),
+    )
+    return [f'<link rel="alternate" type="{mime}" title="{e(label)}" href="{e(absu(lang, path))}">' for mime, path in specs]
+
+
+def _iso_day(value):
+    raw = (value or "")[:10]
+    if len(raw) != 10:
+        return None
+    try:
+        return datetime.date.fromisoformat(raw).isoformat()
+    except ValueError:
+        return None
+
+
+def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="website", alt=True, alternates=None, og_image=None):
     out = [
         '<meta charset="utf-8">',
         '<meta name="viewport" content="width=device-width,initial-scale=1">',
@@ -177,6 +199,8 @@ def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="webs
         out += [f'<link rel="alternate" hreflang="vi" href="{e(absu("vi", alts["vi"]))}">',
                 f'<link rel="alternate" hreflang="en" href="{e(absu("en", alts["en"]))}">',
                 f'<link rel="alternate" hreflang="x-default" href="{e(absu("vi", alts["vi"]))}">']
+    out += feed_link_tags(lang)
+    image = og_image or f"{SITE}/og-default.png"
     client = adsense.client_id(CFG)
     if client:
         # Publisher id, Auto ads loader. Manual units are pushed from the end of body.
@@ -187,15 +211,15 @@ def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="webs
         f'<meta property="og:title" content="{e(title)}">',
         f'<meta property="og:description" content="{e(desc)}">',
         f'<meta property="og:url" content="{e(absu(lang, path))}">',
-        f'<meta property="og:image" content="{SITE}/og-default.png">',
+        f'<meta property="og:image" content="{e(image)}">',
         '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">',
-        f'<meta property="og:image:alt" content="{e(NAME)}">',
+        f'<meta property="og:image:alt" content="{e(title)}">',
         f'<meta property="og:locale" content="{"vi_VN" if lang == "vi" else "en_US"}">',
         f'<meta property="og:locale:alternate" content="{"en_US" if lang == "vi" else "vi_VN"}">',
         '<meta name="twitter:card" content="summary_large_image">',
         f'<meta name="twitter:title" content="{e(title)}">',
         f'<meta name="twitter:description" content="{e(desc)}">',
-        f'<meta name="twitter:image" content="{SITE}/og-default.png">',
+        f'<meta name="twitter:image" content="{e(image)}">',
         '<meta name="theme-color" content="#0f766e" media="(prefers-color-scheme: light)">',
         '<meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">',
         '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
@@ -208,7 +232,7 @@ def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="webs
     return "\n".join(out)
 
 
-def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=None, js=True, aside=None, og_type="website", alt=True, alternates=None):
+def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=None, js=True, aside=None, og_type="website", alt=True, alternates=None, og_image=None):
     t = T[lang]
     nav = [("/cong-ty/", t["nav_companies"]), ("/viec-lam/", t["nav_jobs"]),
            ("/viec-lam-remote/", t["nav_roles"]), ("/cong-cu/", t["nav_tools"]),
@@ -252,13 +276,13 @@ def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=No
     footer = f"""<footer class="foot"><div class="wrap"><div class="cols">
 <div><a class="brand" href="{L('/')}">{LOGO}<span>RemoteJob <b>VN</b></span></a><p class="muted" style="margin-top:12px;max-width:42ch">{e(t['site_tag'])}. {e(privacy_blurb)}</p></div>
 <nav aria-label="{e(t['ft_explore'])}"><h2>{e(t['ft_explore'])}</h2><ul><li><a href="{L('/cong-ty/')}">{e(t['nav_companies'])}</a></li><li><a href="{L('/viec-lam/')}">{e(t['nav_jobs'])}</a></li><li><a href="{L('/viec-lam-remote/')}">{e(t['nav_roles'])}</a></li><li><a href="{L('/cong-cu/')}">{e(t['nav_tools'])}</a></li></ul></nav>
-<nav aria-label="{e(t['ft_project'])}"><h2>{e(t['ft_project'])}</h2><ul><li><a href="{url_for(lang, support_page.PATHS[lang])}">{e(t['ft_support'])}</a></li><li><a href="{L('/gioi-thieu/')}">{e(t['nav_about'])}</a></li><li><a href="{L('/dang-tin/')}">{e(t['nav_post'])}</a></li><li><a href="{repo}/blob/main/CONTRIBUTING.md" rel="noopener">{e(t['ft_contribute'])}</a></li><li><a href="{repo}" rel="noopener">GitHub</a></li><li><a href="/sitemap.xml">Sitemap</a></li></ul></nav>
+<nav aria-label="{e(t['ft_project'])}"><h2>{e(t['ft_project'])}</h2><ul><li><a href="{url_for(lang, support_page.PATHS[lang])}">{e(t['ft_support'])}</a></li><li><a href="{L('/gioi-thieu/')}">{e(t['nav_about'])}</a></li><li><a href="{L('/dang-tin/')}">{e(t['nav_post'])}</a></li><li><a href="{repo}/blob/main/CONTRIBUTING.md" rel="noopener">{e(t['ft_contribute'])}</a></li><li><a href="{repo}" rel="noopener">GitHub</a></li><li><a href="/sitemap.xml">Sitemap</a></li><li><a href="{L('/feed.xml')}">RSS</a></li></ul></nav>
 <nav aria-label="{e(t['ft_legal'])}"><h2>{e(t['ft_legal'])}</h2><ul><li><a href="{legal_href(lang, 'privacy')}">{e(t['ft_privacy'])}</a></li><li><a href="{legal_href(lang, 'terms')}">{e(t['ft_terms'])}</a></li><li><a href="{legal_href(lang, 'contact')}">{e(t['ft_contact'])}</a></li><li><a href="{L('/cong-cu/')}#disclosure">{e(t['ft_disclosure'])}</a></li><li><a href="{L('/quang-cao/')}">{e(t['ads_title'])}</a></li><li><a href="{L('/gioi-thieu/')}#license">{e(t['ft_license'])}</a></li></ul></nav>
 </div><p class="fine">{e(t['footer'])}</p><p class="fine status">{e(FRESH.get(lang, ''))}</p></div></footer>"""
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
-{head_tags(lang, path, title, desc, noindex, ld, og_type, alt, alternates)}
+{head_tags(lang, path, title, desc, noindex, ld, og_type, alt, alternates, og_image)}
 </head>
 <body data-lang="{lang}">
 <a class="skip" href="#main">{e(t['skip'])}</a>
@@ -550,21 +574,36 @@ def main():
         for lang in LANGS
     }
 
-    # --- role pages (direct employers only)
-    roles = []
-    for slug, vi, en, tagset, rx, co_roles in ROLE_PAGES:
-        crx = re.compile(rx, re.I)
-        js = [j for j in listed if (set(j["roles"]) & tagset) or crx.search(j["title"])]
-        cos = [c for c in companies if not company_is_aggregator(c) and set(c["hires_roles"]) & co_roles]
-        roles.append(dict(slug=slug, vi=vi, en=en, jobs=js, keys={j["key"] for j in js}, companies=cos, co_roles=co_roles))
+    # Landing hubs. Curated role URLs always exist; other hubs need >= 3 open jobs.
+    catalog = hubs.collect(listed, co_by, ROLE_PAGES)
     role_by_hr = defaultdict(list)
-    for r in roles:
-        for hr in r["co_roles"]:
-            role_by_hr[hr].append(r)
+    curated = {h["slug"]: h for h in catalog if h.get("origin") == "curated"}
+    for slug, _vi, _en, _tagset, _rx, co_roles in ROLE_PAGES:
+        hub = curated.get(slug)
+        if not hub:
+            continue
+        for hr in co_roles:
+            role_by_hr[hr].append(hub)
+    hubs_by_company = defaultdict(list)
+    for hub in catalog:
+        if not hub["indexable"]:
+            continue
+        for slug in {job["company_slug"] for job in hub["jobs"]}:
+            hubs_by_company[slug].append(hub)
 
     if os.path.exists(OUT):
         shutil.rmtree(OUT)
     sitemap = {"vi": [], "en": []}
+    og_for = {}
+    og_dir = os.path.join(OUT, "og")
+    os.makedirs(og_dir, exist_ok=True)
+    for hub in catalog:
+        if not hub["indexable"]:
+            continue
+        dest = os.path.join(og_dir, hub["slug"] + ".png")
+        copy = hubs.page_copy(hub, "en")
+        og_card.write_hub_png(dest, copy["og_title"], len(hub["jobs"]), hub["updated"])
+        og_for[hub["slug"]] = f"{SITE}/og/{hub['slug']}.png"
 
     def write(lang, path, content, lastmod=None, index=True, alternates=None):
         fp = os.path.join(OUT, url_for(lang, path).lstrip("/"), "index.html") if path.endswith("/") else os.path.join(OUT, url_for(lang, path).lstrip("/"))
@@ -598,7 +637,8 @@ def main():
         side = ad_sidebar(lang, ads)
         # ---------------- home
         top = [j for j in listed if j["region"] in ("vn", "apac") and j["remote"] in ("yes", "hybrid")][:12]
-        role_links = "".join(f'<li><a class="chip" href="{url_for(lang, "/viec-lam-remote/" + r["slug"] + "/")}">{e(r[lang])} <span class="n">{len(r["jobs"])}</span></a></li>' for r in roles)
+        popular = hubs.pick_diverse([h for h in catalog if h["indexable"]], 12)
+        role_links = hubs.chip_html(popular, lang, lambda p, lang=lang: url_for(lang, p))
         grpA = [c for c in companies if c["group"] == "A"][:10]
         lead_key = "home_lead_ads" if adsense.client_id(CFG) else "home_lead"
         desc_key = "home_desc_ads" if adsense.client_id(CFG) else "home_desc"
@@ -606,6 +646,7 @@ def main():
 <form class="hero-search" action="{url_for(lang, '/viec-lam/')}" method="get" role="search"><label class="sr" for="hq">{e(t['search'])}</label>
 <input id="hq" type="search" name="q" placeholder="{e(t['hero_search_ph'])}" autocomplete="off"><button class="btn primary" type="submit">{e(t['hero_btn'])}</button></form>
 <ul class="chips" aria-label="{e(t['browse_roles'])}">{role_links}</ul>
+<p style="margin-top:16px"><a class="btn" href="{url_for(lang, '/viec-lam-remote/')}">{e(t['all_categories'])} →</a></p>
 <ul class="stats"><li><b>{len(companies)}</b> {e(t['stat_companies'])}</li><li><b>{len(listed)}</b> {e(t['stat_jobs'])}</li><li><b>{n_vn}</b> {e(t['stat_vn'])}</li><li><b>{fmt_date(jobs_updated, lang)}</b> {e(t['updated'])}</li></ul>
 {f'<p class="muted small">{e(t["home_agg_note"])}</p>' if agg_slugs else ''}</section>
 {support_page.nudge(lang)}
@@ -649,9 +690,24 @@ def main():
                 srcnote = f'<p class="muted">{e(t["jobs_fetched"])}: {fmt_date(src.get("last_checked"), lang)}</p>'
             if company_is_aggregator(c):
                 srcnote = f'<p class="note">{e(t["agg_list_note"])}</p>' + srcnote
-            role_links_c = " ".join(
-                (f'<a class="b role" href="{url_for(lang, "/viec-lam-remote/" + role_by_hr[r][0]["slug"] + "/")}">{e(r)}</a>' if role_by_hr.get(r) else badge(r, "role"))
-                for r in c["hires_roles"])
+            linked_paths = set()
+            role_parts = []
+            for r in c["hires_roles"]:
+                group = role_by_hr.get(r)
+                if group:
+                    role_path = f"/viec-lam-remote/{group[0]['slug']}/"
+                    if role_path not in linked_paths:
+                        role_parts.append(f'<a class="b role" href="{url_for(lang, role_path)}">{e(r)}</a>')
+                        linked_paths.add(role_path)
+                else:
+                    role_parts.append(badge(r, "role"))
+            role_links_c = " ".join(role_parts)
+            extra_hubs = [h for h in hubs.pick_diverse(hubs_by_company.get(c["slug"], []), 12) if h["path"] not in linked_paths][:8]
+            hub_section = ""
+            if extra_hubs:
+                hub_section = (f'<section><h2>{e(t["categories"])}</h2><ul class="chips">'
+                               + hubs.chip_html(extra_hubs, lang, lambda p, lang=lang: url_for(lang, p))
+                               + "</ul></section>")
             site_link = f'<a href="{e(c["website"])}" rel="noopener">{e(c["website"])}</a>' if c["website"] else "—"
             facts = [(t["hq"], e(c["hq"])), (t["remote_policy"], e(c["remote_policy"])), (t["hiring_mode"], e(c["vn_hiring_mode"])),
                      (t["timezone"], e(c["timezone_note"])), (t["salary"], e(c["salary_public"])), (t["roles"], role_links_c),
@@ -671,6 +727,7 @@ def main():
 <div class="cta"><a class="btn primary" href="{e(c['careers_url'])}" rel="noopener">{e(t['careers'])} ↗</a>{('<a class="btn" href="' + e(c['website']) + '" rel="noopener">' + e(t['website']) + ' ↗</a>') if c['website'] else ''}<a class="btn" href="#jobs">{e(t['open_jobs'])} ({len(cj)})</a></div>
 <div class="panel"><dl class="facts">{dl}</dl>{note_lang}</div>
 <section><h2 id="jobs">{e(t['open_jobs'])} ({len(cj)})</h2>{srcnote}{jl}</section>
+{hub_section}
 <section><h2>{e(t['related'])}</h2><ul class="list grid2">{relhtml}</ul></section>
 <p style="margin-top:24px" class="small"><a href="{e(CFG['REPO_URL'])}/edit/main/data/companies.json" rel="noopener">✎ {e(t['edit'])}</a></p>
 {ad_bottom(lang, ads)}"""
@@ -718,7 +775,10 @@ def main():
             others = [x for x in jobs_by_co[c["slug"]] if x is not j][:8]
             jr = set(j["roles"]) - {"other", "engineering"}
             sim = [x for x in listed if x["company_slug"] != c["slug"] and set(x["roles"]) & jr and x["region"] == j["region"]][:6] if jr else []
-            rlinks = [r for r in roles if j["key"] in r["keys"]] if not is_gone else []
+            matched_hubs = []
+            if not is_gone:
+                matched_hubs = hubs.pick_diverse(
+                    [h for h in catalog if h["indexable"] and j["key"] in h["keys"]], 8)
             facts = [(t["f_company"], f'<a href="{url_for(lang, "/cong-ty/" + c["slug"] + "/")}">{e(c["name"])}</a>'),
                      (t["location"], e(j.get("location") or "—")), (t["f_region"], e(t["region_" + j["region"]])),
                      (t["f_remote"], e(t["remote_" + j["remote"]]))]
@@ -728,8 +788,9 @@ def main():
                 facts.append((t["posted"], fmt_date(j["date_posted"], lang)))
             facts += [(t["first_seen"], fmt_date(j.get("first_seen"), lang)), (t["last_checked"], fmt_date(j["last_checked"], lang)),
                       (t["hiring_mode"], e(c["vn_hiring_mode"])), (t["timezone"], e(c["timezone_note"]))]
-            if rlinks:
-                facts.append((t["f_role"], " ".join(f'<a class="b role" href="{url_for(lang, "/viec-lam-remote/" + r["slug"] + "/")}">{e(r[lang])}</a>' for r in rlinks)))
+            if matched_hubs:
+                facts.append((t["categories"], " ".join(
+                    f'<a class="b role" href="{url_for(lang, h["path"])}">{e(h[lang])}</a>' for h in matched_hubs)))
             dl = "".join(f"<dt>{e(k)}</dt><dd>{v}</dd>" for k, v in facts)
             desc_html = (f'<section><h2>{e(t["description"])}</h2><p class="excerpt">{e(j["description"])}</p><p class="muted small">{e(t["excerpt_note"])}</p></section>' if j.get("description") else "")
             banner = f'<p class="note warn" role="status">{e(t["removed"])}</p>' if is_gone else ""
@@ -753,35 +814,40 @@ def main():
             write(lang, path, page(lang, path, title, desc[:300], body, crumbs=[(t["nav_jobs"], "/viec-lam/"), (c["name"], f"/cong-ty/{c['slug']}/"), (j["title"], path)],
                                    noindex=is_gone, jsonld=ld, og_type="article", aside=side), j["last_checked"], index=not is_gone)
 
-        # ---------------- role pages
-        chips = "".join(f'<li><a class="chip" href="{url_for(lang, "/viec-lam-remote/" + r["slug"] + "/")}">{e(r[lang])} <span class="n">{len(r["jobs"])}</span></a></li>' for r in roles)
-        write(lang, "/viec-lam-remote/", page(lang, "/viec-lam-remote/", t["roles_title"], t["roles_desc"],
-                                              f'<div class="pagehead"><h1>{e(t["roles_title"])}</h1><p class="lead">{e(t["roles_desc"])}</p></div><ul class="chips">{chips}</ul>',
-                                              crumbs=[(t["nav_roles"], "/viec-lam-remote/")], aside=side), jobs_updated)
-        for r in roles:
-            base = f"/viec-lam-remote/{r['slug']}/"
-            rtotal = max(1, -(-len(r["jobs"]) // per))
-            for n in range(1, rtotal + 1):
+        # ---------------- category hubs (role, skill, timezone, seniority, salary)
+        n_hubs = sum(1 for h in catalog if h["indexable"])
+        index_lead = t["roles_desc"].format(n=n_hubs, min=hubs.MIN_OPEN_JOBS)
+        write(lang, "/viec-lam-remote/", page(
+            lang, "/viec-lam-remote/", t["roles_title"], index_lead,
+            hubs.index_html(catalog, lang, lambda p, lang=lang: url_for(lang, p), t["roles_h1"], index_lead),
+            crumbs=[(t["nav_roles"], "/viec-lam-remote/")], aside=side), jobs_updated)
+        for hub in catalog:
+            if not (hub["indexable"] or hub.get("origin") == "curated"):
+                continue
+            base = hub["path"]
+            rel = hubs.related(hub, catalog) if hub["indexable"] else []
+            pages = max(1, -(-len(hub["jobs"]) // per)) if hub["indexable"] else 1
+            og = og_for.get(hub["slug"])
+            for n in range(1, pages + 1):
                 path = base if n == 1 else f"{base}trang/{n}/"
-                chunk = r["jobs"][(n - 1) * per: n * per]
-                ptxt = "" if n == 1 else f" – {t['page']} {n}"
-                if lang == "vi":
-                    h1 = f"Việc làm {r['vi']} remote ở Việt Nam{ptxt}"
-                    desc = f"{len(r['jobs'])} việc làm {r['vi']} remote đang mở từ công ty remote-first tuyển ở Việt Nam, ưu tiên tin ghi rõ Việt Nam/APAC. {len(r['companies'])} công ty thường tuyển {r['vi']}."
+                chunk = hub["jobs"][(n - 1) * per: n * per]
+                if chunk:
+                    jl = f'<ul class="list">{with_native([job_row(j, co_by[j["company_slug"]], lang) for j in chunk], lang, ads)}</ul>'
                 else:
-                    h1 = f"Remote {r['en']} jobs for Vietnam{ptxt}"
-                    desc = f"{len(r['jobs'])} open remote {r['en']} jobs from remote-first companies hiring in Vietnam, Vietnam/APAC first. {len(r['companies'])} companies that hire {r['en']}."
-                cos = "".join(f'<li><a class="chip" href="{url_for(lang, "/cong-ty/" + c["slug"] + "/")}">{e(c["name"])}</a></li>' for c in r["companies"][:40]) if n == 1 else ""
-                others = "".join(f'<li><a class="chip" href="{url_for(lang, "/viec-lam-remote/" + x["slug"] + "/")}">{e(x[lang])}</a></li>' for x in roles if x is not r)
-                jl = f'<ul class="list">{with_native([job_row(j, co_by[j["company_slug"]], lang) for j in chunk], lang, ads)}</ul>' if chunk else empty_state(lang)
-                body = f"""<div class="pagehead"><h1>{e(h1)}</h1><p class="lead">{e(desc)}</p></div>
-{support_page.nudge(lang)}
-{jl}{pager(lang, base, n, rtotal)}
-{('<section><h2>' + e(t['nav_companies']) + '</h2><ul class="chips">' + cos + '</ul></section>') if cos else ''}
-<section><h2>{e(t['nav_roles'])}</h2><ul class="chips">{others}</ul></section>"""
-                write(lang, path, page(lang, path, h1 + (" | RemoteJob VN" if n == 1 else ""), desc, body,
-                                       crumbs=[(t["nav_roles"], "/viec-lam-remote/"), (r[lang], base)] + ([(f"{t['page']} {n}", path)] if n > 1 else []), aside=side),
-                      max([j["last_checked"] for j in chunk] or [TODAY]))
+                    jl = empty_state(lang)
+                pager_html = pager(lang, base, n, pages) if pages > 1 else ""
+                body, copy = hubs.sections_html(
+                    hub, lang, jl, rel, lambda p, lang=lang: url_for(lang, p),
+                    pager_html=pager_html, before_list=support_page.nudge(lang), page_n=n)
+                ld = [hubs.faq_jsonld(copy["faq"])] if n == 1 and copy["faq"] and hub["indexable"] else []
+                crumbs = [(t["nav_roles"], "/viec-lam-remote/"), (hub[lang], base)]
+                if n > 1:
+                    crumbs.append((f"{t['page']} {n}", path))
+                lastmod = max([j["last_checked"] for j in chunk] or [hub["updated"] or TODAY])
+                write(lang, path, page(
+                    lang, path, copy["title"], copy["description"], body,
+                    crumbs=crumbs, noindex=not hub["indexable"], jsonld=ld, aside=side, og_image=og),
+                    lastmod, index=hub["indexable"])
 
         # ---------------- tools (affiliate) page
         cats = ""
@@ -913,6 +979,20 @@ def main():
             alts = LEGAL_PATHS[key]
             write(lang, path, page(lang, path, t[title_key], t[desc_key], renderer(),
                                    crumbs=[(t[title_key], path)], alternates=alts), TODAY, alternates=alts)
+        ui = hubs.UI[lang]
+        feed_items = hubs.feed_items(listed, co_by, lang, lambda p, lang=lang: absu(lang, p))
+        home = absu(lang, "/")
+        feed_title = ui["feed_title"] + " – " + NAME
+        write(lang, "/feed.xml", hubs.rss_xml(
+            feed_items, title=feed_title, link=home, description=ui["feed_desc"],
+            language=lang, self_url=absu(lang, "/feed.xml")), jobs_updated, index=False)
+        write(lang, "/atom.xml", hubs.atom_xml(
+            feed_items, title=feed_title, link=home, description=ui["feed_desc"],
+            self_url=absu(lang, "/atom.xml"), updated=jobs_updated), jobs_updated, index=False)
+        write(lang, "/feed.json", json.dumps(hubs.json_feed(
+            feed_items, title=feed_title, link=home, description=ui["feed_desc"],
+            language=lang, self_url=absu(lang, "/feed.json")), ensure_ascii=False, indent=2) + "\n",
+            jobs_updated, index=False)
 
     # ---------------- 404, assets, data index, sitemap, robots
     tv, te = T["vi"], T["en"]
@@ -982,41 +1062,63 @@ def main():
     with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as fh:
         fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
                  "".join(f"<sitemap><loc>{SITE}/sitemap-{l}.xml</loc><lastmod>{TODAY}</lastmod></sitemap>\n" for l in LANGS) + "</sitemapindex>\n")
-    role_meta = [(slug, vi, en) for slug, vi, en, _tags, _rx, _co in ROLE_PAGES]
+    role_meta = [(h["slug"], h["vi"], h["en"]) for h in catalog if h.get("origin") == "curated"]
+    extra_pages = [(h["path"], h["vi"], h["en"], len(h["jobs"])) for h in catalog if h["indexable"] and h.get("origin") != "curated"]
     with open(os.path.join(OUT, "llms.txt"), "w", encoding="utf-8") as fh:
-        fh.write(llms.llms_txt(SITE, CFG["REPO_URL"], role_meta))
+        fh.write(llms.llms_txt(SITE, CFG["REPO_URL"], role_meta, extra_pages=extra_pages))
     full_jobs = []
     for job in listed:
         row = dict(job)
         row["company_name"] = co_by[job["company_slug"]]["name"]
         full_jobs.append(row)
     with open(os.path.join(OUT, "llms-full.txt"), "w", encoding="utf-8") as fh:
-        fh.write(llms.llms_full_txt(SITE, companies, full_jobs, TODAY))
+        fh.write(llms.llms_full_txt(SITE, companies, full_jobs, TODAY, hubs=catalog))
     with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as fh:
         fh.write(llms.robots_txt(SITE))
     n_pages = sum(len(v) for v in sitemap.values())
+    by_kind = Counter(h["kind"] for h in catalog if h["indexable"])
+    kind_bits = ", ".join(f"{kind} {by_kind[kind]}" for kind in hubs.KIND_ORDER if by_kind[kind])
     print(f"built {OUT}: {len(companies)} companies, {len(active)} active jobs, {len(listed)} in default listings, "
           f"{len(active) - len(listed)} aggregator jobs withheld from mixed lists, {len(gone)} removed/stale job pages (noindex), "
-          f"{n_pages} sitemap URLs, {sum(1 for j in active if job_posting_ld(j, co_by[j['company_slug']]))} JobPosting blocks per language")
+          f"{n_pages} sitemap URLs, {sum(1 for j in active if job_posting_ld(j, co_by[j['company_slug']]))} JobPosting blocks per language, "
+          f"{sum(by_kind.values())} indexable hubs ({kind_bits})")
 
 
 def job_posting_ld(j, c):
-    """schema.org JobPosting, only when the required facts exist; otherwise None (no JSON-LD)."""
+    """schema.org JobPosting, only when the required facts exist; otherwise None (no JSON-LD).
+
+    Expired or removed jobs never emit a block. validThrough is the site freshness
+    cutoff (last_checked + JOB_STALE_DAYS) and is omitted when last_checked is missing.
+    Salary text is copied from the posting; a structured baseSalary is not invented.
+    """
+    if j.get("status", "open") != "open":
+        return None
     if company_is_aggregator(c):
         return None  # the record is a job board, not the hiring organization
-    if not (j.get("title") and j.get("url") and j.get("date_posted") and c.get("name")):
+    posted = _iso_day(j.get("date_posted"))
+    if not (j.get("title") and j.get("url") and posted and c.get("name")):
         return None
     if j.get("remote") != "yes" or j.get("region") not in ("vn", "global"):
         return None  # only claim TELECOMMUTE + Vietnam eligibility when the posting names Vietnam or is worldwide
+    desc = j.get("description") or j["title"]
+    salary = (j.get("salary") or "").strip()
+    if salary:
+        desc = f"{desc} Salary as published: {salary}"
+    org = {"@type": "Organization", "name": c["name"]}
+    same = c.get("website") or c.get("careers_url")
+    if same:
+        org["sameAs"] = same
     d = {"@context": "https://schema.org", "@type": "JobPosting", "title": j["title"],
-         "description": f"<p>{html.escape(j.get('description') or j['title'])}</p>",
-         "datePosted": j["date_posted"][:10],
-         "validThrough": (datetime.date.fromisoformat(j["last_checked"][:10]) + datetime.timedelta(days=CFG["JOB_STALE_DAYS"])).isoformat(),
-         "hiringOrganization": {"@type": "Organization", "name": c["name"], "sameAs": c["website"] or c["careers_url"]},
+         "description": f"<p>{html.escape(desc)}</p>",
+         "datePosted": posted,
+         "hiringOrganization": org,
          "jobLocationType": "TELECOMMUTE",
-         "applicantLocationRequirements": {"@type": "Country", "name": "VN"},
+         "applicantLocationRequirements": {"@type": "Country", "name": "Vietnam"},
          "url": j["url"], "directApply": False,
-         "identifier": {"@type": "PropertyValue", "name": c["name"], "value": j["key"].split(":", 1)[-1]}}
+         "identifier": {"@type": "PropertyValue", "name": c["name"], "value": (j.get("key") or j["url"]).split(":", 1)[-1]}}
+    checked = _iso_day(j.get("last_checked"))
+    if checked:
+        d["validThrough"] = (datetime.date.fromisoformat(checked) + datetime.timedelta(days=CFG["JOB_STALE_DAYS"])).isoformat()
     return d
 
 

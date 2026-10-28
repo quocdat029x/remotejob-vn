@@ -53,7 +53,7 @@ Other tools:
 
 ```bash
 python3 scripts/check_jsonld.py      # validate JSON-LD in dist/
-python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && python3 scripts/test_support.py && node scripts/test_interstitial.mjs
+python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && python3 scripts/test_support.py && python3 scripts/test_hubs.py && node scripts/test_interstitial.mjs
 ./scripts/screenshots.sh             # light/dark screenshots at 1280 and 390 px (needs google-chrome + local server)
 ```
 
@@ -66,7 +66,8 @@ python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 
 | `/cong-ty/<slug>/` | Company profile, open jobs, related companies |
 | `/viec-lam/` (+ `/trang/N/`) | All open jobs, paginated; filters by role/company/region/remote with JS |
 | `/viec-lam/<company>-<job>/` | Job page with apply link and JobPosting JSON-LD when data allows |
-| `/viec-lam-remote/<role>/` | Role landing pages: devops, sre, platform, ai-llm, mlops, dev, data, security, blockchain |
+| `/viec-lam-remote/<slug>/` | Category hubs with at least 3 open direct-employer jobs: roles, title skills (Python, Go, …), EU/APAC vs US hours, seniority, and public salary (`/luong-cong-khai/`) |
+| `/feed.xml`, `/atom.xml`, `/feed.json` | Newest jobs (RSS, Atom, JSON Feed). English copies under `/en/` |
 | `/cong-cu/` | Tools for remote workers (affiliate slots, clearly labeled; URLs are placeholders) |
 | `/dang-tin/` | Post a sponsored job (pricing: contact, via a GitHub issue) |
 | `/quang-cao/`, `/gioi-thieu/` | Advertising info, about/privacy/license |
