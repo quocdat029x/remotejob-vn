@@ -1,0 +1,63 @@
+name: Post a sponsored job
+description: Request a featured listing for a remote role open to people in Vietnam
+title: "Sponsored job: "
+labels: [sponsored]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Public GitHub issue. This is the contact path for a featured listing.
+        Do not include personal phone numbers, private notes, or anyone's CV.
+        You do not need to email the maintainer.
+  - type: input
+    id: company
+    attributes:
+      label: Company name
+      description: The employer, not a recruitment agency posting on someone else's behalf unless that is stated.
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Job title
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Public job URL
+      description: Careers page or the posting itself. Must be a public https URL.
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: eligibility
+    attributes:
+      label: Remote policy and Vietnam eligibility
+      description: Confirm the role is remote and open to people based in Vietnam. Name the time zone overlap if you know it.
+    validations:
+      required: true
+  - type: input
+    id: dates
+    attributes:
+      label: Requested start and end dates
+      description: Featured slots run between these dates. At most 3 sponsored jobs are shown at once.
+      placeholder: YYYY-MM-DD to YYYY-MM-DD
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else that is public
+      description: Salary if you already publish it, location text, role family. Leave out private contact details.
+  - type: checkboxes
+    id: policy
+    attributes:
+      label: Checklist
+      options:
+        - label: This role is remote (or explicitly remote-friendly) and open to people in Vietnam.
+          required: true
+        - label: This is not a gambling, betting, casino or iGaming role or company.
+          required: true
+        - label: I understand pricing is "contact" for now and this issue is the request, not a paid order.
+          required: true

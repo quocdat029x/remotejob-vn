@@ -1,7 +1,18 @@
 // Progressive enhancement only: every page is fully rendered without this file.
-// Adds client-side filtering to the company directory and the jobs list. No tracking, no cookies.
+// Adds client-side filtering, and the apply-click interstitial. No cookies.
+// Cloudflare Web Analytics is injected by Pages, not by this file.
 (function () {
   "use strict";
+  function rjIsBot(webdriver, ua) {
+    if (webdriver) return true;
+    return /bot|crawl|spider|slurp|headless|phantom|semrush|ahrefs|petalbot|lighthouse|facebookexternalhit|embedly/i.test(ua || "");
+  }
+  function rjOutboundAdDecision(clicks, lastShownMs, nowMs) {
+    var n = (clicks || 0) + 1;
+    var due = !lastShownMs || (nowMs - lastShownMs) >= 600000;
+    var show = n % 3 === 0 && due;
+    return {clicks: n, show: show, lastShownMs: show ? nowMs : (lastShownMs || 0)};
+  }
   var lang = document.body.getAttribute("data-lang") || "vi";
   var L = lang === "en"
     ? { results: "results", more: "Show more", ad: "Ad", checked: "checked",
@@ -124,7 +135,8 @@
         matches = idx.jobs.filter(function (j) {
           return (!o.role || (" " + j[5] + " ").indexOf(" " + o.role + " ") >= 0) && (!o.company || j[2] === o.company) &&
             (!o.region || j[3] === o.region) && (!o.remote || j[4] === o.remote) &&
-            (!q || norm(j[1] + " " + (idx.cos[j[2]] || "") + " " + j[6]).indexOf(q) >= 0);
+                (!q || norm(j[1] + " " + (idx.cos[j[2]] || "") + " " + j[6]).indexOf(q) >= 0) &&
+            (!j[9] || o.company === j[2]);
         });
         shown = 50;
         if (pager) pager.hidden = true;
@@ -137,5 +149,95 @@
     jf.addEventListener("reset", function () { setTimeout(run2, 0); });
     jf.addEventListener("submit", function (e) { e.preventDefault(); });
     if (location.search) run2();
+  }
+
+  // Outbound apply click only. The <a href> stays a normal link when JS is off.
+  // Nothing here runs on load. Bots and webdriver never see the dialog.
+  function storeGet(key) {
+    try { return localStorage.getItem(key); } catch (e) { /* storage blocked */ }
+    try { return sessionStorage.getItem(key); } catch (e2) { return null; }
+  }
+  function storeSet(key, val) {
+    try { localStorage.setItem(key, val); return; } catch (e) { /* storage blocked */ }
+    try { sessionStorage.setItem(key, val); } catch (e2) { /* storage blocked */ }
+  }
+  function safeHref(h) {
+    if (h && h.charAt(0) === "/" && h.charAt(1) !== "/") return h;
+    if (h && /^https:\/\//i.test(h)) return h;
+    return prefix + "/quang-cao/";
+  }
+  function openIx(href) {
+    var root = document.createElement("div");
+    root.className = "ix";
+    root.setAttribute("role", "dialog");
+    root.setAttribute("aria-modal", "true");
+    root.setAttribute("aria-labelledby", "rj-ix-title");
+    var house = safeHref(ixCfg.href);
+    root.innerHTML = '<div class="ix-card"><div class="ix-top"><span class="label ix-label">' + esc(ixCfg.label || "Quảng cáo / Advertisement") + "</span>" +
+      '<button type="button" class="btn" data-ix-x>' + esc(ixCfg.close || "Close") + "</button></div>" +
+      '<h2 id="rj-ix-title">' + esc(ixCfg.title || "") + "</h2><p>" + esc(ixCfg.body || "") + "</p>" +
+      '<div class="ix-actions">' + (ixCfg.cta ? '<a class="btn" data-ix-house href="' + esc(house) + '">' + esc(ixCfg.cta) + "</a>" : "") +
+      '<button type="button" class="btn primary" data-ix-go>' + esc(ixCfg.go || "Continue to job") + "</button></div>" +
+      '<p class="ix-count" id="rj-ix-count" aria-live="polite"></p></div>';
+    document.body.appendChild(root);
+    var gone = false, timer = null;
+    function leave() {
+      if (gone) return;
+      gone = true;
+      if (timer) clearInterval(timer);
+      document.removeEventListener("keydown", onKey, true);
+      location.assign(href);
+    }
+    function onKey(e) {
+      if (e.key === "Escape") { e.preventDefault(); leave(); return; }
+      if (e.key !== "Tab") return;
+      var f = root.querySelectorAll("a[href],button:not([disabled])");
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    document.addEventListener("keydown", onKey, true);
+    root.querySelector("[data-ix-x]").addEventListener("click", leave);
+    root.querySelector("[data-ix-go]").addEventListener("click", leave);
+    var houseLink = root.querySelector("[data-ix-house]");
+    if (houseLink) houseLink.addEventListener("click", function () {
+      gone = true;
+      if (timer) clearInterval(timer);
+      document.removeEventListener("keydown", onKey, true);
+    });
+    var countEl = root.querySelector("#rj-ix-count");
+    var left = ixCfg.seconds || 5;
+    var tpl = ixCfg.count || "{n}";
+    countEl.textContent = tpl.replace("{n}", String(left));
+    timer = setInterval(function () {
+      left -= 1;
+      if (left <= 0) leave();
+      else countEl.textContent = tpl.replace("{n}", String(left));
+    }, 1000);
+    root.querySelector("[data-ix-x]").focus();
+  }
+  var ixNode = document.getElementById("rj-ix");
+  var ixCfg = null;
+  if (ixNode && !rjIsBot(navigator.webdriver, navigator.userAgent)) {
+    try { ixCfg = JSON.parse(ixNode.textContent); } catch (e) { ixCfg = null; }
+  }
+  if (ixCfg) {
+    document.addEventListener("click", function (ev) {
+      var el = ev.target;
+      if (el && !el.closest && el.parentElement) el = el.parentElement;
+      if (!el || !el.closest) return;
+      var a = el.closest('a[data-out="job"]');
+      if (!a || ev.button !== 0) return;
+      var n = parseInt(storeGet("rjvn-out-n") || "0", 10) || 0;
+      var at = parseInt(storeGet("rjvn-out-at") || "0", 10) || 0;
+      var d = rjOutboundAdDecision(n, at, Date.now());
+      storeSet("rjvn-out-n", String(d.clicks));
+      var modified = ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || a.target === "_blank";
+      if (!d.show || modified) return;
+      ev.preventDefault();
+      storeSet("rjvn-out-at", String(d.lastShownMs));
+      openIx(a.href);
+    });
   }
 })();

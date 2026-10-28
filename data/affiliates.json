@@ -1,19 +1,80 @@
 {
- "_note": "PLACEHOLDER links only. Replace url with a real affiliate link after signing a program. Every item is rendered with an 'Affiliate' label and rel=\"sponsored nofollow noopener\".",
+ "_note": "Each item is a slot for a future affiliate URL. Today `url` is a non-affiliate placeholder: the vendor's public homepage, or https://example.com/affiliate/<slot> when there is no single product page. To go live, replace `url` only. Do not add scripts, pixels, or tracking parameters. The tools page always shows an Affiliate label and rel=\"sponsored nofollow noopener\".",
  "categories": [
-  {"id": "vps-hosting", "vi": "VPS & hosting", "en": "VPS & hosting", "items": [
-   {"name": "Nhà cung cấp VPS A (placeholder)", "url": "https://example.com/affiliate/vps-a", "vi": "VPS giá rẻ có region Singapore, hợp lab DevOps.", "en": "Budget VPS with a Singapore region, good for DevOps labs."},
-   {"name": "Cloud provider B (placeholder)", "url": "https://example.com/affiliate/cloud-b", "vi": "Credit dùng thử cho Kubernetes managed.", "en": "Trial credit for managed Kubernetes."}]},
-  {"id": "courses-certs", "vi": "Khoá học & chứng chỉ", "en": "Courses & certifications", "items": [
-   {"name": "Nền tảng học Cloud C (placeholder)", "url": "https://example.com/affiliate/course-c", "vi": "Luyện thi CKA/CKAD, AWS, GCP.", "en": "CKA/CKAD, AWS, GCP exam prep."},
-   {"name": "English for remote work D (placeholder)", "url": "https://example.com/affiliate/english-d", "vi": "Tiếng Anh giao tiếp cho họp với team quốc tế.", "en": "Spoken English for international team meetings."}]},
-  {"id": "home-office", "vi": "Thiết bị làm việc tại nhà", "en": "Home-office gear", "items": [
-   {"name": "Ghế công thái học E (placeholder)", "url": "https://example.com/affiliate/chair-e", "vi": "Ghế ngồi 8 tiếng không đau lưng.", "en": "A chair you can sit in for 8 hours."},
-   {"name": "Tai nghe chống ồn F (placeholder)", "url": "https://example.com/affiliate/headset-f", "vi": "Tai nghe có mic tốt cho call.", "en": "Headset with a good mic for calls."}]},
-  {"id": "payments", "vi": "Nhận lương quốc tế", "en": "International payments", "items": [
-   {"name": "Ví/thẻ đa tiền tệ G (placeholder)", "url": "https://example.com/affiliate/payments-g", "vi": "Nhận USD/EUR, phí chuyển về VND thấp.", "en": "Receive USD/EUR, low fees to VND."},
-   {"name": "Dịch vụ invoice cho contractor H (placeholder)", "url": "https://example.com/affiliate/invoice-h", "vi": "Xuất hoá đơn cho khách nước ngoài.", "en": "Invoicing for foreign clients."}]},
-  {"id": "coworking", "vi": "Coworking", "en": "Coworking", "items": [
-   {"name": "Coworking I (placeholder)", "url": "https://example.com/affiliate/coworking-i", "vi": "Có chi nhánh Hà Nội, TP.HCM, Đà Nẵng.", "en": "Locations in Hanoi, HCMC, Da Nang."}]}
+  {
+   "id": "payments",
+   "vi": "Nhận lương quốc tế",
+   "en": "Receiving international payments",
+   "intro": {
+    "vi": "Cách nhận USD, EUR và ngoại tệ khác khi làm remote. Phù hợp mọi vai trò: kỹ thuật, kinh doanh, marketing, hỗ trợ và vận hành.",
+    "en": "Ways to receive USD, EUR and other currencies while working remote. For every role: engineering, sales, marketing, support and operations."
+   },
+   "items": [
+    {"name": "Wise", "url": "https://wise.com/", "vi": "Tài khoản đa tiền tệ, phí chuyển khoản được công bố trên trang của Wise.", "en": "Multi-currency account. Transfer fees are published on Wise's own site."},
+    {"name": "Payoneer", "url": "https://www.payoneer.com/", "vi": "Nhận thanh toán từ khách hàng và nền tảng quốc tế.", "en": "Receive payments from international clients and platforms."}
+   ]
+  },
+  {
+   "id": "learning",
+   "vi": "Khoá học, chứng chỉ và tiếng Anh",
+   "en": "Courses, certifications and English",
+   "intro": {
+    "vi": "Cho người đang ứng tuyển việc remote, không chỉ kỹ sư. Gồm khoá học, chứng chỉ, luyện tiếng Anh và công cụ soạn CV.",
+    "en": "For people applying to remote jobs, not only engineers. Courses, certifications, English practice and CV tools."
+   },
+   "items": [
+    {"name": "Coursera", "url": "https://www.coursera.org/", "vi": "Khoá học từ trường và công ty, nhiều lĩnh vực ngoài lập trình.", "en": "Courses from universities and companies, including non-engineering subjects."},
+    {"name": "Udemy", "url": "https://www.udemy.com/", "vi": "Khoá ngắn theo kỹ năng: công cụ văn phòng, bán hàng, dữ liệu, ngoại ngữ.", "en": "Short courses by skill: office tools, sales, data, languages."},
+    {"name": "KodeKloud", "url": "https://kodekloud.com/", "vi": "Lab thực hành cho DevOps, cloud và Kubernetes.", "en": "Hands-on labs for DevOps, cloud and Kubernetes."},
+    {"name": "Duolingo", "url": "https://www.duolingo.com/", "vi": "Ứng dụng luyện tiếng Anh mỗi ngày, hợp người mới bắt đầu.", "en": "English-learning app for a daily habit, including beginners."},
+    {"name": "ELSA Speak", "url": "https://elsaspeak.com/", "vi": "Ứng dụng luyện nói tiếng Anh, có góp ý phát âm.", "en": "English-speaking app with pronunciation feedback."},
+    {"name": "Kickresume", "url": "https://www.kickresume.com/", "vi": "Công cụ soạn CV cho đơn ứng tuyển quốc tế.", "en": "CV and resume builder for international applications."}
+   ]
+  },
+  {
+   "id": "home-office",
+   "vi": "Thiết bị làm việc tại nhà",
+   "en": "Home-office gear",
+   "intro": {
+    "vi": "Ghế, bàn, màn hình và mạng cho chỗ làm ở nhà, mọi vai trò. Kênh dự kiến là Shopee Affiliate qua ACCESSTRADE Việt Nam. Các URL dưới đây là chỗ giữ chỗ, chưa phải link affiliate.",
+    "en": "Chairs, desks, screens and network gear for a home office, any role. The intended program is Shopee Affiliate via ACCESSTRADE Vietnam. The URLs below are placeholders, not affiliate links yet."
+   },
+   "items": [
+    {"name": "Ghế công thái học", "url": "https://example.com/affiliate/home-office/ergonomic-chair", "vi": "Ghế ngồi lâu cho ngày làm việc remote.", "en": "A chair for a full remote work day."},
+    {"name": "Bàn đứng", "url": "https://example.com/affiliate/home-office/standing-desk", "vi": "Bàn nâng hạ hoặc bàn đứng.", "en": "A standing desk or sit-stand desk."},
+    {"name": "Màn hình", "url": "https://example.com/affiliate/home-office/monitor", "vi": "Màn hình cho việc đọc tài liệu và họp.", "en": "A monitor for documents and calls."},
+    {"name": "Tai nghe", "url": "https://example.com/affiliate/home-office/headset", "vi": "Tai nghe có mic cho cuộc họp.", "en": "A headset with a microphone for meetings."},
+    {"name": "Router", "url": "https://example.com/affiliate/home-office/router", "vi": "Router Wi-Fi ổn định cho làm việc tại nhà.", "en": "A stable Wi-Fi router for working from home."},
+    {"name": "UPS", "url": "https://example.com/affiliate/home-office/ups", "vi": "Bộ lưu điện khi mất điện ngắn.", "en": "A UPS for short power cuts."}
+   ]
+  },
+  {
+   "id": "vps",
+   "vi": "VPS và hosting cho kỹ sư",
+   "en": "VPS and hosting for engineers",
+   "intro": {
+    "vi": "Máy ảo và hosting cho lab, dự án phụ hoặc dịch vụ nhỏ. Phần này dành cho người làm kỹ thuật.",
+    "en": "Virtual servers and hosting for labs, side projects or small services. This section is for engineers."
+   },
+   "items": [
+    {"name": "DigitalOcean", "url": "https://www.digitalocean.com/", "vi": "VPS và Kubernetes cho lab và side project.", "en": "VPS and Kubernetes for labs and side projects."},
+    {"name": "Vultr", "url": "https://www.vultr.com/", "vi": "VPS có region gần Việt Nam.", "en": "VPS with regions near Vietnam."},
+    {"name": "Hostinger", "url": "https://www.hostinger.com/", "vi": "Hosting và VPS giá khởi điểm thấp.", "en": "Hosting and VPS with a low starting price."}
+   ]
+  },
+  {
+   "id": "coworking",
+   "vi": "Coworking",
+   "en": "Coworking",
+   "intro": {
+    "vi": "Chỗ ngồi làm việc tại TP.HCM, Hà Nội và Đà Nẵng. Mỗi URL là chỗ giữ chỗ cho thành phố đó, thay bằng link đặt chỗ khi có đối tác.",
+    "en": "A desk in Ho Chi Minh City, Hanoi or Da Nang. Each URL is a placeholder for that city; replace it with a booking link when a partner exists."
+   },
+   "items": [
+    {"name": "TP.HCM", "url": "https://example.com/affiliate/coworking/ho-chi-minh-city", "vi": "Coworking tại Thành phố Hồ Chí Minh.", "en": "Coworking in Ho Chi Minh City."},
+    {"name": "Hà Nội", "url": "https://example.com/affiliate/coworking/hanoi", "vi": "Coworking tại Hà Nội.", "en": "Coworking in Hanoi."},
+    {"name": "Đà Nẵng", "url": "https://example.com/affiliate/coworking/da-nang", "vi": "Coworking tại Đà Nẵng.", "en": "Coworking in Da Nang."}
+   ]
+  }
  ]
 }

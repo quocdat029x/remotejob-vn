@@ -35,6 +35,7 @@ Repository: https://github.com/quocdat029x/remotejob-vn
 | `source_urls` | yes | One or more public URLs that back the facts |
 | `verified` | yes | `true` only if a source explicitly confirms remote hiring in Vietnam |
 | `last_checked` | yes | `YYYY-MM-DD` |
+| `kind` | no | `employer` (default when omitted) or `aggregator` for a job board. Aggregator jobs stay on the company page and are omitted from default mixed listings. See `docs/JOB_FILTER_RULES.md`. |
 
 3. If the company uses a public ATS, add an entry to `data/sources.json` so jobs refresh automatically:
 
@@ -61,6 +62,6 @@ company that should be removed. Please include the page URL and a public source.
 ## Code contributions
 
 - Python 3.10+, stdlib only (Pillow optional for images). Keep the site framework-free.
-- Budgets: CSS < 30 KB, JS < 20 KB, no web fonts, no third-party scripts, no tracking.
+- Budgets: CSS < 30 KB, JS < 20 KB, no web fonts. No analytics except the cookieless Cloudflare Web Analytics beacon that Pages injects; do not add another tracker. The CSP in `site/_headers` lists the only allowed beacon hosts.
 - Every page must work without JavaScript.
 - Code, comments, docs and commit messages are in English; user-facing site text is Vietnamese-first with English under `/en/`.

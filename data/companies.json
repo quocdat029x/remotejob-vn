@@ -1567,6 +1567,7 @@
  },
  {
   "slug": "huzzle",
+  "kind": "aggregator",
   "name": "Huzzle (nền tảng)",
   "website": "https://huzzle.app",
   "careers_url": "https://apply.workable.com/huzzle",

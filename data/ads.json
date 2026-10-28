@@ -1,7 +1,28 @@
 {
- "_note": "Placeholder ad slots. No ad network script is loaded. Slots reserve fixed space (no layout shift).",
+ "_note": "Placeholder ad slots. No ad network script is loaded. List slots reserve fixed space (no layout shift). interstitial is a house ad created in the browser only after an outbound apply click.",
  "enabled": true,
  "native_every": 12,
  "sidebar": {"vi": "Đặt quảng cáo ở đây: tiếp cận kỹ sư remote tại Việt Nam.", "en": "Advertise here: reach remote engineers in Vietnam.", "url": "/quang-cao/"},
- "native": {"vi": "Vị trí quảng cáo (placeholder). Nhà tuyển dụng remote? Đăng tin tài trợ.", "en": "Ad slot (placeholder). Hiring remote? Post a sponsored job.", "url": "/quang-cao/"}
+ "native": {"vi": "Vị trí quảng cáo (placeholder). Nhà tuyển dụng remote? Đăng tin tài trợ.", "en": "Ad slot (placeholder). Hiring remote? Post a sponsored job.", "url": "/quang-cao/"},
+ "interstitial": {
+  "seconds": 5,
+  "href": "/quang-cao/",
+  "label": "Quảng cáo / Advertisement",
+  "vi": {
+   "title": "Nhà tuyển dụng remote?",
+   "body": "Đặt quảng cáo trên RemoteJob VN để tiếp cận kỹ sư ở Việt Nam. Đây là quảng cáo nội bộ (placeholder), không phải mạng quảng cáo.",
+   "cta": "Tìm hiểu quảng cáo",
+   "continue": "Tiếp tục tới tin tuyển dụng",
+   "close": "Đóng",
+   "countdown": "Tự động tiếp tục sau {n} giây"
+  },
+  "en": {
+   "title": "Hiring remote engineers?",
+   "body": "Advertise on RemoteJob VN to reach engineers in Vietnam. This is a house ad placeholder, not an ad network.",
+   "cta": "Advertising options",
+   "continue": "Continue to job",
+   "close": "Close",
+   "countdown": "Continuing automatically in {n}s"
+  }
+ }
 }

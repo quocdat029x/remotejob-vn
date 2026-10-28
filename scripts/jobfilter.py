@@ -3,6 +3,7 @@
 Used by scripts/import_seed.py (one-off seed import) and scripts/refresh_jobs.py.
 Stdlib only. Every rule is documented in docs/JOB_FILTER_RULES.md.
 """
+import datetime
 import re
 import urllib.parse as up
 
@@ -36,7 +37,22 @@ NAV_TITLES = {
     "learn more", "read more", "apply", "apply now", "join us", "see open positions", "sign up", "submit application",
     "xem & ứng tuyển", "xem chi tiết", "ứng tuyển", "rss feed", "career advice", "view all jobs", "open positions",
 }
-STALE_YEAR_RX = re.compile(r"\b(20(1\d|2[0-5]))\b")   # title like "... - 07/2023" => stale listing
+_YEAR_RX = re.compile(r"\b(20\d{2})\b")
+
+
+def title_has_stale_year(title, today=None):
+    """True when the title names a calendar year from 2010 through last year.
+
+    The window follows the date the filter runs (or `today` in tests). A title
+    that says "DevOps - 07/2023" is an old listing; the current calendar year
+    and later years are kept. Years before 2010 are ignored.
+    """
+    today = today or datetime.date.today()
+    for match in _YEAR_RX.finditer(title or ""):
+        year = int(match.group(1))
+        if 2010 <= year < today.year:
+            return True
+    return False
 
 
 def slug_to_title(url):
@@ -59,17 +75,21 @@ def clean_title(title, url):
     return t
 
 
-def is_job(ats, url, title):
-    """Return (ok, reason)."""
+def is_job(ats, url, title, today=None):
+    """Return (ok, reason). `today` overrides the clock for the stale-year rule."""
     if not url or not url.startswith("http"):
         return False, "no-url"
     if DENY_URL_RX.search(url):
         return False, "nav-or-policy-link"
     if ats in API_URL_RX:
-        return (True, "api") if API_URL_RX[ats].search(url) else (False, "api-url-not-a-posting")
+        if not API_URL_RX[ats].search(url):
+            return False, "api-url-not-a-posting"
+        if title_has_stale_year(title, today):
+            return False, "stale (old year in title)"
+        return True, "api"
     if not any(rx.search(url) for rx in HTML_URL_RX):
         return False, "html-url-not-a-posting (category/listing/nav)"
-    if STALE_YEAR_RX.search(title or ""):
+    if title_has_stale_year(title, today):
         return False, "stale (old year in title)"
     return True, "html"
 

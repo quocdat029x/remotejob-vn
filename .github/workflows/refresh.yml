@@ -1,3 +1,6 @@
+# Daily job refresh. Auth is the default GITHUB_TOKEN only (contents: write). No other secrets.
+# Public ATS APIs, about one request per second, no sign-in. A data commit on the default
+# branch is what makes Cloudflare Pages rebuild. See docs/DEPLOY.md.
 name: refresh-jobs
 
 on:
@@ -18,20 +21,23 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version-file: ".python-version"
       - name: Refresh jobs from public ATS APIs (1 request/second)
         run: python3 scripts/refresh_jobs.py --delay 1.0
       - name: Validate
         run: python3 scripts/validate.py
       - name: Build (sanity check)
         run: python3 scripts/build.py && python3 scripts/check_jsonld.py
-      - name: Commit data changes
+      - name: Commit data changes to the default branch
         run: |
           if git diff --quiet -- data/; then echo "No changes"; exit 0; fi
           git config user.name "remotejob-vn-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/
           git commit -m "chore(data): daily job refresh $(date -u +%Y-%m-%d)"
-          git push
+          git push origin "HEAD:${{ github.event.repository.default_branch }}"
