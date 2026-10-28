@@ -235,7 +235,10 @@ def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=No
             {"@type": "ListItem", "position": i + 1, "name": n, "item": absu(lang, p)} for i, (n, p) in enumerate(items)]})
     main = f'<div class="layout{" with-aside" if aside else ""}"><main id="main">{crumbhtml}{body}</main>'
     if aside:
-        main += f'<aside class="side" aria-label="{e(t["ad"])}">{aside}</aside>'
+        # Ad stays in .side (hidden under 1100px, which also skips an AdSense request).
+        # The support card is a sibling so small screens can show it without the ad.
+        main += (f'<div class="rail"><aside class="side" aria-label="{e(t["ad"])}">{aside}</aside>'
+                 f'{support_page.sidebar_card(lang)}</div>')
     main += "</div>"
     script = (ix_script(lang) + f'\n<script src="/assets/app.{JS_HASH}.js" defer></script>') if js else ""
     # Manual AdSense units are pushed only when a slot id exists. The apply-click
@@ -288,6 +291,15 @@ def ad_unit(lang, placement, tag=None):
     return f'<div class="{cls}">{inner}</div>'
 
 
+def sidebar_house_text(lang, slot):
+    """House line for one language. Vietnamese must not repeat the English sentence."""
+    text = str((slot or {}).get(lang) or "").strip()
+    en = str((slot or {}).get("en") or "").strip()
+    if lang == "vi" and (not text or text == en or text.lower().startswith("advertise here")):
+        return "Quảng cáo tại đây: tiếp cận kỹ sư remote ở Việt Nam."
+    return text
+
+
 def ad_sidebar(lang, ads):
     if not ads.get("enabled"):
         return None
@@ -297,7 +309,7 @@ def ad_sidebar(lang, ads):
     t = T[lang]
     s = ads["sidebar"]
     return (f'<div class="slot slot-side"><span><span class="label">{e(t["ad"])}</span></span>'
-            f'<div class="ph">300 × 250</div><a href="{url_for(lang, s["url"])}">{e(s[lang])}</a></div>')
+            f'<div class="ph">300 × 250</div><a href="{url_for(lang, s["url"])}">{e(sidebar_house_text(lang, s))}</a></div>')
 
 
 def ad_native(lang, ads, tag="li"):
@@ -646,7 +658,7 @@ def main():
                      else f"{c['name']}: remote jobs, remote policy & hiring in Vietnam")
             desc = (f"{c['name']} ({c['hq']}) – {c['remote_policy']}. Hình thức tuyển ở VN: {c['vn_hiring_mode']}. {len(cj)} việc làm remote đang mở." if lang == "vi"
                     else f"{c['name']} ({c['hq']}): remote policy, how they hire people in Vietnam, time zone, and {len(cj)} open remote jobs.")
-            write(lang, path, page(lang, path, title, desc[:300], body, crumbs=[(t["nav_companies"], "/cong-ty/"), (c["name"], path)], jsonld=[org], og_type="profile"),
+            write(lang, path, page(lang, path, title, desc[:300], body, crumbs=[(t["nav_companies"], "/cong-ty/"), (c["name"], path)], jsonld=[org], og_type="profile", aside=side),
                   max([c["last_checked"]] + [j["last_checked"] for j in cj]))
 
         # ---------------- job listing (paginated)
@@ -715,7 +727,7 @@ def main():
             desc = (f"{j['title']} tại {c['name']}{loc_txt}. {t['remote_' + j['remote']]}, khu vực {t['region_' + j['region']]}. Kiểm tra lần cuối {fmt_date(j['last_checked'], lang)}."
                     if lang == "vi" else f"{j['title']} at {c['name']}{loc_txt}. {t['remote_' + j['remote']]}, region: {t['region_' + j['region']]}. Last checked {j['last_checked']}.")
             write(lang, path, page(lang, path, title, desc[:300], body, crumbs=[(t["nav_jobs"], "/viec-lam/"), (c["name"], f"/cong-ty/{c['slug']}/"), (j["title"], path)],
-                                   noindex=is_gone, jsonld=ld, og_type="article"), j["last_checked"], index=not is_gone)
+                                   noindex=is_gone, jsonld=ld, og_type="article", aside=side), j["last_checked"], index=not is_gone)
 
         # ---------------- role pages
         chips = "".join(f'<li><a class="chip" href="{url_for(lang, "/viec-lam-remote/" + r["slug"] + "/")}">{e(r[lang])} <span class="n">{len(r["jobs"])}</span></a></li>' for r in roles)

@@ -293,4 +293,26 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(mark, fallback);
     else fallback();
   });
+
+  // Sticky sidebar (ad + support card) only when the pair fits in the viewport.
+  // A too-tall rail stays in normal flow so the bottom controls remain reachable
+  // and the card cannot cover the footer.
+  function fitRail() {
+    var rail = document.querySelector(".rail");
+    if (!rail || !window.matchMedia) return;
+    var desktop = window.matchMedia("(min-width: 1100px)").matches;
+    if (!desktop) {
+      rail.classList.remove("is-tall");
+      return;
+    }
+    rail.classList.remove("is-tall");
+    var limit = window.innerHeight - 32;
+    rail.classList.toggle("is-tall", rail.offsetHeight > limit);
+  }
+  fitRail();
+  window.addEventListener("resize", fitRail);
+  if (window.matchMedia) {
+    var desktopQ = window.matchMedia("(min-width: 1100px)");
+    if (desktopQ.addEventListener) desktopQ.addEventListener("change", fitRail);
+  }
 })();

@@ -11,7 +11,7 @@ Source: `site/assets/style.css` (minified and fingerprinted to `dist/assets/styl
 - **Brand**: SVG logo + "RemoteJob VN" wordmark, `favicon.svg`, `favicon-32.png`, `icon-192/512.png`,
   `apple-touch-icon.png`, `site.webmanifest`, 1200×630 `og-default.png` (generated with Pillow, cached in `site/`).
 - **Components**: hero with search, chips, badges (region, remote mode, salary, last checked), an accent
-  "Ủng hộ" / "Support" nav button, a dismissible in-flow support note, company cards with
+  "Ủng hộ" / "Support" nav button, a dismissible in-flow support note, a compact sidebar support card under the ad slot, company cards with
   initials avatars (no hotlinked logos), job cards, detail header, fact panel, sticky filter bar, pager with gaps,
   "show more" (JS) on top of real pagination (no JS), empty states, 404, footer with About / Contribute /
   Affiliate disclosure / data license / GitHub.
