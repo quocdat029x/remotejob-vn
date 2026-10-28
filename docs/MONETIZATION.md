@@ -10,11 +10,16 @@ code, never track users and never block content. Everything is data-driven and c
 {"enabled": true, "native_every": 12, "sidebar": {"vi": "...", "en": "...", "url": "/quang-cao/"}, "native": {...}}
 ```
 
-- **Desktop sidebar** (≥1100 px): one 300×250 reserved box on home, company directory, jobs and role pages.
-  Hidden on mobile.
+- **Desktop sidebar** (≥1100 px): one 300×250 reserved box on home, company directory, company pages,
+  job lists, job pages and role pages. A compact support card (VietQR thumbnail, account copy, Buy Me a Coffee)
+  sits under that box. The pair is `position: sticky` when it fits the viewport, and returns to normal flow
+  when it is taller than the screen so it does not cover the footer. Hidden ad on mobile.
+  On a single column the support card is shown once below the content only when that page has no dismissible
+  support note.
 - **Native card**: at most one card every 10–15 rows (`native_every`, clamped to 10–15) in company and job lists,
   styled like a list card but labeled "Quảng cáo / Ad". Hidden while the user is filtering.
-- **Company pages**: no ad at the top; one labeled slot at the very bottom only.
+- **Company pages**: no ad above the company name; the sidebar column matches the other pages, plus one labeled
+  slot at the very bottom.
 - List slots reserve their size so they do not shift layout. With no AdSense slot id they stay house ads.
   The async AdSense loader is separate and only present when `adsense_client` is set (see below).
 - To sell a slot, replace the text/URL in `data/ads.json` (static house ad) or paste an AdSense slot id.
@@ -31,8 +36,10 @@ shown when someone lands from search.
   off, or for a crawler, the browser follows that href. Modified clicks (new tab) are not intercepted.
 - **Frequency cap**, stored on the device in `localStorage` (falls back to `sessionStorage` if
   `localStorage` throws). Keys `rjvn-out-n` (outbound click count) and `rjvn-out-at` (last time the
-  dialog was shown). The dialog opens on every 3rd plain click, and never more than once per 10 minutes.
-  Nothing is sent to a server.
+  dialog was shown). The cadence is `interstitial` in `site.config.json`: `first_click` (show on the
+  first apply click), `every_n` (then every Nth click after that), and `min_gap_ms` (minimum time
+  between shows). Shipped values are the first click, then every 2nd click, at least 3 minutes
+  (180000 ms) apart. Nothing is sent to a server.
 - **Creative** comes from `data/ads.json` → `interstitial` (house/sponsored placeholder by default:
   title, body, internal CTA, 5 second countdown). The visible label is `Quảng cáo / Advertisement`.
 - **Controls.** A visible close button, a "Continue to job" / "Tiếp tục tới tin tuyển dụng" button, and

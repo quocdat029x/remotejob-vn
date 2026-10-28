@@ -91,6 +91,76 @@ class SupportPageTests(unittest.TestCase):
         self.assertNotIn("position:fixed", html)
         self.assertNotIn("position:sticky", html)
 
+    def test_sidebar_card_is_compact_and_language_ordered(self):
+        vi = support_page.sidebar_card("vi")
+        self.assertIn("Ủng hộ RemoteJob VN ☕", vi)
+        self.assertIn("Trang miễn phí. Ủng hộ giúp trang tiếp tục hoạt động.", vi)
+        self.assertLess(vi.index("side-qr"), vi.index("bmc-btn"))
+        self.assertIn('loading="lazy"', vi)
+        self.assertIn('width="160"', vi)
+        self.assertIn('height="207"', vi)
+        self.assertIn('srcset="/assets/vietqr-tpbank.webp"', vi)
+        self.assertIn('src="/assets/vietqr-tpbank.png"', vi)
+        self.assertIn("8888 6897 979", vi)
+        self.assertIn('data-copy="88886897979"', vi)
+        self.assertIn('href="https://buymeacoffee.com/quocdat0292"', vi)
+        self.assertIn('rel="noopener"', vi)
+        self.assertIn('target="_blank"', vi)
+        self.assertIn('href="/ung-ho/"', vi)
+        self.assertIn("Xem thêm", vi)
+        self.assertNotIn("<script", vi)
+        self.assertNotIn("bmc-button", vi)
+        self.assertIsNone(EMAIL.search(vi))
+        en = support_page.sidebar_card("en")
+        self.assertIn("Support RemoteJob VN ☕", en)
+        self.assertIn("The site is free. Donations keep it running.", en)
+        self.assertLess(en.index("bmc-btn"), en.index("side-qr"))
+        self.assertIn('href="/en/support/"', en)
+        self.assertIn("See more", en)
+        self.assertIn('loading="lazy"', en)
+
+    def test_sidebar_rail_places_card_under_the_house_ad(self):
+        import json
+        with open(os.path.join(ROOT, "data", "ads.json"), encoding="utf-8") as fh:
+            ads = json.load(fh)
+        vi_ad = build.ad_sidebar("vi", ads)
+        self.assertIn("Quảng cáo tại đây: tiếp cận kỹ sư remote ở Việt Nam.", vi_ad)
+        self.assertIn(">Quảng cáo<", vi_ad)
+        self.assertNotIn("Advertise here", vi_ad)
+        self.assertIn("300 × 250", vi_ad)
+        en_ad = build.ad_sidebar("en", ads)
+        self.assertIn("Advertise here: reach remote engineers in Vietnam.", en_ad)
+        self.assertIn(">Ad<", en_ad)
+        forced = build.sidebar_house_text("vi", {"vi": "Advertise here: reach remote engineers in Vietnam.", "en": "Advertise here: reach remote engineers in Vietnam."})
+        self.assertEqual(forced, "Quảng cáo tại đây: tiếp cận kỹ sư remote ở Việt Nam.")
+        page = build.page("vi", "/viec-lam/example/", "T", "D", "<p>body</p>", aside=vi_ad)
+        self.assertIn('class="rail"', page)
+        self.assertLess(page.index("slot-side"), page.index("side-support"))
+        self.assertIn("Ủng hộ RemoteJob VN ☕", page)
+        self.assertNotIn("support-nudge", page)
+        listed = build.page("vi", "/", "T", "D", support_page.nudge("vi") + "<p>body</p>", aside=vi_ad)
+        self.assertIn("support-nudge", listed)
+        self.assertIn("side-support", listed)
+        en_page = build.page("en", "/cong-ty/acme/", "T", "D", "<p>body</p>", aside=en_ad)
+        card = en_page[en_page.index("side-support"):]
+        self.assertLess(card.index("bmc-btn"), card.index("side-qr"))
+        bare = build.page("vi", "/gioi-thieu/", "T", "D", "<p>body</p>")
+        self.assertNotIn("side-support", bare)
+
+    def test_sidebar_css_sticks_only_when_it_fits(self):
+        css_path = os.path.join(ROOT, "site", "assets", "style.css")
+        js_path = os.path.join(ROOT, "site", "assets", "app.js")
+        with open(css_path, encoding="utf-8") as fh:
+            css = fh.read()
+        with open(js_path, encoding="utf-8") as fh:
+            js = fh.read()
+        self.assertIn(".rail{display:flex", css.replace("\n", ""))
+        self.assertIn(".rail.is-tall{position:static}", css.replace("\n", ""))
+        self.assertIn(".layout.with-aside:not(:has(.support-nudge)) .side-support", css)
+        self.assertIn("max-height:720px", css)
+        self.assertIn("function fitRail()", js)
+        self.assertIn("is-tall", js)
+
     def test_interstitial_has_a_soft_coffee_line(self):
         previous = build.CFG.get("outbound_interstitial")
         build.CFG["outbound_interstitial"] = True

@@ -69,6 +69,38 @@ def body(lang, repo):
 </ul></section>"""
 
 
+# Display size of the sidebar thumbnail. Intrinsic file is 887×1150; 160×207 keeps that ratio.
+THUMB_W, THUMB_H = 160, 207
+
+
+def sidebar_card(lang):
+    """Compact donate card for the sidebar column. English leads with Buy Me a Coffee."""
+    t = T[lang]
+    href = url_for(lang, PATHS[lang])
+    qr = f"""<div class="side-qr"><picture>
+<source srcset="/assets/vietqr-tpbank.webp" type="image/webp">
+<img src="/assets/vietqr-tpbank.png" width="{THUMB_W}" height="{THUMB_H}" alt="{e(t["support_qr_alt"])}" decoding="async" loading="lazy">
+</picture></div>"""
+    acct = (
+        f'<div class="side-acct"><span class="acct">{ACCOUNT_DISPLAY}</span> '
+        f'<button type="button" class="btn copy-acct" data-copy="{ACCOUNT_COPY}" data-copied="{e(t["support_copied"])}" '
+        f'aria-live="polite">{e(t["support_copy"])}</button></div>'
+    )
+    bmc = (
+        f'<a class="btn bmc-btn" href="{BMC_URL}" rel="noopener" target="_blank">'
+        f'<span aria-hidden="true">☕</span> {e(t["support_bmc_btn"])}</a>'
+    )
+    parts = (qr, acct, bmc) if lang == "vi" else (bmc, qr, acct)
+    more = f'<a class="side-more" href="{href}">{e(t["support_more"])}</a>'
+    return (
+        f'<section class="side-support" aria-labelledby="side-support-h">'
+        f'<h2 id="side-support-h">{e(t["support_side_h"])}</h2>'
+        f'<p>{e(t["support_side_p"])}</p>'
+        f'<div class="side-support-body">{"".join(parts)}</div>'
+        f'{more}</section>'
+    )
+
+
 def nudge(lang):
     """Small in-flow note. Hidden before paint when localStorage says it was dismissed."""
     t = T[lang]

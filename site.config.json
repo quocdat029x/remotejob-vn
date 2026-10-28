@@ -7,6 +7,7 @@
  "JOBS_PER_PAGE": 50,
  "REPO_URL": "https://github.com/quocdat029x/remotejob-vn",
  "outbound_interstitial": true,
+ "interstitial": {"first_click": true, "every_n": 2, "min_gap_ms": 180000},
  "adsense_client": "ca-pub-7257034493587502",
  "adsense_slots": {"sidebar": "", "native": "", "bottom": ""},
  "indexnow_key": "93b4ade68c6d304974c6d72857eb4de5"

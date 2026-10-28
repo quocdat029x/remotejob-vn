@@ -7,10 +7,18 @@
     if (webdriver) return true;
     return /bot|crawl|spider|slurp|headless|phantom|semrush|ahrefs|petalbot|lighthouse|facebookexternalhit|embedly/i.test(ua || "");
   }
-  function rjOutboundAdDecision(clicks, lastShownMs, nowMs) {
+  function rjOutboundAdDecision(clicks, lastShownMs, nowMs, rules) {
+    var cfg = rules || {};
+    var everyN = parseInt(cfg.every_n != null ? cfg.every_n : cfg.everyN, 10);
+    if (!everyN || everyN < 1) everyN = 2;
+    var gap = parseInt(cfg.min_gap_ms != null ? cfg.min_gap_ms : cfg.minGapMs, 10);
+    if (isNaN(gap) || gap < 0) gap = 180000;
+    var first = cfg.first_click != null ? cfg.first_click : cfg.firstClick;
+    if (first == null) first = true;
     var n = (clicks || 0) + 1;
-    var due = !lastShownMs || (nowMs - lastShownMs) >= 600000;
-    var show = n % 3 === 0 && due;
+    var due = !lastShownMs || (nowMs - lastShownMs) >= gap;
+    var onCadence = first ? (n === 1 || (n - 1) % everyN === 0) : (n % everyN === 0);
+    var show = onCadence && due;
     return {clicks: n, show: show, lastShownMs: show ? nowMs : (lastShownMs || 0)};
   }
   var lang = document.body.getAttribute("data-lang") || "vi";
@@ -242,7 +250,7 @@
       if (!a || ev.button !== 0) return;
       var n = parseInt(storeGet("rjvn-out-n") || "0", 10) || 0;
       var at = parseInt(storeGet("rjvn-out-at") || "0", 10) || 0;
-      var d = rjOutboundAdDecision(n, at, Date.now());
+      var d = rjOutboundAdDecision(n, at, Date.now(), ixCfg);
       storeSet("rjvn-out-n", String(d.clicks));
       var modified = ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || a.target === "_blank";
       if (!d.show || modified) return;
@@ -293,4 +301,26 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(mark, fallback);
     else fallback();
   });
+
+  // Sticky sidebar (ad + support card) only when the pair fits in the viewport.
+  // A too-tall rail stays in normal flow so the bottom controls remain reachable
+  // and the card cannot cover the footer.
+  function fitRail() {
+    var rail = document.querySelector(".rail");
+    if (!rail || !window.matchMedia) return;
+    var desktop = window.matchMedia("(min-width: 1100px)").matches;
+    if (!desktop) {
+      rail.classList.remove("is-tall");
+      return;
+    }
+    rail.classList.remove("is-tall");
+    var limit = window.innerHeight - 32;
+    rail.classList.toggle("is-tall", rail.offsetHeight > limit);
+  }
+  fitRail();
+  window.addEventListener("resize", fitRail);
+  if (window.matchMedia) {
+    var desktopQ = window.matchMedia("(min-width: 1100px)");
+    if (desktopQ.addEventListener) desktopQ.addEventListener("change", fitRail);
+  }
 })();
