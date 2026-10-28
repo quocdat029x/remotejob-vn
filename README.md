@@ -54,6 +54,7 @@ Other tools:
 ```bash
 python3 scripts/check_jsonld.py      # validate JSON-LD in dist/
 python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && python3 scripts/test_support.py && python3 scripts/test_hubs.py && node scripts/test_interstitial.mjs
+node scripts/test_interstitial_bfcache.mjs   # apply-dialog Back button; needs google-chrome
 ./scripts/screenshots.sh             # light/dark screenshots at 1280 and 390 px (needs google-chrome + local server)
 ```
 
