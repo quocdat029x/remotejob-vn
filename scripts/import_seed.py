@@ -12,7 +12,7 @@ import policy
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUBLIC_FIELDS = ["slug", "name", "website", "careers_url", "group", "hq", "remote_policy", "vn_hiring_mode",
-                 "hires_roles", "timezone_note", "salary_public", "source_urls", "verified", "last_checked"]
+                 "hires_roles", "timezone_note", "salary_public", "source_urls", "verified", "last_checked", "kind"]
 SOURCE_FIELDS = ["slug", "ats", "token", "endpoint", "method"]
 JOB_FIELDS_IN = ["key", "company_slug", "company", "title", "location", "url", "salary", "desc"]  # desc -> short excerpt only
 GAMBLING_RX = policy.GAMBLING_RX
@@ -34,7 +34,10 @@ def main(src):
         why = policy.exclusion_reason(c)
         if why:
             excluded.append({"slug": c["slug"], "name": c["name"], "reason": why}); continue
-        kept.append({k: c.get(k) for k in PUBLIC_FIELDS})
+        row = {k: c.get(k) for k in PUBLIC_FIELDS if k != "kind"}
+        if c.get("kind") in ("employer", "aggregator"):
+            row["kind"] = c["kind"]
+        kept.append(row)
     keep_slugs = {c["slug"] for c in kept}
 
     # A company whose OWN job titles are mostly gambling products is also excluded (none at import time).

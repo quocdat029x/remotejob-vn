@@ -21,8 +21,10 @@ A scraped link becomes a job only if it passes all of the rules below.
 ## 2. Clean-up
 
 - Titles: strip "Remote Apply", hashtags and internal codes such as `JO123`.
-- Stale: titles that contain a year from 2010–2025 (e.g. "DevOps - 07/2023") are treated as old listings.
-  *Update this range each January.*
+- Stale: a title that contains a calendar year from 2010 through the year before the current year
+  (e.g. "DevOps - 07/2023") is an old listing. `title_has_stale_year` in `scripts/jobfilter.py` compares
+  the year with today's date, so the window moves every 1 January with no code edit. The current calendar
+  year and later years are kept; years before 2010 are ignored. The check applies to HTML and API sources.
 - Duplicates: the same (company, title, location) is kept once (re-posts are common on some boards).
 - Description: plain-text excerpt, at most 600 characters.
 
@@ -49,3 +51,32 @@ A scraped link becomes a job only if it passes all of the rules below.
 - One request per second (`--delay`, minimum 1.0 s), 25 s timeout, no retries, identifying User-Agent with the repo URL.
 - HTML careers pages are not scraped by default (`--include-html` to opt in); sources that fail are marked
   `status: error` in `data/sources.json` and their existing jobs are kept until they become stale.
+
+## 6. Aggregators do not crowd out direct employers
+
+Some sources are job boards, not the employer. Huzzle is one: a hiring platform whose public Workable
+board contributed about 526 of ~3200 jobs and dominated mixed lists.
+
+Flag the company, not the individual jobs, with optional `"kind": "aggregator"` in `data/companies.json`
+(omitted means `employer`; allowed values are `employer` and `aggregator`). Example: Huzzle.
+
+Aggregator jobs stay in `data/jobs.json`, on `/cong-ty/<slug>/`, and as their own job pages (still linked
+from that company page). They are left out of:
+
+- the home page (latest Vietnam/APAC jobs, the open-job count, and the Vietnam/APAC count),
+- `/viec-lam/` and its pagination,
+- role landing pages and the "companies hiring this role" chips,
+- "similar jobs" on a job page.
+
+The jobs index used by client-side filters still contains them, with a trailing `1` flag. They appear
+only when the company filter is that aggregator, so choosing Huzzle still lists its roles. They are not
+capped inside the company page: the whole board is available there, and mixed pages stay employer-only.
+A cap would still place a job board on every page of results; exclusion keeps direct employers as the
+default browse.
+
+Aggregator postings do not get JobPosting JSON-LD, because the company record is not the hiring
+organization. The company card and profile show a "Nền tảng tổng hợp / Job aggregator" badge.
+
+The rule runs at build time (`jobs_for_default_listings` in `scripts/build.py`). Adding another board
+is a one-line `"kind": "aggregator"` on that company. Do not use this flag for a direct employer that
+simply has many openings.

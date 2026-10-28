@@ -16,7 +16,7 @@ data/sources.json     where each company's jobs come from (ATS + token/endpoint)
 data/jobs.json        open jobs, refreshed daily from public ATS APIs
 data/sponsored.json   paid "Featured job" slots (empty by default, schema/sponsored.schema.json)
 data/affiliates.json  "Tools for remote workers" page (placeholder links)
-data/ads.json         non-intrusive ad slot settings (house ads only, no ad scripts)
+data/ads.json         house ad slots plus the outbound-click interstitial creative (no ad scripts)
 site.config.json      SITE_URL (canonical domain), site name, staleness windows, page size, repo URL
 scripts/build.py      static site generator -> dist/ (pre-rendered HTML for every page, vi + en)
 scripts/refresh_jobs.py  polite job refresher (1 request/second, public endpoints only)
@@ -52,6 +52,7 @@ Other tools:
 
 ```bash
 python3 scripts/check_jsonld.py      # validate JSON-LD in dist/
+python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && node scripts/test_interstitial.mjs
 ./scripts/screenshots.sh             # light/dark screenshots at 1280 and 390 px (needs google-chrome + local server)
 ```
 
@@ -72,7 +73,7 @@ python3 scripts/check_jsonld.py      # validate JSON-LD in dist/
 ## Documentation
 
 - [CONTRIBUTING.md](CONTRIBUTING.md) – add or fix a company
-- [docs/DEPLOY.md](docs/DEPLOY.md) – Cloudflare Pages (recommended) or GitHub Pages
+- [docs/DEPLOY.md](docs/DEPLOY.md) – Cloudflare Pages (`python3 scripts/build.py`, output `dist`)
 - [docs/SEO.md](docs/SEO.md) – SEO design and Google Search Console setup
 - [docs/JOB_FILTER_RULES.md](docs/JOB_FILTER_RULES.md) – which job links are kept and why
 - [docs/MONETIZATION.md](docs/MONETIZATION.md) – ad slots, affiliate page, sponsored jobs
@@ -86,6 +87,8 @@ python3 scripts/check_jsonld.py      # validate JSON-LD in dist/
 
 ## Workflows
 
-- `.github/workflows/validate.yml` – runs on every pull request: validate data, build, check JSON-LD.
-- `.github/workflows/refresh.yml` – daily: refresh jobs, validate, commit `data/` if changed.
-- `.github/workflows/pages.yml` – optional manual GitHub Pages deploy (Cloudflare Pages builds from git directly).
+- `.github/workflows/validate.yml` – runs on every pull request: unit tests, validate data, build, check JSON-LD.
+- `.github/workflows/refresh.yml` – daily: refresh jobs from public APIs (~1 request/second), validate, commit `data/` to the default branch with `GITHUB_TOKEN` only. Cloudflare Pages rebuilds from that push.
+
+Python 3.12 is pinned in `.python-version`. Set `PYTHON_VERSION=3.12` on Cloudflare Pages (see `docs/DEPLOY.md`).
+Companies with `"kind": "aggregator"` (Huzzle) stay in the directory but are left out of the default job lists.

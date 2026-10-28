@@ -59,8 +59,10 @@ role pages for its `hires_roles` and 6 related companies, and role pages link to
 
 ## Core Web Vitals
 
-- No render-blocking JS (`defer`), one small cacheable stylesheet (~16 KB), system fonts, no web fonts.
+- No render-blocking JS (`defer`), one small cacheable stylesheet, system fonts, no web fonts.
 - Ad slots and cards reserve their size (no layout shift). No third-party requests at all.
+- The apply-click interstitial is not in the HTML and is not shown on load or on a landing from search,
+  so it does not sit on the LCP element and does not add CLS. See `docs/MONETIZATION.md`.
 - Lighthouse 13 (local, 2026-10-28): home and a job page score Performance 99–100, Accessibility 100, Best Practices 100, SEO 100 on mobile and desktop.
 
 ## Google Search Console setup

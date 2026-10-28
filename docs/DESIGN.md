@@ -15,6 +15,7 @@ Source: `site/assets/style.css` (minified and fingerprinted to `dist/assets/styl
   "show more" (JS) on top of real pagination (no JS), empty states, 404, footer with About / Contribute /
   Affiliate disclosure / data license / GitHub.
 - **Labeled commercial slots**: `.slot` (Ad), `.featured` + `.label.sp` (Sponsored), `.tool-card` + `.label.aff` (Affiliate).
+  The outbound-click interstitial (`.ix`) is created in the DOM only after an apply click, so it is outside the first paint.
 - **Accessibility**: skip link, visible focus rings, keyboard-only navigation, `aria-current`, labeled forms,
   `prefers-reduced-motion`, 44 px touch targets.
 - **Responsive**: tested at 360/390, 768 and 1280 px; print stylesheet hides navigation, filters and ads and prints link URLs.

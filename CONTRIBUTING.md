@@ -35,6 +35,7 @@ Repository: https://github.com/quocdat029x/remotejob-vn
 | `source_urls` | yes | One or more public URLs that back the facts |
 | `verified` | yes | `true` only if a source explicitly confirms remote hiring in Vietnam |
 | `last_checked` | yes | `YYYY-MM-DD` |
+| `kind` | no | `employer` (default when omitted) or `aggregator` for a job board. Aggregator jobs stay on the company page and are omitted from default mixed listings. See `docs/JOB_FILTER_RULES.md`. |
 
 3. If the company uses a public ATS, add an entry to `data/sources.json` so jobs refresh automatically:
 
