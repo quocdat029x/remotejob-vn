@@ -144,7 +144,8 @@ class LlmsAndIndexTests(unittest.TestCase):
         self.assertTrue(text.startswith("# RemoteJob VN"))
         self.assertIn("Vietnamese-first", text)
         for path in ("/viec-lam/", "/viec-lam-remote/devops/", "/cong-ty/", "/cong-cu/", "/dang-tin/",
-                     "/gioi-thieu/", "/chinh-sach-bao-mat/", "/en/", "/en/privacy/", "/llms-full.txt"):
+                     "/gioi-thieu/", "/chinh-sach-bao-mat/", "/ung-ho/", "/en/", "/en/privacy/",
+                     "/en/support/", "/llms-full.txt"):
             self.assertIn("https://remotejob.nguyenquocdat.dev" + path, text)
         self.assertIn("https://github.com/quocdat029x/remotejob-vn", text)
         self.assertIn("CC BY 4.0", text)

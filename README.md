@@ -53,7 +53,7 @@ Other tools:
 
 ```bash
 python3 scripts/check_jsonld.py      # validate JSON-LD in dist/
-python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && node scripts/test_interstitial.mjs
+python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && python3 scripts/test_support.py && node scripts/test_interstitial.mjs
 ./scripts/screenshots.sh             # light/dark screenshots at 1280 and 390 px (needs google-chrome + local server)
 ```
 
@@ -70,8 +70,10 @@ python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 
 | `/cong-cu/` | Tools for remote workers (affiliate slots, clearly labeled; URLs are placeholders) |
 | `/dang-tin/` | Post a sponsored job (pricing: contact, via a GitHub issue) |
 | `/quang-cao/`, `/gioi-thieu/` | Advertising info, about/privacy/license |
+| `/ung-ho/` | Support the project: VietQR (TPBank) and Buy Me a Coffee |
 | `/chinh-sach-bao-mat/`, `/dieu-khoan/`, `/lien-he/` | Privacy, terms, contact (GitHub issues only) |
 | `/en/privacy/`, `/en/terms/`, `/en/contact/` | English privacy, terms, and contact |
+| `/en/support/` | English support page (Buy Me a Coffee, then VietQR) |
 | `/llms.txt`, `/llms-full.txt` | llmstxt.org summary and a compact public listing |
 | `/en/...` | English versions of the HTML pages above |
 

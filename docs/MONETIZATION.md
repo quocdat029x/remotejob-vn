@@ -1,6 +1,7 @@
 # Monetization
 
-The site is free for job seekers. Revenue options are wired in as **placeholders** that never load third-party
+The site is free for job seekers. Optional donations (VietQR and Buy Me a Coffee on `/ung-ho/` and `/en/support/`)
+are plain links and a self-hosted QR image, with no third-party widget. Revenue options are wired in as **placeholders** that never load third-party
 code, never track users and never block content. Everything is data-driven and can be turned off.
 
 ## Ad slots (`data/ads.json`)
