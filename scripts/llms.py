@@ -43,14 +43,35 @@ def robots_txt(site):
     return "\n".join(blocks)
 
 
-def llms_txt(site, repo, role_pages):
-    """Short llmstxt.org document. `role_pages` is a list of (slug, vi, en)."""
+def llms_txt(site, repo, role_pages, extra_pages=None):
+    """Short llmstxt.org document. `role_pages` is a list of (slug, vi, en).
+
+    `extra_pages` is an optional list of (path, vi, en, job_count) for hubs
+    other than the curated role pages.
+    """
     site = site.rstrip("/")
     repo = repo.rstrip("/")
     roles = "\n".join(
         f"- [{vi} / {en}]({site}/viec-lam-remote/{slug}/): remote {en} roles open to people in Vietnam"
         for slug, vi, en in role_pages
     )
+    landing = ""
+    if extra_pages:
+        lines = "\n".join(
+            f"- [{vi} / {en}]({site}{path}): {n} open jobs"
+            for path, vi, en, n in extra_pages
+        )
+        landing = f"\n## Landing pages\n\n{lines}\n"
+    feeds = f"""
+## Feeds
+
+- [RSS, Vietnamese]({site}/feed.xml)
+- [RSS, English]({site}/en/feed.xml)
+- [JSON Feed, Vietnamese]({site}/feed.json)
+- [JSON Feed, English]({site}/en/feed.json)
+- [Atom, Vietnamese]({site}/atom.xml)
+- [Atom, English]({site}/en/atom.xml)
+"""
     return f"""# RemoteJob VN
 
 > RemoteJob VN is a Vietnamese-first directory of remote-first companies that hire people in Vietnam, with an English mirror under /en/. It lists public careers pages and the remote jobs currently open on them. The site is free, open source, and community maintained.
@@ -74,7 +95,7 @@ Jobs are read from public applicant-tracking feeds (Greenhouse, Lever, Ashby, Wo
 ## Roles
 
 {roles}
-
+{landing}{feeds}
 ## English
 
 - [Home]({site}/en/): English mirror of the home page
@@ -112,7 +133,7 @@ def _one_line(text):
     return " ".join((text or "").split())
 
 
-def llms_full_txt(site, companies, jobs, today):
+def llms_full_txt(site, companies, jobs, today, hubs=None):
     """Compact public listing. `jobs` must already be active and non-aggregator."""
     site = site.rstrip("/")
     company_lines = []
@@ -131,11 +152,20 @@ def llms_full_txt(site, companies, jobs, today):
             f"- [{_one_line(job.get('title'))}]({site}{job['path']}) — {job.get('company_name')} — "
             f"{loc} — remote: {remote} — checked {str(job.get('last_checked') or '')[:10]}"
         )
+    hub_section = ""
+    if hubs:
+        lines = [
+            f"- [{hub['vi']} / {hub['en']}]({site}{hub['path']}): {len(hub['jobs'])} open jobs, checked {hub.get('updated') or today}"
+            for hub in hubs if hub.get("indexable")
+        ]
+        if lines:
+            hub_section = "\n## Landing pages\n\n" + "\n".join(lines) + "\n"
     return (
         f"# RemoteJob VN — companies and open jobs\n\n"
         f"> Public facts only, generated {today}. {len(companies)} companies and "
         f"{len(jobs)} open jobs from direct employers (job-board aggregators are omitted from the job list). "
-        f"English pages use the same path under {site}/en/.\n\n"
+        f"English pages use the same path under {site}/en/.\n"
+        f"{hub_section}\n"
         f"## Companies\n\n"
         + "\n".join(company_lines)
         + "\n\n## Jobs\n\n"

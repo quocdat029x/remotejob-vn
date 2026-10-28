@@ -9,6 +9,26 @@
   Cache-Control: public, max-age=604800
 /og-default.png
   Cache-Control: public, max-age=604800
+/og/*
+  Cache-Control: public, max-age=86400
+/feed.xml
+  Content-Type: application/rss+xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+/atom.xml
+  Content-Type: application/atom+xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+/feed.json
+  Content-Type: application/feed+json; charset=utf-8
+  Cache-Control: public, max-age=3600
+/en/feed.xml
+  Content-Type: application/rss+xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+/en/atom.xml
+  Content-Type: application/atom+xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+/en/feed.json
+  Content-Type: application/feed+json; charset=utf-8
+  Cache-Control: public, max-age=3600
 /data/*
   Cache-Control: public, max-age=3600
 /llms.txt

@@ -11,6 +11,7 @@ REQUIRED = {
     "BreadcrumbList": ["itemListElement"],
     "ItemList": ["itemListElement"],
     "JobPosting": ["title", "description", "datePosted", "hiringOrganization", "jobLocationType", "applicantLocationRequirements", "url"],
+    "FAQPage": ["mainEntity"],
 }
 counts, errors = {}, []
 for fp in glob.glob(os.path.join(DIST, "**", "*.html"), recursive=True):
@@ -36,8 +37,25 @@ for fp in glob.glob(os.path.join(DIST, "**", "*.html"), recursive=True):
                 errors.append(f"{fp}: jobLocationType must be TELECOMMUTE")
             if not re.match(r"\d{4}-\d{2}-\d{2}", d.get("datePosted", "")):
                 errors.append(f"{fp}: bad datePosted")
-            if (d.get("hiringOrganization") or {}).get("@type") != "Organization":
-                errors.append(f"{fp}: hiringOrganization must be an Organization")
+            org = d.get("hiringOrganization") or {}
+            if org.get("@type") != "Organization" or not org.get("name"):
+                errors.append(f"{fp}: hiringOrganization must be an Organization with a name")
+            alr = d.get("applicantLocationRequirements") or {}
+            if alr.get("@type") != "Country" or not alr.get("name"):
+                errors.append(f"{fp}: applicantLocationRequirements must be a Country")
+            if d.get("validThrough") and not re.match(r"^\d{4}-\d{2}-\d{2}", d["validThrough"]):
+                errors.append(f"{fp}: bad validThrough")
+        if t == "FAQPage":
+            ents = d.get("mainEntity")
+            if not isinstance(ents, list) or not ents:
+                errors.append(f"{fp}: FAQPage needs mainEntity")
+            else:
+                for q in ents:
+                    ans = q.get("acceptedAnswer") or {}
+                    if q.get("@type") != "Question" or not str(q.get("name") or "").strip():
+                        errors.append(f"{fp}: FAQ question missing name")
+                    if ans.get("@type") != "Answer" or not str(ans.get("text") or "").strip():
+                        errors.append(f"{fp}: FAQ answer missing text")
         if t == "BreadcrumbList":
             for i, it in enumerate(d["itemListElement"], 1):
                 if it.get("position") != i or not it.get("item", "").startswith("http"):
