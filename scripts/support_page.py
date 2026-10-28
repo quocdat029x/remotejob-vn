@@ -32,7 +32,9 @@ ACCOUNT_NAME = "NGUYEN QUOC DAT"
 ACCOUNT_DISPLAY = "8888 6897 979"
 ACCOUNT_COPY = "88886897979"
 BANK = "TPBank"
-QR_W, QR_H = 887, 1150
+# Square crop of the VietQR symbol only (version 12, 65 modules) plus a quiet
+# zone of about 4 modules. The framed TPBank/Napas poster was 887×1150.
+QR_W, QR_H = 683, 683
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 e = html.escape
@@ -119,11 +121,12 @@ def _qr_card(lang):
     loading = ' loading="lazy"' if lang == "en" else ' fetchpriority="high"'
     return f"""<section class="card qr-card" id="vietqr" aria-labelledby="vietqr-h">
 <h2 id="vietqr-h">{e(t["support_qr_h"])}</h2>
-<p>{e(t["support_qr_p"])}</p>
+<p class="donate-intro">{e(t["support_qr_p"])}</p>
 <div class="qr-frame"><picture>
 <source srcset="/assets/vietqr-tpbank.webp" type="image/webp">
 <img src="/assets/vietqr-tpbank.png" width="{QR_W}" height="{QR_H}" alt="{e(t["support_qr_alt"])}" decoding="async"{loading}>
-</picture></div>
+</picture>
+<p class="qr-badge">{e(t["support_qr_badge"])}</p></div>
 <dl class="acct-facts">
 <div><dt>{e(t["support_name_l"])}</dt><dd>{ACCOUNT_NAME}</dd></div>
 <div><dt>{e(t["support_number_l"])}</dt><dd class="acct-row"><span class="acct">{ACCOUNT_DISPLAY}</span> {_copy_button(ACCOUNT_COPY, t["support_copy"], t["support_copied"])}</dd></div>
@@ -169,7 +172,7 @@ def _binance_card(lang, block):
     instruction = _fill(t["support_binance_p"], username=username)
     return f"""<section class="card qr-card binance-card" id="binance" aria-labelledby="binance-h">
 <h2 id="binance-h">{e(t["support_binance_h"])}</h2>
-<p>{e(instruction)}</p>
+<p class="donate-intro">{e(instruction)}</p>
 <div class="qr-frame"><picture>
 {source}
 <img src="{e(block["qr_image"])}" width="{width}" height="{height}" alt="{e(alt)}" decoding="async" loading="lazy">
@@ -185,8 +188,12 @@ def _bmc_card(lang):
     t = T[lang]
     return f"""<section class="card bmc-card" id="international" aria-labelledby="bmc-h">
 <h2 id="bmc-h">{e(t["support_bmc_h"])}</h2>
-<p>{e(t["support_bmc_p"])}</p>
-<p><a class="btn bmc-btn" href="{BMC_URL}" rel="noopener" target="_blank"><span aria-hidden="true">☕</span> {e(t["support_bmc_btn"])}</a></p>
+<p class="donate-intro">{e(t["support_bmc_p"])}</p>
+<ul class="bmc-points">
+<li>{e(t["support_bmc_li1"])}</li>
+<li>{e(t["support_bmc_li2"])}</li>
+</ul>
+<p class="bmc-action"><a class="btn bmc-btn" href="{BMC_URL}" rel="noopener" target="_blank"><span aria-hidden="true">☕</span> {e(t["support_bmc_btn"])}</a></p>
 </section>"""
 
 
@@ -218,8 +225,8 @@ def body(lang, repo, donate=None):
 </ul></section>"""
 
 
-# Display size of the sidebar thumbnail. Intrinsic file is 887×1150; 160×207 keeps that ratio.
-THUMB_W, THUMB_H = 160, 207
+# Sidebar thumbnail. The file is square; 160×160 keeps the rail compact.
+THUMB_W, THUMB_H = 160, 160
 
 
 def sidebar_card(lang, donate=None):
