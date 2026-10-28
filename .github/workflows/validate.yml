@@ -17,18 +17,18 @@ jobs:
         with:
           python-version-file: ".python-version"
       - name: Unit tests
-        run: python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && python3 scripts/test_support.py && python3 scripts/test_hubs.py && node scripts/test_interstitial.mjs
+        run: python3 scripts/test_jobfilter.py && python3 scripts/test_listing.py && python3 scripts/test_content.py && python3 scripts/test_freshness.py && python3 scripts/test_support.py && python3 scripts/test_hubs.py && python3 scripts/test_facets.py && node scripts/test_interstitial.mjs && node scripts/test_facets.mjs
       - name: Validate data (schema, policy, privacy)
         run: python3 scripts/validate.py
       - name: Build site
         run: python3 scripts/build.py
       - name: Check JSON-LD
         run: python3 scripts/check_jsonld.py
-      - name: Check asset budgets (CSS < 30 KB, JS < 20 KB)
+      - name: Check asset budgets (CSS < 30 KB, JS < 28 KB)
         run: |
           css=$(stat -c %s dist/assets/style.*.css); js=$(stat -c %s dist/assets/app.*.js)
           echo "css=$css js=$js"
-          test "$css" -lt 30720 && test "$js" -lt 20480
+          test "$css" -lt 30720 && test "$js" -lt 28672
       - name: Check llms.txt, robots.txt, and AdSense files
         run: |
           test -s dist/llms.txt

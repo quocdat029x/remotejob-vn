@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import adsense  # noqa: E402
 import jobfilter as jf  # noqa: E402
 import legal_pages  # noqa: E402
+import facets  # noqa: E402
 import hubs  # noqa: E402
 import llms  # noqa: E402
 import og_card  # noqa: E402
@@ -434,6 +435,27 @@ def select(name, label, options, lang):
     return f'<label>{e(label)}<select name="{name}">{opts}</select></label>'
 
 
+def facet_bar(fx, lang):
+    """Checkbox lists for the jobs page. The same nodes move into the mobile sheet."""
+    col = 1 if lang == "vi" else 2
+    parts = []
+    for facet in fx:
+        key, label, opts = facet[0], facet[col], facet[3]
+        find = ""
+        if len(opts) > 8:
+            find = (f'<input class="facet-q" type="search" autocomplete="off" placeholder="{e(T[lang]["f_find"])}" '
+                    f'aria-label="{e(T[lang]["f_find"] + " " + label)}">')
+        boxes = "".join(
+            f'<label class="opt" data-t="{e(opt[0] + " " + opt[1] + " " + opt[2])}">'
+            f'<input type="checkbox" value="{e(opt[0])}"><span class="lab">{e(opt[col])}</span><span class="n">0</span></label>'
+            for opt in opts)
+        parts.append(
+            f'<div class="facet" data-k="{e(key)}"><h3 class="facet-h">{e(label)}</h3>'
+            f'<button type="button" class="facet-btn" id="facet-{e(key)}-btn" aria-expanded="false" aria-pressed="false" aria-controls="facet-{e(key)}">{e(label)} <span class="n"></span></button>'
+            f'<div class="facet-pop" id="facet-{e(key)}" hidden role="group" aria-labelledby="facet-{e(key)}-btn">{find}{boxes}</div></div>')
+    return "".join(parts)
+
+
 def empty_state(lang, extra=""):
     t = T[lang]
     return f'<div class="empty"><b>{e(t["empty_title"])}</b>{e(t["empty_body"])}{extra}</div>'
@@ -629,8 +651,27 @@ def main():
         return f'<section class="feat" aria-label="{e(t["featured"])}"><h2>{e(t["featured"])}</h2><ul class="list">{rows}</ul></section>'
 
     n_vn = sum(1 for j in listed if j["region"] in ("vn", "apac"))
-    role_opts_jobs = sorted({r for j in active for r in j["roles"]})
     co_role_counts = Counter(r for c in companies for r in c["hires_roles"])
+    # Facet tokens use the same predicates as the category hubs. Options are the
+    # direct-employer values; aggregator jobs still carry tokens for when that
+    # company is selected. The query string is not a separate indexable URL.
+    seen = facets.empty_seen()
+    names = {}
+    job_rows = []
+    for j in active:
+        c = co_by[j["company_slug"]]
+        tok = facets.tokens(j, c)
+        if j["company_slug"] not in agg_slugs:
+            facets.observe(seen, j, tok)
+        names[j["company_slug"]] = c["name"]
+        job_rows.append([
+            j["slug"], j["title"], j["company_slug"], j["region"], j["remote"],
+            " ".join(tok["role"]), j.get("location") or "", j["last_checked"], j.get("salary") or "",
+            1 if j["company_slug"] in agg_slugs else 0,
+            " ".join(tok["skill"]), " ".join(tok["tz"]), " ".join(tok["level"]),
+            tok["group"], tok["posted"],
+        ])
+    job_fx = facets.catalog(seen, sorted(names.items(), key=lambda kv: kv[1].lower()))
 
     for lang in LANGS:
         t = T[lang]
@@ -745,13 +786,15 @@ def main():
         # ---------------- job listing (paginated)
         per = CFG["JOBS_PER_PAGE"]
         total = max(1, -(-len(listed) // per))
-        co_opts = [(c["slug"], c["name"]) for c in sorted(companies, key=lambda c: c["name"].lower()) if jobs_by_co[c["slug"]]]
+        # Facets are filled from the jobs index. Canonical stays this page; the query is not a new URL.
         jform = f"""<form class="filters" id="job-filters" hidden role="search">
-<label class="q">{e(t['search'])}<input type="search" name="q" placeholder="{e(t['search_jobs_ph'])}"></label>
-{select('role', t['f_role'], [(r, r) for r in role_opts_jobs], lang)}{select('company', t['f_company'], co_opts, lang)}
-{select('region', t['f_region'], [(k, t['region_' + k]) for k in REGION_ORDER], lang)}
-{select('remote', t['f_remote'], [(k, t['remote_' + k]) for k in REMOTE_ORDER], lang)}
-<div class="row-end"><output name="count" aria-live="polite"></output><button type="reset">{e(t['reset'])}</button></div></form>"""
+<div class="q-row"><label class="q">{e(t['search'])}<input type="search" name="q" placeholder="{e(t['search_jobs_ph'])}" autocomplete="off" enterkeyhint="search"></label>
+<button type="button" class="btn filters-open" id="job-filters-open" hidden aria-expanded="false" aria-pressed="false" aria-controls="job-sheet">{e(t['f_filters'])} <span class="n" id="job-filters-n"></span></button></div>
+<div class="facet-bar" id="job-facets">{facet_bar(job_fx, lang)}</div>
+<div class="active-row"><div class="active-filters" id="job-active"></div>
+<div class="row-end"><output name="count" aria-live="polite"></output><button type="button" id="job-clear" hidden>{e(t['f_clear_all'])}</button></div></div>
+<dialog class="sheet" id="job-sheet" aria-modal="true" aria-labelledby="job-sheet-title"><div class="sheet-h"><h2 id="job-sheet-title" tabindex="-1">{e(t['f_filters'])}</h2><button type="button" class="btn" data-sheet-x aria-label="{e(t['f_close'])}">{e(t['f_close'])}</button></div><div class="sheet-b" id="job-sheet-body"></div><div class="sheet-f"><button type="button" class="btn" data-sheet-clear>{e(t['f_clear'])}</button><button type="button" class="btn primary" data-sheet-apply></button></div></dialog>
+</form>"""
         for n in range(1, total + 1):
             path = "/viec-lam/" if n == 1 else f"/viec-lam/trang/{n}/"
             chunk = listed[(n - 1) * per: n * per]
@@ -760,7 +803,7 @@ def main():
             body = f"""<div class="pagehead"><h1>{e(t['jobs_h1'])}{e(ptxt)}</h1><p class="lead">{e(t['jobs_desc'].format(n=len(listed), d=fmt_date(jobs_updated, lang)))}</p>{agg_note}</div>
 {support_page.nudge(lang)}
 {featured_block(lang) if n == 1 else ''}{jform if n == 1 else ''}
-<div id="job-empty" hidden>{empty_state(lang)}</div><ul class="list" id="job-list" data-index="/data/jobs-index.json">{with_native([job_row(j, co_by[j['company_slug']], lang) for j in chunk], lang, ads)}</ul>
+<div id="job-empty" hidden>{empty_state(lang, f'<p><button type="button" class="btn" data-job-clear>{e(t["f_clear_all"])}</button></p>')}</div><ul class="list" id="job-list" data-index="/data/jobs-index.json">{with_native([job_row(j, co_by[j['company_slug']], lang) for j in chunk], lang, ads)}</ul>
 <div id="job-more" class="loadmore"></div>{pager(lang, '/viec-lam/', n, total)}"""
             title = t["jobs_title"].format(page=ptxt) + (" | RemoteJob VN" if lang == "en" else " | việc làm remote Việt Nam")
             write(lang, path, page(lang, path, title, t["jobs_desc"].format(n=len(listed), d=fmt_date(jobs_updated, lang)), body,
@@ -1042,7 +1085,7 @@ def main():
     os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
     idx = {"cos": {c["slug"]: c["name"] for c in companies},
            "ad": ads.get("native") if ads.get("enabled") else None, "every": ads.get("native_every", 12),
-           "jobs": [[j["slug"], j["title"], j["company_slug"], j["region"], j["remote"], " ".join(j["roles"]), j.get("location") or "", j["last_checked"], j.get("salary") or "", 1 if j["company_slug"] in agg_slugs else 0] for j in active]}
+           "jobs": job_rows}
     with open(os.path.join(OUT, "data", "jobs-index.json"), "w", encoding="utf-8") as fh:
         json.dump(idx, fh, ensure_ascii=False, separators=(",", ":"))
     for f in ("companies.json", "jobs.json"):  # public open data downloads

@@ -21,12 +21,116 @@
     var show = onCadence && due;
     return {clicks: n, show: show, lastShownMs: show ? nowMs : (lastShownMs || 0)};
   }
+  // Facet query: OR within a key, AND across keys. Values stay comma-separated.
+  function rjKeys() {
+    return ["role", "skill", "tz", "level", "company", "region", "remote", "group", "salary", "posted"];
+  }
+  function rjFold(s) {
+    return (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
+  }
+  function rjBlank() {
+    var s = {q: ""}, keys = rjKeys(), i;
+    for (i = 0; i < keys.length; i++) s[keys[i]] = [];
+    return s;
+  }
+  function rjParseFacetQuery(search) {
+    var s = rjBlank(), raw = (search || "").replace(/^\?/, ""), i, part, eq, key, val, seen, bits, n, bit;
+    if (!raw) return s;
+    var parts = raw.split("&");
+    for (i = 0; i < parts.length; i++) {
+      part = parts[i];
+      if (!part) continue;
+      eq = part.indexOf("=");
+      key = decodeURIComponent(eq < 0 ? part : part.slice(0, eq));
+      val = decodeURIComponent((eq < 0 ? "" : part.slice(eq + 1)).replace(/\+/g, " "));
+      if (key === "q") { s.q = val; continue; }
+      if (rjKeys().indexOf(key) < 0) continue;
+      seen = {};
+      bits = val.split(",");
+      for (n = 0; n < bits.length; n++) {
+        bit = bits[n].replace(/^\s+|\s+$/g, "");
+        if (!bit || seen[bit]) continue;
+        seen[bit] = 1;
+        s[key].push(bit);
+      }
+    }
+    return s;
+  }
+  function rjSerializeFacetQuery(state) {
+    var parts = [], keys = rjKeys(), i, vals;
+    if (state.q) parts.push("q=" + encodeURIComponent(state.q));
+    for (i = 0; i < keys.length; i++) {
+      vals = state[keys[i]] || [];
+      if (vals.length) parts.push(keys[i] + "=" + vals.map(encodeURIComponent).join(","));
+    }
+    return parts.join("&");
+  }
+  function rjHave(job, key) {
+    var v = job[key];
+    if (v == null || v === "") return [];
+    return typeof v === "string" ? [v] : v;
+  }
+  function rjDays(day, today) {
+    if (!day || !today) return null;
+    var a = Date.parse(String(day).slice(0, 10) + "T00:00:00Z");
+    var b = Date.parse(String(today).slice(0, 10) + "T00:00:00Z");
+    if (isNaN(a) || isNaN(b)) return null;
+    return Math.round((b - a) / 86400000);
+  }
+  function rjJobMatches(job, state, today, ignoreAgg) {
+    var keys, i, key, want, age, ok, have, hit, w, n;
+    state = state || {};
+    if (job.agg && !ignoreAgg && (state.company || []).indexOf(job.company) < 0) return false;
+    if (rjFold(state.q || "") && rjFold(job.text || "").indexOf(rjFold(state.q || "")) < 0) return false;
+    keys = rjKeys();
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      want = state[key];
+      if (!want || !want.length) continue;
+      if (key === "posted") {
+        age = rjDays(job.posted, today);
+        ok = false;
+        if (age != null && age >= 0) for (n = 0; n < want.length; n++) if (age <= (+want[n] || 0)) ok = true;
+        if (!ok) return false;
+        continue;
+      }
+      have = rjHave(job, key);
+      hit = false;
+      for (w = 0; w < want.length; w++) if (have.indexOf(want[w]) >= 0) { hit = true; break; }
+      if (!hit) return false;
+    }
+    return true;
+  }
+  function rjFacetCounts(jobs, state, facet, today, buckets) {
+    var scoped = rjBlank(), keys = rjKeys(), i, counts = {}, job, ignore, age, have, t, b, list;
+    scoped.q = state.q || "";
+    for (i = 0; i < keys.length; i++) if (keys[i] !== facet) scoped[keys[i]] = (state[keys[i]] || []).slice();
+    list = buckets || ["7", "30", "90"];
+    for (i = 0; i < jobs.length; i++) {
+      job = jobs[i];
+      ignore = facet === "company" && job.agg;
+      if (!rjJobMatches(job, scoped, today, ignore)) continue;
+      if (facet === "posted") {
+        age = rjDays(job.posted, today);
+        if (age == null || age < 0) continue;
+        for (b = 0; b < list.length; b++) if (age <= (+list[b] || 0)) counts[list[b]] = (counts[list[b]] || 0) + 1;
+        continue;
+      }
+      have = rjHave(job, facet);
+      for (t = 0; t < have.length; t++) counts[have[t]] = (counts[have[t]] || 0) + 1;
+    }
+    return counts;
+  }
   var lang = document.body.getAttribute("data-lang") || "vi";
   var L = lang === "en"
     ? { results: "results", more: "Show more", ad: "Ad", checked: "checked",
+        filters: "Filters", apply: "Apply", clear: "Clear", clearAll: "Clear all", close: "Close",
+        find: "Search", remove: "Remove",
         region: { vn: "Vietnam", apac: "APAC", global: "Worldwide", other: "Other / unclear" },
         remote: { yes: "Remote", hybrid: "Hybrid", no: "Onsite", unknown: "Remote: unclear" } }
     : { results: "kết quả", more: "Xem thêm", ad: "Quảng cáo", checked: "kiểm tra",
+        filters: "Bộ lọc", apply: "Áp dụng", clear: "Xóa", clearAll: "Xóa tất cả", close: "Đóng",
+        find: "Tìm", remove: "Bỏ",
         region: { vn: "Việt Nam", apac: "APAC", global: "Toàn cầu", other: "Khu vực khác / chưa rõ" },
         remote: { yes: "Remote", hybrid: "Hybrid", no: "Onsite", unknown: "Chưa rõ remote" } };
   var prefix = lang === "en" ? "/en" : "";
@@ -49,9 +153,7 @@
     });
   }
 
-  function norm(s) {
-    return (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
-  }
+  function norm(s) { return rjFold(s); }
   function params(form) {
     var o = {};
     Array.prototype.forEach.call(form.elements, function (el) { if (el.name && el.value) o[el.name] = el.value; });
@@ -97,66 +199,131 @@
     run();
   }
 
-  // ---- jobs list: page 1 is pre-rendered; filtering loads a compact index of all jobs.
+  // ---- jobs list: page 1 is pre-rendered. Facets OR within a key and AND across keys.
   var jf = document.getElementById("job-filters");
   if (jf) {
-    jf.hidden = false;
-    restore(jf);
-    var list = document.getElementById("job-list");
-    var pager = document.querySelector(".pager");
-    var moreBox = document.getElementById("job-more");
-    var empty = document.getElementById("job-empty");
-    var original = list.innerHTML, idx = null, shown = 50, matches = [];
-    var load = function () {
-      if (idx) return Promise.resolve(idx);
-      return fetch(list.dataset.index).then(function (r) { return r.json(); }).then(function (d) { idx = d; return d; });
-    };
-    var row = function (j) {
-      var co = idx.cos[j[2]] || j[2];
-      return '<li class="card job-card"><a class="t" href="' + prefix + "/viec-lam/" + j[0] + '/">' + esc(j[1]) + "</a>" +
-        '<div class="meta"><a class="co" href="' + prefix + "/cong-ty/" + j[2] + '/">' + esc(co) + "</a>" +
-        (j[6] ? '<span class="loc">' + esc(j[6]) + "</span>" : "") + "</div>" +
-        '<div class="tags"><span class="b r-' + j[3] + '">' + L.region[j[3]] + '</span><span class="b m-' + j[4] + '">' + L.remote[j[4]] + "</span>" +
-        (j[8] ? '<span class="b sal">💰 ' + esc(j[8]) + "</span>" : "") +
-        '<span class="b date">✓ ' + L.checked + " " + fmtDate(j[7]) + "</span></div></li>";
-    };
-    var render = function () {
-      var every = Math.min(15, Math.max(10, idx.every || 12)), html = [];
-      matches.slice(0, shown).forEach(function (j, i) {
-        html.push(row(j));
-        if (idx.ad && (i + 1) % every === 0 && i + 1 < Math.min(shown, matches.length))
-          html.push('<li class="slot slot-native"><span class="label">' + L.ad + '</span><a href="' + prefix + idx.ad.url + '">' + esc(idx.ad[lang]) + "</a></li>");
-      });
-      list.innerHTML = html.join("");
-      empty.hidden = matches.length > 0;
-      moreBox.innerHTML = matches.length > shown ? '<button type="button" class="btn">' + L.more + " (" + (matches.length - shown) + ")</button>" : "";
-    };
-    moreBox.addEventListener("click", function () { shown += 50; render(); });
-    var run2 = function () {
-      var o = params(jf);
-      syncUrl(o);
-      if (!Object.keys(o).length) {
-        list.innerHTML = original; moreBox.innerHTML = ""; empty.hidden = true; if (pager) pager.hidden = false; jf.elements.count.value = ""; return;
+    var list = document.getElementById("job-list"), pager = document.querySelector(".pager"), more = document.getElementById("job-more"), empty = document.getElementById("job-empty");
+    var bar = document.getElementById("job-facets"), chips = document.getElementById("job-active"), openBtn = document.getElementById("job-filters-open"), clearBtn = document.getElementById("job-clear"), sheet = document.getElementById("job-sheet"), sheetBody = document.getElementById("job-sheet-body");
+    var qInput = jf.querySelector('input[name="q"]'), original = list.innerHTML, idx = null, jobs = [], shown = 50, matches = [], draft = null, qt, barNext = bar.nextSibling;
+    var state = rjParseFacetQuery(location.search);
+    if (qInput) qInput.value = state.q || "";
+    function today() { var d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+    function tok(s) { return s ? String(s).split(" ").filter(Boolean) : []; }
+    function jobOf(r) { return {row: r, company: r[2], region: r[3], remote: r[4], role: tok(r[5]), agg: r[9] ? 1 : 0, skill: tok(r[10]), tz: tok(r[11]), level: tok(r[12]), group: r[13] || "", posted: r[14] || "", salary: r[8] ? "yes" : "", text: (r[1] || "") + " " + ((idx.cos && idx.cos[r[2]]) || "") + " " + (r[6] || "")}; }
+    function nActive(st) { var n = st.q ? 1 : 0, k = rjKeys(), i; for (i = 0; i < k.length; i++) n += (st[k[i]] || []).length; return n; }
+    function nMatch(st) { var t = today(), n = 0, i; for (i = 0; i < jobs.length; i++) if (rjJobMatches(jobs[i], st, t)) n++; return n; }
+    function buckets(key) { var boxes, o, i; if (key !== "posted") return null; boxes = bar.querySelectorAll('.facet[data-k="posted"] input'); o = []; for (i = 0; i < boxes.length; i++) o.push(boxes[i].value); return o; }
+    function labelOf(key, value) { var box; if (key === "q") return value; box = bar.querySelector('.facet[data-k="' + key + '"] input[value="' + value + '"]'); return box ? box.parentNode.querySelector(".lab").textContent : value; }
+    function refresh(st) {
+      var t, nodes, i, node, key, counts, sel, btn, num, boxes, b, box, on, c;
+      if (!idx) return;
+      t = today(); nodes = bar.querySelectorAll(".facet");
+      for (i = 0; i < nodes.length; i++) {
+        node = nodes[i]; key = node.getAttribute("data-k"); counts = rjFacetCounts(jobs, st, key, t, buckets(key)); sel = st[key] || [];
+        btn = node.querySelector(".facet-btn");
+        if (btn) { btn.setAttribute("aria-pressed", sel.length ? "true" : "false"); num = btn.querySelector(".n"); if (num) num.textContent = sel.length ? String(sel.length) : ""; }
+        boxes = node.querySelectorAll('input[type="checkbox"]');
+        for (b = 0; b < boxes.length; b++) { box = boxes[b]; on = sel.indexOf(box.value) >= 0; c = counts[box.value] || 0; box.checked = on; box.disabled = !on && !c; box.parentNode.classList.toggle("is-zero", !c && !on); num = box.parentNode.querySelector(".n"); if (num) num.textContent = String(c); }
       }
-      load().then(function () {
-        var q = norm(o.q);
-        matches = idx.jobs.filter(function (j) {
-          return (!o.role || (" " + j[5] + " ").indexOf(" " + o.role + " ") >= 0) && (!o.company || j[2] === o.company) &&
-            (!o.region || j[3] === o.region) && (!o.remote || j[4] === o.remote) &&
-                (!q || norm(j[1] + " " + (idx.cos[j[2]] || "") + " " + j[6]).indexOf(q) >= 0) &&
-            (!j[9] || o.company === j[2]);
-        });
-        shown = 50;
-        if (pager) pager.hidden = true;
-        jf.elements.count.value = matches.length + " " + L.results;
-        render();
-      });
-    };
-    var t;
-    jf.addEventListener("input", function () { clearTimeout(t); t = setTimeout(run2, 150); });
-    jf.addEventListener("reset", function () { setTimeout(run2, 0); });
+    }
+    function paintChips() {
+      var h = "", keys = rjKeys(), i, n, v, text, badge = document.getElementById("job-filters-n"), nAct;
+      function aq(s) { return esc(s).replace(/"/g, "&quot;"); }
+      if (state.q) h += '<button type="button" class="chip-x" data-k="q" aria-label="' + aq(L.remove + " " + state.q) + '">' + esc(state.q) + " ×</button>";
+      for (i = 0; i < keys.length; i++) for (n = 0; n < (state[keys[i]] || []).length; n++) { v = state[keys[i]][n]; text = labelOf(keys[i], v); h += '<button type="button" class="chip-x" data-k="' + keys[i] + '" data-v="' + aq(v) + '" aria-label="' + aq(L.remove + " " + text) + '">' + esc(text) + " ×</button>"; }
+      chips.innerHTML = h; nAct = nActive(state); clearBtn.hidden = !nAct; if (badge) badge.textContent = nAct ? String(nAct) : ""; if (openBtn) openBtn.setAttribute("aria-pressed", nAct ? "true" : "false");
+    }
+    function row(j) {
+      var co = idx.cos[j[2]] || j[2];
+      return '<li class="card job-card"><a class="t" href="' + prefix + "/viec-lam/" + j[0] + '/">' + esc(j[1]) + '</a><div class="meta"><a class="co" href="' + prefix + "/cong-ty/" + j[2] + '/">' + esc(co) + "</a>" + (j[6] ? '<span class="loc">' + esc(j[6]) + "</span>" : "") + '</div><div class="tags"><span class="b r-' + j[3] + '">' + (L.region[j[3]] || "") + '</span><span class="b m-' + j[4] + '">' + (L.remote[j[4]] || "") + "</span>" + (j[8] ? '<span class="b sal">💰 ' + esc(j[8]) + "</span>" : "") + '<span class="b date">✓ ' + L.checked + " " + fmtDate(j[7]) + "</span></div></li>";
+    }
+    function render() {
+      var every = Math.min(15, Math.max(10, idx.every || 12)), html = [], i;
+      for (i = 0; i < matches.length && i < shown; i++) { html.push(row(matches[i])); if (idx.ad && (i + 1) % every === 0 && i + 1 < Math.min(shown, matches.length)) html.push('<li class="slot slot-native"><span class="label">' + L.ad + '</span><a href="' + prefix + idx.ad.url + '">' + esc(idx.ad[lang]) + "</a></li>"); }
+      list.innerHTML = html.join(""); empty.hidden = matches.length > 0; more.innerHTML = matches.length > shown ? '<button type="button" class="btn">' + L.more + " (" + (matches.length - shown) + ")</button>" : "";
+    }
+    function run2() {
+      var t, i; if (!idx) return;
+      if (!nActive(state)) { list.innerHTML = original; more.innerHTML = ""; empty.hidden = true; if (pager) pager.hidden = false; jf.elements.count.value = ""; return; }
+      t = today(); matches = []; for (i = 0; i < jobs.length; i++) if (rjJobMatches(jobs[i], state, t)) matches.push(jobs[i].row);
+      shown = 50; if (pager) pager.hidden = true; jf.elements.count.value = matches.length + " " + L.results; render();
+    }
+    function commit(mode) {
+      var q = rjSerializeFacetQuery(state), next = location.pathname + (q ? "?" + q : "");
+      refresh(state); paintChips();
+      if (mode && next !== location.pathname + location.search) history[(mode === "replace" && history.state && history.state.rjf) ? "replaceState" : "pushState"]({rjf: 1}, "", next);
+      run2();
+    }
+    function closePops() { var p = bar.querySelectorAll(".facet-pop"), b = bar.querySelectorAll(".facet-btn"), i; for (i = 0; i < p.length; i++) p[i].hidden = true; for (i = 0; i < b.length; i++) b[i].setAttribute("aria-expanded", "false"); }
+    function setVal(st, key, value, on) { var list, at; if (key === "q") { st.q = on ? value : ""; return; } list = st[key]; at = list.indexOf(value); if (on && at < 0) list.push(value); if (!on && at >= 0) list.splice(at, 1); }
+    function sheetNote() { var a = sheet.querySelector("[data-sheet-apply]"); if (qInput) draft.q = qInput.value; if (a) a.textContent = L.apply + " · " + nMatch(draft) + " " + L.results; refresh(draft); }
+    function park(inSheet) {
+      var pops, i;
+      if (inSheet) { sheetBody.appendChild(bar); pops = bar.querySelectorAll(".facet-pop"); for (i = 0; i < pops.length; i++) pops[i].hidden = false; }
+      else { barNext.parentNode.insertBefore(bar, barNext); closePops(); }
+    }
+    jf.addEventListener("change", function (e) {
+      var box = e.target, facet, st;
+      if (!box || box.type !== "checkbox") return;
+      facet = box.closest(".facet"); if (!facet) return;
+      st = (sheet.open && draft) ? draft : state;
+      setVal(st, facet.getAttribute("data-k"), box.value, box.checked);
+      if (st === draft) sheetNote(); else commit("push");
+    });
+    bar.addEventListener("input", function (e) {
+      var n, labs, i; if (!e.target.classList || !e.target.classList.contains("facet-q")) return;
+      n = rjFold(e.target.value); labs = e.target.parentNode.querySelectorAll("label.opt");
+      for (i = 0; i < labs.length; i++) labs[i].hidden = !!(n && rjFold(labs[i].getAttribute("data-t")).indexOf(n) < 0);
+    });
+    bar.addEventListener("click", function (e) {
+      var btn = e.target.closest(".facet-btn"), pop, first;
+      if (!btn || sheet.open) return;
+      pop = document.getElementById(btn.getAttribute("aria-controls"));
+      if (btn.getAttribute("aria-expanded") === "true") { closePops(); return; }
+      closePops(); btn.setAttribute("aria-expanded", "true"); pop.hidden = false; first = pop.querySelector("input"); if (first) first.focus();
+    });
+    bar.addEventListener("keydown", function (e) {
+      var pop, boxes, all, i, at, next;
+      if (sheet.open) return;
+      if (e.key === "Escape") { pop = e.target.closest && e.target.closest(".facet-pop"); closePops(); if (pop) { var b = document.getElementById(pop.getAttribute("aria-labelledby")); if (b) b.focus(); } return; }
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      pop = e.target.closest && e.target.closest(".facet-pop");
+      if (!pop) { if (e.key === "ArrowDown" && e.target.classList && e.target.classList.contains("facet-btn")) { e.preventDefault(); e.target.click(); } return; }
+      boxes = []; all = pop.querySelectorAll('input[type="checkbox"]');
+      for (i = 0; i < all.length; i++) if (!all[i].disabled && !all[i].parentNode.hidden) boxes.push(all[i]);
+      if (!boxes.length) return;
+      e.preventDefault(); at = boxes.indexOf(document.activeElement); next = e.key === "ArrowDown" ? at + 1 : at - 1;
+      if (next < 0) next = boxes.length - 1; if (next >= boxes.length) next = 0; boxes[next].focus();
+    });
+    document.addEventListener("click", function (e) { if (!sheet.open && !bar.contains(e.target)) closePops(); });
+    chips.addEventListener("click", function (e) {
+      var b = e.target.closest(".chip-x"); if (!b) return;
+      if (b.getAttribute("data-k") === "q") { state.q = ""; if (qInput) qInput.value = ""; } else setVal(state, b.getAttribute("data-k"), b.getAttribute("data-v"), false);
+      commit("push");
+    });
+    function clearAll() { state = rjBlank(); draft = null; if (qInput) qInput.value = ""; if (sheet.open) sheet.close(); commit("push"); }
+    clearBtn.addEventListener("click", clearAll);
+    if (empty) empty.addEventListener("click", function (e) { if (e.target.closest("[data-job-clear]")) clearAll(); });
+    sheet.addEventListener("click", function (e) {
+      var keys, i, keep;
+      if (e.target === sheet || (e.target.closest && e.target.closest("[data-sheet-x]"))) { sheet.close(); return; }
+      if (e.target.closest && e.target.closest("[data-sheet-clear]")) { keep = draft ? draft.q : ""; draft = rjBlank(); draft.q = keep || ""; sheetNote(); return; }
+      if (!e.target.closest || !e.target.closest("[data-sheet-apply]")) return;
+      keys = rjKeys(); for (i = 0; i < keys.length; i++) state[keys[i]] = (draft[keys[i]] || []).slice(); draft = null; sheet.close(); commit("push");
+    });
+    sheet.addEventListener("close", function () { draft = null; park(false); if (openBtn) openBtn.setAttribute("aria-expanded", "false"); refresh(state); });
+    if (openBtn) openBtn.addEventListener("click", function () {
+      draft = rjParseFacetQuery("?" + rjSerializeFacetQuery(state)); park(true); sheetNote();
+      if (sheet.showModal) sheet.showModal(); openBtn.setAttribute("aria-expanded", "true");
+    });
+    if (qInput) qInput.addEventListener("input", function () { state.q = qInput.value; if (draft) sheetNote(); clearTimeout(qt); qt = setTimeout(function () { commit("replace"); }, 200); });
     jf.addEventListener("submit", function (e) { e.preventDefault(); });
-    if (location.search) run2();
+    window.addEventListener("popstate", function () { clearTimeout(qt); state = rjParseFacetQuery(location.search); if (qInput) qInput.value = state.q || ""; if (sheet.open) sheet.close(); commit(""); });
+    more.addEventListener("click", function () { shown += 50; render(); });
+    fetch(list.dataset.index).then(function (r) { return r.json(); }).then(function (d) {
+      var i; idx = d; jobs = []; for (i = 0; i < idx.jobs.length; i++) jobs.push(jobOf(idx.jobs[i]));
+      jf.hidden = false; if (openBtn) openBtn.hidden = false; commit("");
+    }).catch(function () {});
   }
 
   // Outbound apply click only. The <a href> stays a normal link when JS is off.
