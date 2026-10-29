@@ -7,7 +7,7 @@ name: refresh-jobs
 
 on:
   schedule:
-    - cron: "17 22 * * *"   # daily 22:17 UTC = 05:17 Asia/Ho_Chi_Minh
+    - cron: "23 22 * * *"   # daily 22:23 UTC = 05:23 Asia/Ho_Chi_Minh. Changed from 17 on 2026-10-29 so GitHub re-registers this schedule on main.
   workflow_dispatch:
 
 permissions:
