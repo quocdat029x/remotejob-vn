@@ -10,6 +10,9 @@ sitemaps, robots.txt, Open Graph tags, JSON-LD and `dist/CNAME` all follow.
 > Scheduled workflows run from the GitHub default branch, which is `main`.
 > `refresh.yml` and `linkcheck.yml` still check out `ref: main` and push `HEAD:main`
 > explicitly, so a data commit is not redirected if the default branch is ever changed.
+> Changing the default branch does not re-arm a cron that is already on the new branch.
+> GitHub registers that schedule again only after a commit on the default branch changes
+> the cron value. Editing other lines in the workflow file does not do it.
 > The Pages production branch is `main`.
 
 ## Cloudflare Pages
