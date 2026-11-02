@@ -203,6 +203,9 @@ def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="webs
                 f'<link rel="alternate" hreflang="x-default" href="{e(absu("vi", alts["vi"]))}">']
     out += feed_link_tags(lang)
     image = og_image or f"{SITE}/og-default.png"
+    gsv = str(CFG.get("google_site_verification") or "").strip()
+    if gsv and path == "/":
+        out.append(f'<meta name="google-site-verification" content="{e(gsv)}">')
     client = adsense.client_id(CFG)
     if client:
         # Publisher id, Auto ads loader. Manual units are pushed from the end of body.
@@ -1132,6 +1135,9 @@ def main():
         src = os.path.join(ROOT, "site", f)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(OUT, f))
+    import glob
+    for g_html in glob.glob(os.path.join(ROOT, "site", "google*.html")):
+        shutil.copy(g_html, os.path.join(OUT, os.path.basename(g_html)))
     og_image(os.path.join(OUT, "og-default.png"))
     os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
     idx = {"cos": {c["slug"]: c["name"] for c in companies},

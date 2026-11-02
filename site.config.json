@@ -10,6 +10,7 @@
  "interstitial": {"first_click": true, "every_n": 2, "min_gap_ms": 180000},
  "adsense_client": "ca-pub-7257034493587502",
  "adsense_slots": {"sidebar": "", "native": "", "bottom": ""},
+ "google_site_verification": "",
  "indexnow_key": "93b4ade68c6d304974c6d72857eb4de5",
  "donate": {
   "binance": {
