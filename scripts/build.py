@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import adsense  # noqa: E402
 import jobfilter as jf  # noqa: E402
 import legal_pages  # noqa: E402
+import guides  # noqa: E402
 import facets  # noqa: E402
 import hubs  # noqa: E402
 import llms  # noqa: E402
@@ -236,9 +237,9 @@ def head_tags(lang, path, title, desc, noindex=False, jsonld=None, og_type="webs
 def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=None, js=True, aside=None, og_type="website", alt=True, alternates=None, og_image=None):
     t = T[lang]
     nav = [("/cong-ty/", t["nav_companies"]), ("/viec-lam/", t["nav_jobs"]),
-           ("/viec-lam-remote/", t["nav_roles"]), ("/cong-cu/", t["nav_tools"]),
-           ("/dang-tin/", t["nav_post"]), ("/gioi-thieu/", t["nav_about"]),
-           (support_page.PATHS[lang], t["nav_support"])]
+           ("/viec-lam-remote/", t["nav_roles"]), ("/cam-nang/", t["nav_guides"]),
+           ("/cong-cu/", t["nav_tools"]), ("/dang-tin/", t["nav_post"]),
+           ("/gioi-thieu/", t["nav_about"]), (support_page.PATHS[lang], t["nav_support"])]
     other = "en" if lang == "vi" else "vi"
     nav_parts = []
     for p, lbl in nav:
@@ -276,7 +277,7 @@ def page(lang, path, title, desc, body, *, crumbs=None, noindex=False, jsonld=No
     other_path = (alternates or {}).get(other, path)
     footer = f"""<footer class="foot"><div class="wrap"><div class="cols">
 <div><a class="brand" href="{L('/')}">{LOGO}<span>RemoteJob <b>VN</b></span></a><p class="muted" style="margin-top:12px;max-width:42ch">{e(t['site_tag'])}. {e(privacy_blurb)}</p></div>
-<nav aria-label="{e(t['ft_explore'])}"><h2>{e(t['ft_explore'])}</h2><ul><li><a href="{L('/cong-ty/')}">{e(t['nav_companies'])}</a></li><li><a href="{L('/viec-lam/')}">{e(t['nav_jobs'])}</a></li><li><a href="{L('/viec-lam-remote/')}">{e(t['nav_roles'])}</a></li><li><a href="{L('/cong-cu/')}">{e(t['nav_tools'])}</a></li></ul></nav>
+<nav aria-label="{e(t['ft_explore'])}"><h2>{e(t['ft_explore'])}</h2><ul><li><a href="{L('/cong-ty/')}">{e(t['nav_companies'])}</a></li><li><a href="{L('/viec-lam/')}">{e(t['nav_jobs'])}</a></li><li><a href="{L('/viec-lam-remote/')}">{e(t['nav_roles'])}</a></li><li><a href="{L('/cam-nang/')}">{e(t['ft_guides'])}</a></li><li><a href="{L('/cong-cu/')}">{e(t['nav_tools'])}</a></li></ul></nav>
 <nav aria-label="{e(t['ft_project'])}"><h2>{e(t['ft_project'])}</h2><ul><li><a href="{url_for(lang, support_page.PATHS[lang])}">{e(t['ft_support'])}</a></li><li><a href="{L('/gioi-thieu/')}">{e(t['nav_about'])}</a></li><li><a href="{L('/dang-tin/')}">{e(t['nav_post'])}</a></li><li><a href="{repo}/blob/main/CONTRIBUTING.md" rel="noopener">{e(t['ft_contribute'])}</a></li><li><a href="{repo}" rel="noopener">GitHub</a></li><li><a href="/sitemap.xml">Sitemap</a></li><li><a href="{L('/feed.xml')}">RSS</a></li></ul></nav>
 <nav aria-label="{e(t['ft_legal'])}"><h2>{e(t['ft_legal'])}</h2><ul><li><a href="{legal_href(lang, 'privacy')}">{e(t['ft_privacy'])}</a></li><li><a href="{legal_href(lang, 'terms')}">{e(t['ft_terms'])}</a></li><li><a href="{legal_href(lang, 'contact')}">{e(t['ft_contact'])}</a></li><li><a href="{L('/cong-cu/')}#disclosure">{e(t['ft_disclosure'])}</a></li><li><a href="{L('/quang-cao/')}">{e(t['ads_title'])}</a></li><li><a href="{L('/gioi-thieu/')}#license">{e(t['ft_license'])}</a></li></ul></nav>
 </div><p class="fine">{e(t['footer'])}</p><p class="fine status">{e(FRESH.get(lang, ''))}</p></div></footer>"""
@@ -697,7 +698,22 @@ def main():
 <section><h2>{e(t['group_A'])}</h2><ul class="list grid2">{''.join(company_card(c, lang, len(jobs_by_co[c['slug']])) for c in grpA)}</ul>
 <p style="margin-top:16px"><a class="btn" href="{url_for(lang, '/cong-ty/')}">{e(t['see_all_companies'])} →</a></p></section>
 <p class="note" style="margin-top:32px">{e(t['contrib_cta'])} <a href="{e(CFG['REPO_URL'])}/blob/main/CONTRIBUTING.md" rel="noopener">CONTRIBUTING.md</a></p>"""
-        ld = [{"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": absu(lang, "/"), "inLanguage": lang}]
+        ld = [{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": NAME,
+            "alternateName": ["RemoteJob VN", "Remote Job Vietnam"],
+            "url": absu(lang, "/"),
+            "inLanguage": lang,
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                    "@type": "EntryPoint",
+                    "urlTemplate": absu(lang, "/viec-lam/?q={search_term_string}")
+                },
+                "query-input": "required name=search_term_string"
+            }
+        }]
         write(lang, "/", page(lang, "/", t["home_title"], t[desc_key].format(n=len(companies), j=len(listed)), body, jsonld=ld, aside=side), jobs_updated)
 
         # ---------------- company directory
@@ -937,14 +953,16 @@ def main():
         else:
             ix_cap_vi = f"mỗi {ix_every} lượt bấm, cách nhau ít nhất {ix_gap_vi}"
             ix_cap_en = f"every {ix_every} clicks, at least {ix_gap_en} apart"
+        priv_url = legal_href(lang, "privacy")
         if lang == "vi":
+            adsense_note = f'Script Google AdSense được tải để xác minh tài khoản và cho Auto ads dạng vignette. Ô dành sẵn vẫn là quảng cáo nội bộ cho đến khi có mã vị trí. Cookie quảng cáo và cách từ chối nằm trong <a href="{priv_url}">chính sách bảo mật</a>.' if adsense.client_id(CFG) else "Chưa tải mạng quảng cáo bên thứ ba. Liên hệ qua GitHub issue của dự án."
             adbody = f"""<h1>Quảng cáo &amp; tin tài trợ</h1>
 <p>RemoteJob VN miễn phí cho người tìm việc. Chi phí vận hành có thể được bù bằng các hình thức không làm phiền:</p>
 <ul><li><b>Vị trí quảng cáo cố định</b>: một ô ở cột phải trên máy tính, và tối đa một thẻ "Quảng cáo" sau mỗi 12 dòng trong danh sách. Không có quảng cáo khi vừa mở trang hoặc khi vào từ kết quả tìm kiếm. Không đặt quảng cáo ở đầu trang công ty.</li>
 <li><b>Khi bấm xem tin gốc</b>: hộp thoại gắn nhãn "Quảng cáo / Advertisement" chỉ hiện sau khi bạn bấm liên kết ứng tuyển ra ngoài ({ix_cap_vi}). Có nút đóng, nút tiếp tục, và tự mở tin sau khoảng 5 giây. Hộp thoại này chỉ dùng nội dung của trang (quảng cáo nội bộ), không bao giờ là đơn vị Google AdSense. Tắt bằng <code>outbound_interstitial</code> trong site.config.json.</li>
 <li><b>Tin tuyển dụng tài trợ</b>: tối đa 3 tin, gắn nhãn "Tài trợ", hiển thị riêng ở đầu trang việc làm, có ngày hết hạn. Chỉ nhận việc remote mở cho người ở Việt Nam, không nhận cờ bạc/cá cược. <a href="{post_url}">Đăng tin tuyển dụng</a>.</li>
 <li><b>Liên kết affiliate</b> trên trang Công cụ, luôn gắn nhãn "Affiliate".</li></ul>
-<p>{"Script Google AdSense được tải để xác minh tài khoản và cho Auto ads dạng vignette. Ô dành sẵn vẫn là quảng cáo nội bộ cho đến khi có mã vị trí. Cookie quảng cáo và cách từ chối nằm trong <a href=\"" + legal_href(lang, "privacy") + "\">chính sách bảo mật</a>." if adsense.client_id(CFG) else "Chưa tải mạng quảng cáo bên thứ ba. Liên hệ qua GitHub issue của dự án."}</p>"""
+<p>{adsense_note}</p>"""
             abbody = f"""<h1>Giới thiệu</h1><p>RemoteJob VN là danh bạ cộng đồng các công ty remote-first có tuyển người ở Việt Nam. Dữ liệu là thông tin công khai, mỗi công ty có link nguồn và ngày kiểm tra.</p>
 <h2 id="privacy">Quyền riêng tư</h2><p>{"Cloudflare Web Analytics không dùng cookie. Google AdSense có thể dùng cookie quảng cáo khi được bật." if adsense.client_id(CFG) else "Không cookie, không theo dõi cá nhân."} Chi tiết ở <a href="{legal_href(lang, "privacy")}">chính sách bảo mật</a>. Ngôn ngữ chọn bằng đường dẫn (/en/). Trình duyệt có thể lưu lựa chọn giao diện, số lần bấm xem tin và việc bạn đã ẩn thẻ ủng hộ ngay trên máy bạn; dữ liệu đó không được gửi đi.</p>
 <h2>Tiêu chí</h2><ul><li>Công ty cho làm remote (hoặc remote-friendly, có ghi rõ) và tuyển người ở Việt Nam.</li><li>Không đưa công ty cờ bạc, cá cược, casino, iGaming.</li><li>Chỉ thông tin công khai, có nguồn.</li></ul>
@@ -953,13 +971,14 @@ def main():
 <h2 id="status">{e(t["status_h"])}</h2><p>{e(FRESH[lang])}</p><p>{e(link_note)}</p>
 <h2 id="license">Giấy phép</h2><p>Dữ liệu: CC BY 4.0. Mã nguồn: MIT.</p>"""
         else:
+            adsense_note = f'The Google AdSense script loads for account verification and Auto ads vignettes. Reserved slots stay house ads until slot IDs are set. Advertising cookies and opt-out links are in the <a href="{priv_url}">privacy policy</a>.' if adsense.client_id(CFG) else "No third-party ad network is loaded. Contact us via a GitHub issue."
             adbody = f"""<h1>Advertising &amp; sponsored jobs</h1>
 <p>RemoteJob VN is free for job seekers. Running costs may be covered in non-intrusive ways:</p>
 <ul><li><b>Fixed ad slots</b>: one box in the right column on desktop, and at most one "Ad" card every 12 rows in lists. Nothing appears on page load or when landing from search. No ad at the top of a company page.</li>
 <li><b>Outbound apply click</b>: a dialog labeled "Quảng cáo / Advertisement" opens only after you click through to the original posting ({ix_cap_en}). It has a close button, a continue button, and opens the job after about 5 seconds. The dialog is house content only and never an AdSense unit. Turn it off with <code>outbound_interstitial</code> in site.config.json.</li>
 <li><b>Sponsored jobs</b>: at most 3, labeled "Sponsored", shown separately at the top of the jobs page, with an end date. Remote roles open to people in Vietnam only; no gambling/betting. <a href="{post_url}">Post a job</a>.</li>
 <li><b>Affiliate links</b> on the Tools page, always labeled "Affiliate".</li></ul>
-<p>{"The Google AdSense script loads for account verification and Auto ads vignettes. Reserved slots stay house ads until slot IDs are set. Advertising cookies and opt-out links are in the <a href=\"" + legal_href(lang, "privacy") + "\">privacy policy</a>." if adsense.client_id(CFG) else "No third-party ad network is loaded. Contact us via a GitHub issue."}</p>"""
+<p>{adsense_note}</p>"""
             abbody = f"""<h1>About</h1><p>RemoteJob VN is a community directory of remote-first companies that hire people in Vietnam. Data is public information; each company has source links and a last-checked date.</p>
 <h2 id="privacy">Privacy</h2><p>{"Cloudflare Web Analytics is cookieless. Google AdSense may use advertising cookies when it is enabled." if adsense.client_id(CFG) else "No cookies and no personal tracking."} Details are in the <a href="{legal_href(lang, "privacy")}">privacy policy</a>. Language is chosen by URL (/en/). The browser may store the theme choice, how often an apply link was clicked (to cap the ad), and whether you dismissed the support note on this device; that data is not sent anywhere.</p>
 <h2>Criteria</h2><ul><li>The company allows remote work (or remote-friendly, stated clearly) and hires people in Vietnam.</li><li>No gambling, betting, casino or iGaming companies.</li><li>Public, sourced information only.</li></ul>
@@ -1009,6 +1028,29 @@ def main():
             lang, support_path, t["support_title"], t["support_desc"],
             support_page.body(lang, CFG["REPO_URL"]),
             crumbs=[(t["ft_support"], support_path)], alternates=support_alts), TODAY, alternates=support_alts)
+
+        # ---------------- guides (cẩm nang)
+        g_index_alts = guides.index_paths()
+        g_index_crumbs = [(t["nav_guides"], "/cam-nang/")]
+        write(lang, "/cam-nang/", page(
+            lang, "/cam-nang/", t["guides_title"], t["guides_desc"],
+            guides.render_index_page(lang, lambda p, lang=lang: url_for(lang, p)),
+            crumbs=g_index_crumbs, alternates=g_index_alts, aside=side), TODAY, alternates=g_index_alts)
+
+        for guide in guides.GUIDES:
+            g_path = guides.guide_paths(guide)[lang]
+            g_alts = guides.guide_paths(guide)
+            g_title = guide["title_vi"] if lang == "vi" else guide["title_en"]
+            g_desc = guide["desc_vi"] if lang == "vi" else guide["desc_en"]
+            g_art_ld = guides.article_ld(guide, lang, SITE, NAME)
+            g_faq_ld = guides.faq_ld(guide, lang)
+            g_crumbs = [(t["nav_guides"], "/cam-nang/"), (g_title, g_path)]
+            g_body = guides.render_guide_page(guide, lang, lambda p, lang=lang: url_for(lang, p))
+            write(lang, g_path, page(
+                lang, g_path, g_title + " | RemoteJob VN", g_desc,
+                g_body, crumbs=g_crumbs,
+                jsonld=[g_art_ld, g_faq_ld], alternates=g_alts, og_type="article", aside=side),
+                guide["date_modified"], alternates=g_alts)
         repo = CFG["REPO_URL"].rstrip("/")
         report_url = e(repo + "/issues/new?template=report-problem.yml")
         add_url = e(repo + "/issues/new?template=add-company.yml")
@@ -1136,12 +1178,23 @@ def main():
           f"{sum(by_kind.values())} indexable hubs ({kind_bits})")
 
 
+def job_employment_type(title):
+    t = (title or "").lower()
+    if re.search(r"\b(intern|internship|thực tập)\b", t):
+        return ["INTERN"]
+    if re.search(r"\b(part[- ]?time|bán thời gian)\b", t):
+        return ["PART_TIME"]
+    if re.search(r"\b(contract|contractor|freelance|consultant)\b", t):
+        return ["CONTRACTOR"]
+    return ["FULL_TIME"]
+
+
 def job_posting_ld(j, c):
     """schema.org JobPosting, only when the required facts exist; otherwise None (no JSON-LD).
 
     Expired or removed jobs never emit a block. validThrough is the site freshness
     cutoff (last_checked + JOB_STALE_DAYS) and is omitted when last_checked is missing.
-    Salary text is copied from the posting; a structured baseSalary is not invented.
+    Salary text is copied into description for Google for Jobs display.
     """
     if j.get("status", "open") != "open":
         return None
@@ -1150,8 +1203,13 @@ def job_posting_ld(j, c):
     posted = _iso_day(j.get("date_posted"))
     if not (j.get("title") and j.get("url") and posted and c.get("name")):
         return None
-    if j.get("remote") != "yes" or j.get("region") not in ("vn", "global"):
+    if j.get("remote") != "yes":
+        return None
+    loc = (j.get("location") or "").lower()
+    is_vn = j.get("region") in ("vn", "global") or (c.get("group") == "A" and j.get("region") != "other") or "vietnam" in loc
+    if not is_vn:
         return None  # only claim TELECOMMUTE + Vietnam eligibility when the posting names Vietnam or is worldwide
+
     desc = j.get("description") or j["title"]
     salary = (j.get("salary") or "").strip()
     if salary:
@@ -1160,14 +1218,23 @@ def job_posting_ld(j, c):
     same = c.get("website") or c.get("careers_url")
     if same:
         org["sameAs"] = same
+
+    direct_apply = any(domain in j["url"].lower() for domain in [
+        "greenhouse.io", "lever.co", "ashbyhq.com", "workable.com", 
+        "recruitee.com", "smartrecruiters.com", "personio", "teamtailor.com",
+        "bamboohr.com", "breezy.hr", "applytojob.com", "rippling.com"
+    ])
+
     d = {"@context": "https://schema.org", "@type": "JobPosting", "title": j["title"],
          "description": f"<p>{html.escape(desc)}</p>",
          "datePosted": posted,
+         "employmentType": job_employment_type(j["title"]),
          "hiringOrganization": org,
          "jobLocationType": "TELECOMMUTE",
          "applicantLocationRequirements": {"@type": "Country", "name": "Vietnam"},
-         "url": j["url"], "directApply": False,
+         "url": j["url"], "directApply": direct_apply,
          "identifier": {"@type": "PropertyValue", "name": c["name"], "value": (j.get("key") or j["url"]).split(":", 1)[-1]}}
+
     checked = _iso_day(j.get("last_checked"))
     if checked:
         d["validThrough"] = (datetime.date.fromisoformat(checked) + datetime.timedelta(days=CFG["JOB_STALE_DAYS"])).isoformat()

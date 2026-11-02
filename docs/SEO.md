@@ -22,6 +22,11 @@
 | Feeds | `/feed.xml` (RSS), `/atom.xml`, `/feed.json` | `/en/feed.xml`, `/en/atom.xml`, `/en/feed.json` |
 | Post a job | `/dang-tin/` | `/en/dang-tin/` |
 | Tools | `/cong-cu/` | `/en/cong-cu/` |
+| Guides Hub | `/cam-nang/` | `/en/cam-nang/` |
+| Tax Guide | `/cam-nang/thue-thu-nhap-ca-nhan-remote/` | `/en/cam-nang/remote-income-tax-vietnam/` |
+| USD Payout Guide | `/cam-nang/nhan-luong-usd-remote/` | `/en/cam-nang/receiving-usd-salary-remote/` |
+| ATS Resume Guide | `/cam-nang/kinh-nghiem-xin-viec-remote/` | `/en/cam-nang/remote-job-search-tips/` |
+| Scam Warning Guide | `/cam-nang/canh-giac-lua-dao-viec-lam-online/` | `/en/cam-nang/avoiding-remote-job-scams/` |
 | Privacy | `/chinh-sach-bao-mat/` | `/en/privacy/` |
 | Terms | `/dieu-khoan/` | `/en/terms/` |
 | Contact | `/lien-he/` | `/en/contact/` |
@@ -37,12 +42,13 @@
 
 | Type | Where | Rule |
 | --- | --- | --- |
-| `WebSite` | home | always |
+| `WebSite` | home | always, includes `SearchAction` (Sitelinks Search Box) |
 | `ItemList` | company directory | always |
 | `BreadcrumbList` | every page except home | always, matches the visible breadcrumbs |
 | `Organization` | company pages | always (`name`, `url`, `sameAs` = careers page) |
-| `JobPosting` | job pages | **only** when title, hiringOrganization, url **and** datePosted are present, the job is still `open`, remote, and names Vietnam or is open worldwide (APAC-only postings are skipped because they may not include Vietnam). Uses `jobLocationType: TELECOMMUTE` and `applicantLocationRequirements: {Country: Vietnam}`. `validThrough` is last checked + 30 days when `last_checked` exists, and is omitted otherwise. A published salary string is copied into the description; a structured `baseSalary` is not invented. Removed or stale jobs do not emit JobPosting. |
-| `FAQPage` | category hubs with at least 3 open jobs | questions are the page's own counts (jobs, companies, region, salary). |
+| `Article` | guide pages | always (`headline`, `author`, `publisher`, dates) |
+| `FAQPage` | category hubs & guide pages | questions & answers on the page |
+| `JobPosting` | job pages | **only** when title, hiringOrganization, url **and** datePosted are present, the job is still `open`, remote, and names Vietnam or is open worldwide. Includes `employmentType`, `jobLocationType: TELECOMMUTE`, `applicantLocationRequirements: {Country: Vietnam}`, and `directApply: true` on ATS domains. |
 
 Seed jobs have no posting date, so they get `JobPosting` only after `refresh_jobs.py` reads `datePosted`
 from the ATS API. `python3 scripts/check_jsonld.py` validates all blocks; the Rich Results Test
@@ -67,6 +73,20 @@ from the ATS API. `python3 scripts/check_jsonld.py` validates all blocks; the Ri
 - `/llms.txt` (llmstxt.org) and `/llms-full.txt` are generated at build time and served as
   `text/plain; charset=utf-8`. The full file lists public company facts and current
   direct-employer jobs only.
+
+## Google Indexing API
+
+Google allows and encourages the Indexing API specifically for `JobPosting` URLs.
+`scripts/google_indexing.py` publishes newly refreshed job URLs directly to Google's index,
+bypassing standard crawl lag and achieving indexing in minutes:
+
+```bash
+# Dry run check
+python3 scripts/google_indexing.py --dry-run --limit 20
+
+# Live submit with Service Account
+python3 scripts/google_indexing.py --key google-service-account.json --limit 100
+```
 
 ## IndexNow
 

@@ -12,6 +12,7 @@ REQUIRED = {
     "ItemList": ["itemListElement"],
     "JobPosting": ["title", "description", "datePosted", "hiringOrganization", "jobLocationType", "applicantLocationRequirements", "url"],
     "FAQPage": ["mainEntity"],
+    "Article": ["headline", "author", "publisher"],
 }
 counts, errors = {}, []
 for fp in glob.glob(os.path.join(DIST, "**", "*.html"), recursive=True):
