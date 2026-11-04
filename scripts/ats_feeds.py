@@ -5,8 +5,10 @@ raw job dicts refresh_jobs.py already understands: key, title, location, url,
 salary, desc, date_posted. Network access stays in the caller.
 """
 import email.utils
+import html
 import json
 import re
+import urllib.parse
 import xml.etree.ElementTree as ET
 
 
@@ -293,6 +295,155 @@ def _personio_tld(endpoint):
     return "com" if ".personio.com" in (endpoint or "") else "de"
 
 
+def _plain(value):
+    text = html.unescape(value or "")
+    text = re.sub(r"<[^>]+>", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+# Dover's workplace_type can say HYBRID while the posting itself allows remote
+# ("In-office or Remote", "a remote, distributed, and async-friendly work environment").
+# "distributed systems" is not a remote-work statement.
+_REMOTE_ALLOWED_RX = re.compile(
+    r"(?:"
+    r"in[-\s]?office\s+or\s+remote"
+    r"|remote\s+or\s+in[-\s]?office"
+    r"|remote\s+work"
+    r"|work(?:ing)?\s+remotely"
+    r"|fully\s+remote"
+    r"|100%\s*remote"
+    r"|remote[-\s]friendly"
+    r"|a\s+remote,\s+(?:distributed|flexible|async)"
+    r")",
+    re.I,
+)
+_DOVER_DETAIL = "https://app.dover.com/api/v1/inbound/application-portal-job/{}"
+
+
+def description_allows_remote(description):
+    """True when the posting text says remote work is allowed."""
+    return _REMOTE_ALLOWED_RX.search(_plain(description)) is not None
+
+
+def dover_job_url(client, job_id):
+    """Public posting URL used by the Dover careers page.
+
+    On jobs.dover.com the route is /:clientName/:jobId. The same posting on
+    app.dover.com is /apply/:clientName/:jobId. The careers page links to the
+    jobs host, without the referrer query string.
+    """
+    segment = urllib.parse.quote(str(client).strip(), safe="")
+    return f"https://jobs.dover.com/{segment}/{job_id}"
+
+
+def _dover_salary(comp):
+    """Salary text only when Dover marks the range as shared. Bounds alone are not public."""
+    if not isinstance(comp, dict) or comp.get("open_to_sharing_comp") is not True:
+        return None
+    lo, hi = comp.get("lower_bound"), comp.get("upper_bound")
+    if lo is None and hi is None:
+        return None
+
+    def amount(value):
+        if isinstance(value, float) and value.is_integer():
+            return str(int(value))
+        return str(value)
+
+    if lo is not None and hi is not None:
+        span = f"{amount(lo)}-{amount(hi)}"
+    elif lo is not None:
+        span = f"{amount(lo)}+"
+    else:
+        span = f"up to {amount(hi)}"
+    return " ".join(p for p in (span, comp.get("currency_code") or "", comp.get("salary_range_type") or "") if p)
+
+
+def _dover_places(locations):
+    places = []
+    for loc in locations or []:
+        if not isinstance(loc, dict):
+            continue
+        name = loc.get("name")
+        option = loc.get("location_option")
+        if not name and isinstance(option, dict):
+            name = option.get("display_name")
+        if isinstance(name, str):
+            name = name.strip()
+        if name and name not in places:
+            places.append(name)
+    return places
+
+
+def parse_dover_detail(detail, slug, client, job_id=None):
+    """One Dover application-portal job. Remote eligibility follows the description too."""
+    jid = str(job_id or detail.get("id") or "").strip()
+    workplace = str(detail.get("workplace_type") or "").strip().upper()
+    description = detail.get("user_provided_description") or ""
+    if workplace == "REMOTE" or description_allows_remote(description):
+        flag = "remote=true"
+    elif workplace == "HYBRID":
+        flag = "hybrid"
+    elif workplace in {"ONSITE", "ON_SITE", "IN_OFFICE"}:
+        flag = "onsite"
+    else:
+        flag = ""
+    places = ", ".join(_dover_places(detail.get("locations")))
+    location = " | ".join(p for p in (places, flag) if p) or None
+    return dict(
+        key=f"{slug}:{jid}", title=detail.get("title"), location=location,
+        url=dover_job_url(client, jid), salary=_dover_salary(detail.get("compensation")),
+        desc=description, date_posted=rss_date(detail.get("created")),
+    )
+
+
+def fetch_dover(src, get, pause):
+    """List a Dover careers page, then one public detail request per published job.
+
+    The list call is the first request (the caller already waited). Each detail
+    request waits via pause(), including the first, so the source stays at about
+    one request per second.
+    """
+    slug = src["slug"]
+    client = (src.get("token") or "").strip()
+    endpoint = src["endpoint"]
+    page = endpoint
+    out = []
+    seen = set()
+    pages = 0
+    while page and pages < 20 and len(seen) < 500:
+        if pages:
+            pause()
+        pages += 1
+        data = json.loads(get(page))
+        if not isinstance(data, dict):
+            break
+        for row in data.get("results") or []:
+            if not isinstance(row, dict):
+                continue
+            if row.get("is_published") is False or row.get("is_sample") is True:
+                continue
+            jid = str(row.get("id") or "").strip()
+            if not jid or jid in seen:
+                continue
+            seen.add(jid)
+            pause()
+            detail_url = _DOVER_DETAIL.format(urllib.parse.quote(jid, safe=""))
+            detail = json.loads(get(detail_url))
+            if not isinstance(detail, dict):
+                continue
+            if detail.get("active") is False or detail.get("is_private") is True:
+                continue
+            name = client or str(detail.get("client_name") or "").strip()
+            if not name:
+                continue
+            out.append(parse_dover_detail(detail, slug, name, jid))
+        nxt = data.get("next")
+        if not isinstance(nxt, str) or not nxt:
+            break
+        page = nxt if nxt.startswith("http") else urllib.parse.urljoin(endpoint, nxt)
+    return out
+
+
 def fetch_jobs(src, get, pause):
     """Return a list of raw jobs, or None when this module does not handle the ATS.
 
@@ -318,4 +469,6 @@ def fetch_jobs(src, get, pause):
         return parse_pinpoint(get(src["endpoint"]), slug)
     if ats == "rippling":
         return parse_rippling(get(src["endpoint"]), slug, token)
+    if ats == "dover":
+        return fetch_dover(src, get, pause)
     return None

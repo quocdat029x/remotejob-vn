@@ -4,7 +4,7 @@
 Adapted from the original careers monitor (fetch.py):
 - Only public, unauthenticated JSON/XML feeds by default (Greenhouse, Lever, Ashby,
   Workable, Recruitee, plus SmartRecruiters, Personio, Teamtailor, BambooHR, Breezy,
-  JazzHR, Pinpoint and Rippling when a source uses one).
+  JazzHR, Pinpoint, Rippling and Dover when a source uses one).
   HTML careers pages are skipped unless --include-html is given (link scraping is noisy; see docs/JOB_FILTER_RULES.md).
   Jobs with no feed are link-checked by scripts/linkcheck_jobs.py instead.
 - At most ~1 request per second (--delay), one request per source, no retries, 25 s timeout,
