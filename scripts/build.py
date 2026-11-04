@@ -477,6 +477,26 @@ def jobs_for_default_listings(jobs, co_by):
     """Mixed lists (home, /viec-lam/, role pages) show direct employers only."""
     return [j for j in jobs if not company_is_aggregator(co_by.get(j.get("company_slug")))]
 
+def job_posting_date(job):
+    """Best-known posting date: date_posted, else first_seen, else last_checked."""
+    return job.get("date_posted") or job.get("first_seen") or job.get("last_checked") or ""
+
+
+def order_jobs_newest_first(jobs, co_by):
+    """Newest postings first; ties keep region, remote, company, title order."""
+    ranked = sorted(jobs, key=lambda j: (REGION_ORDER[j["region"]], REMOTE_ORDER[j["remote"]],
+                                         co_by[j["company_slug"]]["name"].lower(), j["title"].lower()))
+    ranked.sort(key=job_posting_date, reverse=True)
+    return ranked
+
+
+def rank_companies_by_freshness(companies, jobs_by_co):
+    """Companies whose newest posting is most recent come first; job boards last."""
+    ranked = sorted(companies, key=lambda c: (c["group"], -len(jobs_by_co[c["slug"]]), c["name"].lower()))
+    ranked.sort(key=lambda c: max((job_posting_date(j) for j in jobs_by_co[c["slug"]]), default=""), reverse=True)
+    ranked.sort(key=company_is_aggregator)
+    return ranked
+
 
 def interstitial_rules(cfg):
     """Frequency cap for the apply-click dialog. Numbers live in site.config.json."""
@@ -580,8 +600,7 @@ def main():
             active.append(j)
         elif (j.get("removed_on") or j.get("last_checked", "")) >= keep_cut:
             gone.append(j)
-    sort_key = lambda j: (REGION_ORDER[j["region"]], REMOTE_ORDER[j["remote"]], co_by[j["company_slug"]]["name"].lower(), j["title"].lower())
-    active.sort(key=sort_key)
+    active = order_jobs_newest_first(active, co_by)
     jobs_by_co = defaultdict(list)
     for j in active:
         jobs_by_co[j["company_slug"]].append(j)
@@ -589,6 +608,7 @@ def main():
     # Aggregators (job boards) keep their own pages but do not fill mixed lists.
     agg_slugs = {c["slug"] for c in companies if company_is_aggregator(c)}
     listed = jobs_for_default_listings(active, co_by)
+    companies_ranked = rank_companies_by_freshness(companies, jobs_by_co)
     global FRESH
     api_count = sum(1 for s in sources.values() if s.get("method") == "api" or s.get("ats") in jf.API_ATS)
     checked_dates = [s.get("last_checked") or "" for s in sources.values()] + [j.get("last_checked") or "" for j in active]
@@ -684,7 +704,7 @@ def main():
         top = [j for j in listed if j["region"] in ("vn", "apac") and j["remote"] in ("yes", "hybrid")][:12]
         popular = hubs.pick_diverse([h for h in catalog if h["indexable"]], 12)
         role_links = hubs.chip_html(popular, lang, lambda p, lang=lang: url_for(lang, p))
-        grpA = [c for c in companies if c["group"] == "A"][:10]
+        grpA = [c for c in companies_ranked if c["group"] == "A"][:10]
         lead_key = "home_lead_ads" if adsense.client_id(CFG) else "home_lead"
         desc_key = "home_desc_ads" if adsense.client_id(CFG) else "home_desc"
         body = f"""<section class="hero"><h1>{e(t['home_h1'])}</h1><p class="lead">{e(t[lead_key])}</p>
@@ -728,11 +748,11 @@ def main():
 {select('role', t['f_role'], role_opts, lang)}{select('mode', t['f_mode'], mode_opts, lang)}
 {select('group', t['f_group'], [('A', t['group_A']), ('B', t['group_B'])], lang)}{select('tz', t['f_tz'], tz_opts, lang)}
 <div class="row-end"><output name="count" aria-live="polite"></output><button type="reset">{e(t['reset'])}</button></div></form>"""
-        cards = [company_card(c, lang, len(jobs_by_co[c["slug"]])) for c in sorted(companies, key=lambda c: (c["group"], company_is_aggregator(c), -len(jobs_by_co[c["slug"]]), c["name"].lower()))]
+        cards = [company_card(c, lang, len(jobs_by_co[c["slug"]])) for c in companies_ranked]
         body = f"""<div class="pagehead"><h1>{e(t['companies_h1'])}</h1><p class="lead">{e(t['companies_desc'].format(n=len(companies)))}</p></div>{form}
 <ul class="list" id="co-list">{with_native(cards, lang, ads)}</ul><div id="co-empty" hidden>{empty_state(lang)}</div>"""
         ld = [{"@context": "https://schema.org", "@type": "ItemList", "numberOfItems": len(companies),
-               "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": absu(lang, f"/cong-ty/{c['slug']}/")} for i, c in enumerate(companies)]}]
+               "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": absu(lang, f"/cong-ty/{c['slug']}/")} for i, c in enumerate(companies_ranked)]}]
         write(lang, "/cong-ty/", page(lang, "/cong-ty/", t["companies_title"].format(n=len(companies)), t["companies_desc"].format(n=len(companies)), body,
                                       crumbs=[(t["nav_companies"], "/cong-ty/")], jsonld=ld, js=True, aside=side),
               max(c["last_checked"] for c in companies))
