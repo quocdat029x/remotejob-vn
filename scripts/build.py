@@ -1228,7 +1228,7 @@ def job_posting_ld(j, c):
     direct_apply = any(domain in j["url"].lower() for domain in [
         "greenhouse.io", "lever.co", "ashbyhq.com", "workable.com", 
         "recruitee.com", "smartrecruiters.com", "personio", "teamtailor.com",
-        "bamboohr.com", "breezy.hr", "applytojob.com", "rippling.com"
+        "bamboohr.com", "breezy.hr", "applytojob.com", "rippling.com", "dover.com"
     ])
 
     d = {"@context": "https://schema.org", "@type": "JobPosting", "title": j["title"],

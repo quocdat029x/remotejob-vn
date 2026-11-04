@@ -83,6 +83,7 @@ class FeedAndLinkTests(unittest.TestCase):
             "jazzhr": "https://acme.applytojob.com/apply/Ab12/engineer",
             "pinpoint": "https://acme.pinpointhq.com/en/postings/engineer",
             "rippling": "https://ats.rippling.com/accelerant/jobs/57ae5e12-9e90-481d-8a27-3653a955d669",
+            "dover": "https://jobs.dover.com/TinyFish/ff0fcaa2-76ac-43d2-8e86-9453910eb642",
         }
         for ats, url in cases.items():
             ok, why = jf.is_job(ats, url, "Engineer", today=__import__("datetime").date(2026, 10, 28))
@@ -106,6 +107,114 @@ class FeedAndLinkTests(unittest.TestCase):
         parsed = ats_feeds.parse_personio(xml, "acme", "acme", "de")
         self.assertEqual(parsed[0]["url"], "https://acme.jobs.personio.de/job/12")
         self.assertEqual(parsed[0]["date_posted"], "2026-01-02")
+
+    def test_dover_marks_remote_from_the_description(self):
+        devsecops = ats_feeds.parse_dover_detail({
+            "id": "ff0fcaa2-76ac-43d2-8e86-9453910eb642",
+            "title": "Senior DevSecOps Engineer",
+            "workplace_type": "HYBRID",
+            "locations": [
+                {"name": "Los Altos, CA"},
+                {"name": "Ho Chi Minh City, Viet Nam"},
+            ],
+            "user_provided_description": (
+                "<p>Location: In-office or Remote - (strong preference for overlap with Pacific Time).</p>"
+                "<p>A remote, distributed, and async-friendly work environment.</p>"
+            ),
+            "created": "2026-08-25T16:54:42.306040Z",
+            "compensation": {
+                "open_to_sharing_comp": False,
+                "lower_bound": 150000,
+                "upper_bound": 200000,
+                "currency_code": "USD",
+                "salary_range_type": "YEARLY",
+            },
+        }, "tinyfish", "TinyFish")
+        self.assertEqual(
+            devsecops["url"],
+            "https://jobs.dover.com/TinyFish/ff0fcaa2-76ac-43d2-8e86-9453910eb642",
+        )
+        self.assertEqual(jf.job_remote(devsecops["title"], devsecops["location"]), "yes")
+        self.assertIsNone(devsecops["salary"])
+        self.assertEqual(devsecops["date_posted"], "2026-08-25")
+        self.assertIn("Pacific Time", devsecops["desc"])
+
+        onsite = ats_feeds.parse_dover_detail({
+            "id": "285c761b-b297-4dc4-96d2-09b63d683af8",
+            "title": "Business Development Representative Intern",
+            "workplace_type": "ONSITE",
+            "locations": [{"name": "Ho Chi Minh City, Viet Nam"}],
+            "user_provided_description": "<p>Location: Ho Chi Minh City, Vietnam. Experience with distributed systems.</p>",
+        }, "tinyfish", "TinyFish")
+        self.assertEqual(jf.job_remote(onsite["title"], onsite["location"]), "no")
+        self.assertFalse(ats_feeds.description_allows_remote(onsite["desc"]))
+
+        hybrid = ats_feeds.parse_dover_detail({
+            "id": "23c970ad-73c7-4a89-9b1c-87e762528417",
+            "title": "Product Marketing Manager",
+            "workplace_type": "HYBRID",
+            "locations": [{"name": "San Francisco, CA"}],
+            "user_provided_description": "Base salary: Competitive",
+            "compensation": {"open_to_sharing_comp": True, "lower_bound": None, "upper_bound": None},
+        }, "tinyfish", "TinyFish")
+        self.assertEqual(jf.job_remote(hybrid["title"], hybrid["location"]), "hybrid")
+        self.assertIsNone(hybrid["salary"])
+
+        remote = ats_feeds.parse_dover_detail({
+            "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+            "title": "Engineer",
+            "workplace_type": "REMOTE",
+            "locations": [{"location_option": {"display_name": "Remote"}}],
+            "user_provided_description": "",
+            "compensation": {
+                "open_to_sharing_comp": True,
+                "lower_bound": 100000,
+                "upper_bound": 120000.0,
+                "currency_code": "USD",
+                "salary_range_type": "YEARLY",
+            },
+        }, "tinyfish", "TinyFish")
+        self.assertEqual(jf.job_remote(remote["title"], remote["location"]), "yes")
+        self.assertEqual(remote["salary"], "100000-120000 USD YEARLY")
+
+        ok, why = jf.is_job("dover", devsecops["url"], devsecops["title"], today=__import__("datetime").date(2026, 11, 4))
+        self.assertTrue(ok, why)
+        careers = "https://jobs.dover.com/TinyFish/careers/1499366e-a68d-43f0-91e2-bc016d9eb5ee"
+        self.assertFalse(jf.is_job("dover", careers, "Careers")[0])
+        self.assertIn("dover", jf.API_ATS)
+
+        calls = []
+
+        def get(url, accept=None):
+            calls.append(url)
+            if url.endswith("/jobs"):
+                return json.dumps({"count": 2, "next": None, "results": [
+                    {"id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "title": "Engineer", "is_published": True},
+                    {"id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", "is_published": False},
+                ]})
+            return json.dumps({
+                "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "title": "Engineer",
+                "client_name": "TinyFish",
+                "workplace_type": "HYBRID",
+                "locations": [{"name": "Palo Alto, CA"}],
+                "user_provided_description": "Location: In-office or Remote (strong preference for overlap with Pacific Time).",
+                "created": "2026-10-26T08:09:25.335323Z",
+                "active": True,
+            })
+
+        pauses = []
+        src = {
+            "slug": "tinyfish", "ats": "dover", "token": "TinyFish",
+            "endpoint": "https://app.dover.com/api/v1/careers-page/1499366e-a68d-43f0-91e2-bc016d9eb5ee/jobs",
+        }
+        jobs = ats_feeds.fetch_dover(src, get, lambda: pauses.append(1))
+        self.assertEqual(len(jobs), 1)
+        self.assertEqual(pauses, [1])
+        self.assertEqual(len(calls), 2)
+        self.assertTrue(calls[1].endswith("/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"))
+        self.assertEqual(jf.job_remote(jobs[0]["title"], jobs[0]["location"]), "yes")
+        self.assertEqual(jobs[0]["date_posted"], "2026-10-26")
 
     def test_link_check_classification(self):
         job = "https://example.com/jobs/123-engineer"
