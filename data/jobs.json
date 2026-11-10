@@ -19910,7 +19910,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "cloudx:3b83acdd3e30",
@@ -19930,7 +19930,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "colonist:a8300c34-6aaf-415c-a247-5e0ce8556c5f",
@@ -24996,7 +24996,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "dwarves:970bb28ded09",
@@ -25015,7 +25015,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "dwarves:8fc12a443897",
@@ -25034,7 +25034,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "dwarves:67c2ebee80d9",
@@ -25053,7 +25053,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "dwarves:6e5306017159",
@@ -25072,7 +25072,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "dwarves:576794b2c47b",
@@ -25091,7 +25091,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "dwarves:ce64de444a3d",
@@ -25110,7 +25110,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "edb:8046356003",
@@ -26928,9 +26928,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-03",
+  "removed_on": "2026-11-10"
  },
  {
   "key": "fly-io:6d682d06645f",
@@ -26949,7 +26950,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "fly-io:38efb22f02e1",
@@ -26968,7 +26969,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "fly-io:6c9260710dcf",
@@ -26987,7 +26988,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "fram:401201104c95",
@@ -43507,7 +43508,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "ikonnect:797a669d6089",
@@ -43526,7 +43527,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "ikonnect:05c9eed01c5d",
@@ -43545,7 +43546,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "ikonnect:22e5cb039aa4",
@@ -43565,7 +43566,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "improvado:4c6b200e3c5f",
@@ -43585,7 +43586,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "improvado:abee2c1ed80d",
@@ -43604,7 +43605,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "improvado:789e4f70a194",
@@ -43621,9 +43622,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-03",
+  "removed_on": "2026-11-10"
  },
  {
   "key": "improvado:1cb34fb4d859",
@@ -43642,9 +43644,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-03",
+  "removed_on": "2026-11-10"
  },
  {
   "key": "improvado:2384b848ee33",
@@ -43663,7 +43666,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "improvado:e9c27f15762f",
@@ -43681,9 +43684,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-03",
+  "removed_on": "2026-11-10"
  },
  {
   "key": "improvado:ce849a623513",
@@ -43703,7 +43707,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "improvado:ff8564b7f794",
@@ -43721,9 +43725,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-03",
+  "removed_on": "2026-11-10"
  },
  {
   "key": "improvado:b0e1d0c85e95",
@@ -43742,7 +43747,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "improvado:33c55133183d",
@@ -43761,7 +43766,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "improvado:caacf0d38ac1",
@@ -43779,9 +43784,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-03",
+  "removed_on": "2026-11-10"
  },
  {
   "key": "improvado:036eddde94ca",
@@ -43799,9 +43805,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-03",
+  "removed_on": "2026-11-10"
  },
  {
   "key": "improvado:4a1bb589570a",
@@ -43819,9 +43826,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-03",
+  "removed_on": "2026-11-10"
  },
  {
   "key": "improvado:7a7897f75527",
@@ -43841,7 +43849,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "improvado:f1e9d0ef540c",
@@ -43860,7 +43868,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "knorex:4C4DCB8C86",
@@ -54783,7 +54791,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "nkktech:58e6bba05b46",
@@ -54802,7 +54810,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "nkktech:214361abcb9f",
@@ -54821,7 +54829,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "nkktech:d1718d31f0c2",
@@ -54841,7 +54849,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-03"
+  "last_checked": "2026-11-10"
  },
  {
   "key": "offchain-labs:4e96d021-ff99-4cc5-8075-57051045a3fb",
