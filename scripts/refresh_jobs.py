@@ -4,7 +4,7 @@
 Adapted from the original careers monitor (fetch.py):
 - Only public, unauthenticated JSON/XML feeds by default (Greenhouse, Lever, Ashby,
   Workable, Recruitee, plus SmartRecruiters, Personio, Teamtailor, BambooHR, Breezy,
-  JazzHR, Pinpoint, Rippling and Dover when a source uses one).
+  JazzHR, Pinpoint, Rippling, Dover and Workday when a source uses one).
   HTML careers pages are skipped unless --include-html is given (link scraping is noisy; see docs/JOB_FILTER_RULES.md).
   Jobs with no feed are link-checked by scripts/linkcheck_jobs.py instead.
 - At most ~1 request per second (--delay), one request per source, no retries, 25 s timeout,
@@ -35,11 +35,14 @@ UA = {"User-Agent": f"RemoteJobVN-JobRefresh/1.0 (+{CFG['REPO_URL']})", "Accept"
 JOBRX = re.compile(r"/(jobs?|careers?|positions?|openings?|vacanc|tuyen-dung|it-jobs|o/|apply)", re.I)
 
 
-def get(url, accept=None):
+def get(url, accept=None, data=None):
     headers = dict(UA)
     if accept:
         headers["Accept"] = accept
-    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=25) as r:
+    if data is not None:  # Workday's CXS listing is a JSON POST
+        headers["Content-Type"] = "application/json"
+        data = data.encode() if isinstance(data, str) else data
+    with urllib.request.urlopen(urllib.request.Request(url, data=data, headers=headers), timeout=25) as r:
         return r.read().decode("utf-8", "replace")
 
 

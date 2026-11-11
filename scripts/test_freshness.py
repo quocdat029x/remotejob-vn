@@ -84,6 +84,7 @@ class FeedAndLinkTests(unittest.TestCase):
             "pinpoint": "https://acme.pinpointhq.com/en/postings/engineer",
             "rippling": "https://ats.rippling.com/accelerant/jobs/57ae5e12-9e90-481d-8a27-3653a955d669",
             "dover": "https://jobs.dover.com/TinyFish/ff0fcaa2-76ac-43d2-8e86-9453910eb642",
+            "workday": "https://hitachi.wd1.myworkdayjobs.com/en-US/hitachi/job/Ho-Chi-Minh-City-Ho-Chi-Minh-Vietnam/Cloud-Managed-Service-Engineer_R0149848",
         }
         for ats, url in cases.items():
             ok, why = jf.is_job(ats, url, "Engineer", today=__import__("datetime").date(2026, 10, 28))
@@ -215,6 +216,59 @@ class FeedAndLinkTests(unittest.TestCase):
         self.assertTrue(calls[1].endswith("/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"))
         self.assertEqual(jf.job_remote(jobs[0]["title"], jobs[0]["location"]), "yes")
         self.assertEqual(jobs[0]["date_posted"], "2026-10-26")
+
+    def test_workday_scopes_the_search_and_flags_remote_type(self):
+        listing = {
+            "total": 2,
+            "jobPostings": [
+                {"title": "Cloud Engineer", "locationsText": "Ho Chi Minh City, Vietnam",
+                 "externalPath": "/job/Ho-Chi-Minh-City-Vietnam/Cloud-Engineer_R0149848",
+                 "bulletFields": ["R0149848"]},
+                {"title": "Data Engineer", "locationsText": "2 Locations",
+                 "externalPath": "/job/Hanoi-Vietnam/Data-Engineer_R0149999", "bulletFields": ["R0149999"]},
+            ],
+        }
+        details = {
+            "/job/Ho-Chi-Minh-City-Vietnam/Cloud-Engineer_R0149848": {
+                "title": "Cloud Engineer",
+                "location": "Ho Chi Minh City, Ho Chi Minh, Vietnam",
+                "remoteType": "Onsite",
+                "externalUrl": "https://hitachi.wd1.myworkdayjobs.com/hitachi/job/Ho-Chi-Minh-City-Vietnam/Cloud-Engineer_R0149848",
+                "startDate": "2026-10-27T00:00:00.000Z", "jobDescription": "<p>IoT cloud ops</p>"},
+            "/job/Hanoi-Vietnam/Data-Engineer_R0149999": {
+                "title": "Data Engineer", "location": "Hanoi, Vietnam", "remoteType": "Remote",
+                "additionalLocations": [{"descriptor": "Ho Chi Minh City, Vietnam"}],
+                "startDate": "2026-11-01", "jobDescription": ""},
+        }
+        calls, posts = [], []
+
+        def get(url, accept=None, data=None):
+            calls.append((url, data))
+            if data is not None:
+                posts.append(json.loads(data))
+                return json.dumps(listing)
+            path = [p for p in url.split("/") if p][-3:]
+            return json.dumps({"jobPostingInfo": details["/" + "/".join(path)]})
+
+        pauses = []
+        src = {"slug": "hitachi", "ats": "workday",
+               "facets": {"locationCountry": "db69e8c8446c11de98360015c5e6daf6"},
+               "endpoint": "https://hitachi.wd1.myworkdayjobs.com/wday/cxs/hitachi/hitachi/jobs"}
+        jobs = ats_feeds.workday_jobs(src, get, lambda: pauses.append(1))
+        self.assertEqual(len(jobs), 2)
+        self.assertEqual(posts[0]["appliedFacets"], {"locationCountry": ["db69e8c8446c11de98360015c5e6daf6"]})
+        self.assertEqual(posts[0]["searchText"], "")                 # board scoped by facet, not text
+        self.assertEqual(len(pauses), 2)                             # one pause before each detail
+        onsite, remote = jobs
+        self.assertEqual(onsite["key"], "hitachi:R0149848")
+        self.assertEqual(jf.job_remote(onsite["title"], onsite["location"]), "no")
+        self.assertEqual(onsite["date_posted"], "2026-10-27")
+        self.assertIn("Ho Chi Minh City, Vietnam", remote["location"])  # additionalLocations kept
+        self.assertIn("Hanoi, Vietnam", remote["location"])
+        self.assertEqual(jf.job_remote(remote["title"], remote["location"]), "yes")
+        ok, why = jf.is_job("workday", onsite["url"], onsite["title"])
+        self.assertTrue(ok, why)
+        self.assertFalse(jf.is_job("workday", "https://hitachi.wd1.myworkdayjobs.com/en-US/hitachi", "Careers")[0])
 
     def test_link_check_classification(self):
         job = "https://example.com/jobs/123-engineer"

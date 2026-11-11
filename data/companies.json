@@ -319,6 +319,28 @@
   "last_checked": "2026-10-26"
  },
  {
+  "slug": "hitachi",
+  "name": "Hitachi",
+  "website": "https://www.hitachi.com",
+  "careers_url": "https://hitachi.wd1.myworkdayjobs.com/en-US/hitachi",
+  "group": "B",
+  "hq": "Tokyo, Nhật Bản",
+  "remote_policy": "Tuyển tại VN qua Workday (TP.HCM, Hà Nội, Bắc Ninh); các vị trí hiện ghi Onsite/Hybrid, chưa thấy vị trí remote",
+  "vn_hiring_mode": "Trực tiếp",
+  "hires_roles": [
+   "infra",
+   "engineering",
+   "support-ops"
+  ],
+  "timezone_note": "Giờ VN",
+  "salary_public": "Chưa công bố",
+  "source_urls": [
+   "https://hitachi.wd1.myworkdayjobs.com/en-US/hitachi/job/Ho-Chi-Minh-City-Ho-Chi-Minh-Vietnam/Cloud-Managed-Service-Engineer_R0149848"
+  ],
+  "verified": false,
+  "last_checked": "2026-11-11"
+ },
+ {
   "slug": "holistics",
   "name": "Holistics",
   "website": "https://www.holistics.io",

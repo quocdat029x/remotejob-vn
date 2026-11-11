@@ -5,7 +5,7 @@ A scraped link becomes a job only if it passes all of the rules below.
 
 ## 1. Is it a single job posting?
 
-- **API sources** (Greenhouse, Lever, Ashby, Workable, Recruitee, SmartRecruiters, Personio, Teamtailor, BambooHR, Breezy, JazzHR, Pinpoint, Rippling, Dover): the URL must match the ATS posting pattern
+- **API sources** (Greenhouse, Lever, Ashby, Workable, Recruitee, SmartRecruiters, Personio, Teamtailor, BambooHR, Breezy, JazzHR, Pinpoint, Rippling, Dover, Workday): the URL must match the ATS posting pattern
   - Greenhouse `/jobs/<digits>` or `gh_jid=<digits>`
   - Lever / Ashby `/<company>/<uuid>`
   - Workable `/j/<CODE>`
@@ -19,6 +19,7 @@ A scraped link becomes a job only if it passes all of the rules below.
   - Pinpoint `/postings/<slug>`
   - Rippling `ats.rippling.com/<company>/jobs/<id>`
   - Dover `jobs.dover.com/<company>/<uuid>` (the public careers-page link; not the careers index)
+  - Workday `myworkdayjobs.com/[locale/]<site>/job/<slug>_<R-id>` (with or without the locale segment)
 - **HTML sources**: per-host allowlist of posting URL shapes, for example ITviec `/it-jobs/<slug>-<id>`, LinkedIn
   `/jobs/view/<id>`, Himalayas `/companies/<c>/jobs/<slug>`, CloudX `-aid<id>`, iKonnect `-jo<id>`,
   `*.applytojob.com/apply/<id>/<slug>`. Category, search and listing pages are dropped.

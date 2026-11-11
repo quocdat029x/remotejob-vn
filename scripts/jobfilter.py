@@ -12,7 +12,7 @@ import urllib.parse as up
 API_ATS = {
     "greenhouse", "lever", "ashby", "workable", "recruitee",
     "smartrecruiters", "personio", "teamtailor", "bamboohr", "breezy",
-    "jazzhr", "pinpoint", "rippling", "dover",
+    "jazzhr", "pinpoint", "rippling", "dover", "workday",
 }
 
 # 1) ATS APIs: URL must point at a single posting.
@@ -31,6 +31,7 @@ API_URL_RX = {
     "pinpoint": re.compile(r"/postings/[^/?#]+"),
     "rippling": re.compile(r"ats\.rippling\.com/[^/]+/jobs/[^/?#]+"),
     "dover": re.compile(r"jobs\.dover\.com/[^/]+/[0-9a-f-]{36}"),
+    "workday": re.compile(r"myworkdayjobs\.com/(?:[a-z]{2}(?:-[A-Za-z]{2})?/)?[^/]+/job/[^/?#]+"),
 }
 
 # 2) HTML sources: per-host allowlist of "single posting" URL shapes.

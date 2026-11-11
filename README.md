@@ -41,7 +41,7 @@ python3 -m http.server 8765 --directory dist
 # open http://127.0.0.1:8765/
 ```
 
-Refresh jobs from public ATS APIs (Greenhouse, Lever, Ashby, Workable, Recruitee, Dover, and the other feeds in `scripts/ats_feeds.py`):
+Refresh jobs from public ATS APIs (Greenhouse, Lever, Ashby, Workable, Recruitee, Dover, Workday, and the other feeds in `scripts/ats_feeds.py`):
 
 ```bash
 python3 scripts/refresh_jobs.py --dry-run --only gradion,akuity   # try a few sources without writing

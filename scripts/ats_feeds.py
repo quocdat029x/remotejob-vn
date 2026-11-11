@@ -444,11 +444,112 @@ def fetch_dover(src, get, pause):
     return out
 
 
+# --- Workday career sites (myworkdayjobs.com CXS JSON endpoints) ---
+
+_WORKDAY_ID_RX = re.compile(r"_(R\d+)$")
+
+
+def workday_site_root(endpoint):
+    """Human careers-site root for a CXS listing endpoint.
+
+    https://hitachi.wd1.myworkdayjobs.com/wday/cxs/hitachi/hitachi/jobs
+    -> https://hitachi.wd1.myworkdayjobs.com/hitachi
+    """
+    m = re.match(r"(https?://[^/]+)/wday/cxs/[^/]+/([^/]+)", endpoint or "")
+    return f"{m.group(1)}/{m.group(2)}" if m else None
+
+
+def workday_row_id(row):
+    """Requisition id (R0149848) from a listing row: bulletFields first, path tail second."""
+    bullets = row.get("bulletFields") or []
+    if bullets and isinstance(bullets[0], str) and re.fullmatch(r"R\d+", bullets[0].strip()):
+        return bullets[0].strip()
+    tail = (row.get("externalPath") or "").rsplit("/", 1)[-1]
+    m = _WORKDAY_ID_RX.search(tail)
+    return m.group(1) if m else None
+
+
+def parse_workday_posting(info, slug, url, job_id):
+    """One Workday jobPostingInfo record. remoteType ("Onsite"/"Hybrid"/"Remote")
+    becomes the same location flag the other feeds use."""
+    places = []
+    if isinstance(info.get("location"), str) and info["location"]:
+        places.append(info["location"])
+    for loc in info.get("additionalLocations") or []:
+        if isinstance(loc, dict) and isinstance(loc.get("descriptor"), str) and loc["descriptor"] not in places:
+            places.append(loc["descriptor"])
+    workplace = str(info.get("remoteType") or "").strip()
+    location = " | ".join(p for p in (", ".join(places), workplace) if p) or None
+    return dict(
+        key=f"{slug}:{job_id}", title=info.get("title"), location=location,
+        url=(info.get("externalUrl") or url or "").split("?")[0] or None, salary=None,
+        desc=info.get("jobDescription") or "", date_posted=rss_date(info.get("startDate")),
+    )
+
+
+def workday_facets(src):
+    """appliedFacets payload from a source's `facets` map: {"locationCountry": "<id>"}."""
+    facets = src.get("facets")
+    if not isinstance(facets, dict):
+        return {}
+    out = {}
+    for key, value in facets.items():
+        if isinstance(value, str) and value:
+            out[key] = [value]
+        elif isinstance(value, list):
+            out[key] = [v for v in value if isinstance(v, str) and v]
+    return out
+
+
+def workday_jobs(src, get, pause):
+    """List a Workday CXS feed (one POST per page), then one public detail GET per posting.
+
+    A source may set `facets` (e.g. {"locationCountry": "<Workday country id>"}, taken
+    from the careers-site URL) and/or `search` (free text) to scope a large board;
+    without them the whole site is listed. The first page is the first request (the
+    caller already waited); every further page and every detail request waits via pause().
+    """
+    slug = src["slug"]
+    endpoint = src["endpoint"]
+    base = endpoint.rsplit("/", 1)[0]
+    site_root = workday_site_root(endpoint)
+    applied = workday_facets(src)
+    search = str(src.get("search") or "").strip()
+    out, seen = [], set()
+    offset, pages = 0, 0
+    while pages < 25 and len(seen) < 500:
+        payload = json.dumps({"appliedFacets": applied, "limit": 20, "offset": offset, "searchText": search})
+        data = json.loads(get(endpoint, data=payload))
+        rows = data.get("jobPostings") or [] if isinstance(data, dict) else []
+        pages += 1
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            jid = workday_row_id(row)
+            path = row.get("externalPath")
+            if not jid or jid in seen or not isinstance(path, str) or not path.startswith("/"):
+                continue
+            seen.add(jid)
+            pause()  # one request per second: the listing page already used the slot
+            detail = json.loads(get(base + path))
+            info = detail.get("jobPostingInfo") if isinstance(detail, dict) else None
+            if not isinstance(info, dict):
+                continue
+            fallback = site_root + path if site_root else None
+            out.append(parse_workday_posting(info, slug, fallback, jid))
+        if not rows or not data.get("total") or offset + len(rows) >= int(data["total"]):
+            break
+        offset += len(rows)
+        pause()
+    return out
+
+
 def fetch_jobs(src, get, pause):
     """Return a list of raw jobs, or None when this module does not handle the ATS.
 
-    `get(url)` performs one HTTP GET. `pause()` waits before an extra page.
-    The first request is not paused here; the caller already spaces sources out.
+    `get(url)` performs one HTTP GET; Workday also passes `data=<json string>` for
+    its POST listing. `pause()` waits before an extra page. The first request is
+    not paused here; the caller already spaces sources out.
     """
     ats = src.get("ats")
     slug = src["slug"]
@@ -471,4 +572,6 @@ def fetch_jobs(src, get, pause):
         return parse_rippling(get(src["endpoint"]), slug, token)
     if ats == "dover":
         return fetch_dover(src, get, pause)
+    if ats == "workday":
+        return workday_jobs(src, get, pause)
     return None
