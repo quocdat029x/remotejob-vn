@@ -2,10 +2,10 @@
  "last_api_refresh": "2026-11-17",
  "last_api_attempted": 64,
  "last_api_failed": 0,
- "last_link_check": "2026-11-10",
- "last_link_checked": 40,
- "last_link_alive": 28,
- "last_link_removed": 8,
+ "last_link_check": "2026-11-17",
+ "last_link_checked": 32,
+ "last_link_alive": 23,
+ "last_link_removed": 5,
  "last_link_blocked": 4,
  "last_link_errors": 0
 }
