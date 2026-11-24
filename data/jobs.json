@@ -22610,7 +22610,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "cloudx:3b83acdd3e30",
@@ -22630,7 +22630,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "colonist:a8300c34-6aaf-415c-a247-5e0ce8556c5f",
@@ -28267,7 +28267,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "dwarves:970bb28ded09",
@@ -28286,7 +28286,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "dwarves:8fc12a443897",
@@ -28305,7 +28305,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "dwarves:67c2ebee80d9",
@@ -28324,7 +28324,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "dwarves:6e5306017159",
@@ -28343,7 +28343,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "dwarves:576794b2c47b",
@@ -28362,7 +28362,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "dwarves:ce64de444a3d",
@@ -28381,7 +28381,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "edb:8204757003",
@@ -30514,7 +30514,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "fly-io:38efb22f02e1",
@@ -30533,7 +30533,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "fly-io:6c9260710dcf",
@@ -30552,7 +30552,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "fram:401201104c95",
@@ -50713,7 +50713,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "ikonnect:797a669d6089",
@@ -50732,7 +50732,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "ikonnect:05c9eed01c5d",
@@ -50751,7 +50751,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "ikonnect:22e5cb039aa4",
@@ -50771,7 +50771,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "improvado:4c6b200e3c5f",
@@ -50791,7 +50791,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "improvado:abee2c1ed80d",
@@ -50808,9 +50808,10 @@
   "remote": "unknown",
   "description": null,
   "date_posted": null,
-  "status": "open",
+  "status": "removed",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-17",
+  "removed_on": "2026-11-24"
  },
  {
   "key": "improvado:789e4f70a194",
@@ -50871,7 +50872,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "improvado:e9c27f15762f",
@@ -50953,7 +50954,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "improvado:33c55133183d",
@@ -50972,7 +50973,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "improvado:caacf0d38ac1",
@@ -51055,7 +51056,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "improvado:f1e9d0ef540c",
@@ -51074,7 +51075,7 @@
   "date_posted": null,
   "status": "open",
   "first_seen": "2026-10-28",
-  "last_checked": "2026-11-17"
+  "last_checked": "2026-11-24"
  },
  {
   "key": "knorex:4C4DCB8C86",

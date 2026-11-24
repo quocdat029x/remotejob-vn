@@ -41,7 +41,7 @@
   "token": null,
   "endpoint": "https://memo.d.foundation/careers",
   "method": "html",
-  "last_checked": "2026-11-17",
+  "last_checked": "2026-11-24",
   "status": "ok"
  },
  {
@@ -149,7 +149,7 @@
   "token": null,
   "endpoint": "https://cloudx.com.vn/tin-tuc/tuyen-dung",
   "method": "html",
-  "last_checked": "2026-11-17",
+  "last_checked": "2026-11-24",
   "status": "ok"
  },
  {
@@ -278,7 +278,7 @@
   "token": null,
   "endpoint": "https://www.ikonnectvn.com",
   "method": "html",
-  "last_checked": "2026-11-17",
+  "last_checked": "2026-11-24",
   "status": "ok"
  },
  {
@@ -494,7 +494,7 @@
   "token": null,
   "endpoint": "https://fly.io/jobs/",
   "method": "html",
-  "last_checked": "2026-11-17",
+  "last_checked": "2026-11-24",
   "status": "ok"
  },
  {
@@ -629,7 +629,7 @@
   "token": null,
   "endpoint": "https://improvado.io/careers",
   "method": "html",
-  "last_checked": "2026-11-17",
+  "last_checked": "2026-11-24",
   "status": "ok"
  },
  {
